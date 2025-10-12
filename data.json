@@ -1,59 +1,45 @@
 {
-  "eng": {
-    "p1.1": ["born", "grow up", "learn", "work", "love", "happy", "marry", "look after", "die", "bury", "reunion", "bond"],
-    "p1.1#": ["son", "daughter", "husband", "wife", "parents", "father", "mother", "brother", "sister", "grandparents", "grandfather",
-      "grandmother", "grandson", "granddaughter", "relatives", "aunt", "uncle", "nephew", "niece", "cousin", "brother-in-law", "sister-in-law",
-      "human being", "man", "woman", "gentleman", "lady", "baby", "boy", "girl", "child", "teenager", "adult", "couple", "twins", "person",
-      "visitor", "friend", "stranger", "foreigner"
-    ],
-    "p1.2": ["handsome", "pretty", "shy", "slim", "fat", "tall", "thin", "ugly", "young", "old", "bald", "chubby"],
-    "p1.3": ["kind", "lucky", "polite", "proud", "poor", "rich", "wealthy", "rude", "greedy", "supposed to", "lazy", "stubborn"],
-    "p1.4": ["brave", "busy", "calm", "coward", "frank", "generous", "humble", "neat", "reliable", "willing", "ruthless", "conceited"],
-    "s1": ["Are you nervous about the test?", "No. I'm ready to ace it.", "I like your confidence. Good luck!", "Thanks!",
-      "I'm ready to work.", "I'm ready to listen.", "I'm ready to talk.", "I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."
-    ],
-    "s2": ["Welcome! How can i help you today?", "I'm here to get a refund for this shirt.", "Oh, is there something wrong with it?",
-      "It's too big on me.", "I'm here to exercise.", "I'm here to relax.", "I'm here to see you.", "I'm here to buy something.",
-      "I'm here to meet my friends.", "I'm here to help."
-    ],
-    "s3": ["Why are you walking so slowly?", "I'm not used to wearing heels.", "You'll get the hang of it soon.", "I just hope I don't trip and fall",
-      "I'm not used to wearing glasses.", "I'm not used to the cold.", "I'm not used to waking up early.", "I'm not used to using chopsticks.",
-      "I'm not used to this software.", "I'm not used to this city."
-    ],
-    "s4": ["Why did you tell Sarah my secret?", "I'm sorry for spilling the beans.", "I trusted you!", "I didn't mean to. It just slipped out.",
-      "I'm sorry for hurting you.", "I'm sorry for the mistake.", "I'm sorry for making you worry.", "I'm sorry for raising my voice.",
-      "I'm sorry for the confusion.", "I'm sorry for being late."
-    ]
-  },
-  "kor": {
-    "p1.1": ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
-      "묻다", "친목 모임, 동창회", "유대, 유대감을 형성하다"
-    ],
-    "p1.1#": ["아들", "딸", "남편", "아내, 처", "부모", "아버지", "어머니", "형제(형, 오빠, 남동생)", "자매(언니, 누나, 여동생)", "조부모",
-      "할아버지", "할머니", "손자", "손녀", "친척", "숙모, 고모, 이모", "삼촌", "남자 조카", "여자 조카", "사촌", "처남, 매형, 매부, 형부", "형수, 제수, 처제, 시누이",
-      "사람, 인간", "남자", "여자", "신사", "숙녀", "아기", "소년", "소녀", "아이, 어린이", "10대", "성인", "커플, 부부", "쌍둥이", "(개개의)사람, 개인",
-      "방문객, 손님", "친구", "낯선 사람, 나그네", "외국인"
-    ],
-    "p1.2": ["(남자가)멋진, 잘생긴", "예쁜, 귀여운", "수줍어하는, 부끄러워하는", "날씬한", "뚱뚱한, 살찐", "키가 큰", "마른, 여윈", "못생긴, 추한",
-      "젊은, 어린", "늙은, 나이 많은", "대머리의", "통통한"
-    ],
-    "p1.3": ["친절한, 상냥한", "행운의, 운이 좋은", "예의바른, 공손한", "자랑스러운, 자랑스러워하는", "빈곤한, 가난한", "부유한", "부유한, 재산이 많은",
-      "무례한, 예의 없는", "탐욕스러운, 욕심 많은", "~하기로 되어 있다", "게으른", "완고한, 고집스러운"
-    ],
-    "p1.4": ["용감한", "바쁜", "침찬한,조용한,진정시키다", "겁쟁이", "솔직한", "너그러운, 관대한", "겸손한", "정돈된, 단정한", "신뢰할 만한, 믿을 수 있는",
-      "기꺼이 하는, 자발적인", "무자비한, 인정사정없는", "자만하는"
-    ],
-    "s1": ["시험 보는 거 긴장돼?", "아니. 난 시험 잘 볼 준비됐어.", "너의 자신감이 마음에 들어. 행운을 빌게!", "고마워!", "나 일할 준비됐어.",
-      "나 들을 준비됐어.", "나 얘기할 준비됐어.", "나 주문할 준비됐어.", "나 재밌게 놀 준비됐어.", "나 갈 준비됐어."
-    ],
-    "s2": ["어서 오세요! 어떻게 도와드릴까요?", "이 셔츠 환불하러 왔어요.", "셔츠에 무슨 문제가 있나요?", "저한테는 너무 커서요.",
-      "나 운동하러 왔어.", "나 휴식하러 왔어.", "너 보러 왔어.", "뭐 좀 사러 왔어.", "친구들 만나려고 왔어.", "나 도와주려고 왔어"
-    ],
-    "s3": ["왜 이렇게 천천히 걷는거야?", "힐 신는게 익숙하지 않아서 그래.", "곧 익숙해질 거야.", "그냥 넘어지지만 않으면 좋겠어.", "안경을 끼는게 익숙하지 않아.",
-      "추위에 익숙하지 않아.", "일찍 일어나는 데 익숙하지 않아.", "젓가락을 사용하는 데 익숙하지 않아.", "이 소프트웨어가 익숙하지 않아.", "이 도시가 익숙하지 않아."
-    ],
-    "s4": ["왜 사라에게 내 비밀을 말했어?", "비밀을 말해서 미안해.", "난 널 믿었는데!", "일부러 그런 거 아니야. 그냥 튀어나왔어.", "상처 줘서 미안해.",
-      "실수해서 미안해.", "걱정하게 해서 미안해.", "소리 질러서 미안해.", "혼란스럽게 해서 미안해.", "늦어서 미안해."
-    ]
-  }
+    "eng" : {
+        "p1.1" : ["born", "grow up", "learn", "work", "love", "happy", "marry", "look after", "die", "bury", "reunion", "bond"],
+        "p1.1#" : ["son", "daughter", "husband", "wife", "parents", "father", "mother", "brother", "sister", "grandparents", "grandfather",
+    "grandmother", "grandson", "granddaughter", "relatives", "aunt", "uncle", "nephew", "niece", "cousin", "brother-in-law", "sister-in-law",
+    "human being", "man", "woman", "gentleman", "lady", "baby", "boy", "girl", "child", "teenager", "adult", "couple", "twins", "person",
+    "visitor", "friend", "stranger", "foreigner"],
+        "p1.2" : ["handsome", "pretty", "shy","slim","fat","tall","thin","ugly","young","old","bald","chubby"],
+        "p1.3" : ["kind","lucky","polite","proud","poor","rich","wealthy","rude","greedy","supposed to","lazy","stubborn"],
+        "p1.4" : ["brave","busy","calm","coward","frank","generous","humble","neat","reliable","willing","ruthless","conceited"],
+        "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
+    "I'm ready to work.", "I'm ready to listen.","I'm ready to talk.","I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."],
+        "s2" : ["Welcome! How can i help you today?","I'm here to get a refund for this shirt.","Oh, is there something wrong with it?",
+    "It's too big on me.", "I'm here to exercise.","I'm here to relax.","I'm here to see you.", "I'm here to buy something.",
+    "I'm here to meet my friends.","I'm here to help."],
+        "s3" : ["Why are you walking so slowly?", "I'm not used to wearing heels.","You'll get the hang of it soon.", "I just hope I don't trip and fall",
+    "I'm not used to wearing glasses.","I'm not used to the cold.","I'm not used to waking up early.", "I'm not used to using chopsticks.",
+    "I'm not used to this software.","I'm not used to this city."],
+        "s4" : ["Why did you tell Sarah my secret?", "I'm sorry for spilling the beans.","I trusted you!","I didn't mean to. It just slipped out.",
+    "I'm sorry for hurting you.","I'm sorry for the mistake.","I'm sorry for making you worry.","I'm sorry for raising my voice.",
+    "I'm sorry for the confusion.","I'm sorry for being late."]
+    },
+    "kor" : {
+        "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
+    "묻다", "친목 모임, 동창회", "유대, 유대감을 형성하다"],
+        "p1.1#" : ["아들", "딸", "남편", "아내, 처", "부모", "아버지", "어머니", "형제(형, 오빠, 남동생)", "자매(언니, 누나, 여동생)", "조부모",
+    "할아버지","할머니","손자","손녀","친척","숙모, 고모, 이모","삼촌","남자 조카","여자 조카","사촌","처남, 매형, 매부, 형부","형수, 제수, 처제, 시누이",
+    "사람, 인간", "남자", "여자", "신사","숙녀","아기","소년","소녀","아이, 어린이","10대","성인","커플, 부부","쌍둥이","(개개의)사람, 개인",
+    "방문객, 손님","친구","낯선 사람, 나그네","외국인"],
+        "p1.2" : ["(남자가)멋진, 잘생긴","예쁜, 귀여운","수줍어하는, 부끄러워하는","날씬한","뚱뚱한, 살찐","키가 큰","마른, 여윈","못생긴, 추한",
+    "젊은, 어린","늙은, 나이 많은", "대머리의", "통통한"],
+        "p1.3" : ["친절한, 상냥한","행운의, 운이 좋은","예의바른, 공손한","자랑스러운, 자랑스러워하는","빈곤한, 가난한","부유한","부유한, 재산이 많은",
+    "무례한, 예의 없는", "탐욕스러운, 욕심 많은","~하기로 되어 있다","게으른","완고한, 고집스러운"],
+        "p1.4" : ["용감한","바쁜","침찬한,조용한,진정시키다","겁쟁이","솔직한","너그러운, 관대한","겸손한","정돈된, 단정한","신뢰할 만한, 믿을 수 있는",
+    "기꺼이 하는, 자발적인", "무자비한, 인정사정없는","자만하는"],
+        "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
+    "나 들을 준비됐어.","나 얘기할 준비됐어.","나 주문할 준비됐어.","나 재밌게 놀 준비됐어.","나 갈 준비됐어."],
+        "s2" : ["어서 오세요! 어떻게 도와드릴까요?", "이 셔츠 환불하러 왔어요.", "셔츠에 무슨 문제가 있나요?","저한테는 너무 커서요.",
+    "나 운동하러 왔어.", "나 휴식하러 왔어.", "너 보러 왔어.","뭐 좀 사러 왔어.","친구들 만나려고 왔어.","나 도와주려고 왔어"],
+        "s3" : ["왜 이렇게 천천히 걷는거야?","힐 신는게 익숙하지 않아서 그래.","곧 익숙해질 거야.","그냥 넘어지지만 않으면 좋겠어.","안경을 끼는게 익숙하지 않아.",
+    "추위에 익숙하지 않아.","일찍 일어나는 데 익숙하지 않아.","젓가락을 사용하는 데 익숙하지 않아.","이 소프트웨어가 익숙하지 않아.","이 도시가 익숙하지 않아."],
+        "s4" : ["왜 사라에게 내 비밀을 말했어?", "비밀을 말해서 미안해.", "난 널 믿었는데!", "일부러 그런 거 아니야. 그냥 튀어나왔어.","상처 줘서 미안해.",
+    "실수해서 미안해.","걱정하게 해서 미안해.","소리 질러서 미안해.","혼란스럽게 해서 미안해.","늦어서 미안해."]
+    }
 }

@@ -144,8 +144,13 @@ def format_lines(items: List[str], max_lines: int = 300) -> List[str]:
         lines = lines[:max_lines] + [f"... (총 {len(items)}개 중 상위 {max_lines}개 표시)"]
     return lines
 
+<<<<<<< HEAD
 USAGE_ENG = "사용법: /eng p1.1-p1.4 / /eng p1.1,p1.2# / /eng s1-s4"
 USAGE_KOR   = "사용법: /kor p1.1-p1.4 / /kor p1.1,p1.2# / /kor s1-s4"
+=======
+USAGE_ENG = "사용법: `/eng p1.1-p1.4` / `/eng p1.1,p1.2#` / `/eng s1-s4`"
+USAGE_KOR   = "사용법: `/kor p1.1-p1.4` / `/kor p1.1,p1.2#` / `/kor s1-s4`"
+>>>>>>> d365b68 (commit)
 
 # ================== /eng : 영어 단어만 ==================
 @app.command("/eng")
@@ -168,7 +173,7 @@ def handle_eng(ack, respond, command):
         return
 
     lines = format_lines(items, max_lines=400)
-    msg = f"영어 단어 목록 (챕터 {text})\n• " + "\n• ".join(lines)
+    msg = f"*영어 단어 목록 (챕터 {text})*\n• " + "\n• ".join(lines)
     if missing:
         msg += f"\n_(다음 챕터는 데이터가 없어 건너뜀: {' '.join(missing)})_"
     respond(response_type="in_channel", text=msg)
@@ -193,7 +198,11 @@ def handle_kor(ack, respond, command):
         return
 
     lines = format_lines(items, max_lines=400)
+<<<<<<< HEAD
     msg = f"한글 뜻 목록 (챕터 {text})\n• " + "\n• ".join(lines)
+=======
+    msg = f"*한글 뜻 목록 (챕터 {text})*\n• " + "\n• ".join(lines)
+>>>>>>> d365b68 (commit)
     if missing:
         msg += f"\n_(다음 챕터는 데이터가 없어 건너뜀: {' '.join(missing)})_"
     respond(response_type="in_channel", text=msg)
