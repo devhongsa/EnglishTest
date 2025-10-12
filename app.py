@@ -116,6 +116,22 @@ def parse_range(arg: str) -> List[str]:
     return result
 
 # ================== 공통 헬퍼 ==================
+def collect_items(section: str, chapters: List[str]) -> Tuple[List[str], List[str]]:
+    data = load_data()
+    if data is None:
+        raise FileNotFoundError("data.json을 찾을 수 없습니다.")
+    if section not in data or not isinstance(data[section], dict):
+        raise KeyError(f"data.json의 '{section}' 섹션이 올바르지 않습니다.")
+    bucket: Dict[str, Any] = data[section]
+    items, missing = [], []
+    for ch in chapters:
+        arr = bucket.get(ch)
+        if isinstance(arr, list):
+            items.extend(str(x) for x in arr)
+        else:
+            missing.append(ch)
+    return items, missing
+
 def collect_all_pairs(chapters: List[str] | None) -> List[Tuple[str, str, str]]:
     """
     (eng, kor, key) 페어 전부 수집. chapters=None이면 가능한 모든 챕터에서 수집.
@@ -126,7 +142,6 @@ def collect_all_pairs(chapters: List[str] | None) -> List[Tuple[str, str, str]]:
         raise FileNotFoundError("data.json 없음")
     eng_map: Dict[str, List[str]] = data.get("eng", {}) or {}
     kor_map: Dict[str, List[str]] = data.get("kor", {}) or {}
-
     keys = chapters if chapters else sorted(set(eng_map.keys()) & set(kor_map.keys()))
     pairs: List[Tuple[str, str, str]] = []
     for ch in keys:
@@ -147,9 +162,9 @@ def format_lines(items: List[str], max_lines: int = 400) -> List[str]:
 USAGE_ENG = "사용법: `/eng p1.1-p1.4` / `/eng p1.1,p1.2#` / `/eng s1-s4`"
 USAGE_KOR = "사용법: `/kor p1.1-p1.4` / `/kor p1.1,p1.2#` / `/kor s1-s4`"
 
-# ================== 리스트업 명령 ==================
+# ================== 리스트업 명령 (/eng) ==================
 @app.command("/eng")
-def handle_eng(ack, respond, command):
+def handle_eng(ack, respond, command, client):
     ack()
     text = (command.get("text") or "").strip()
     if not text:
@@ -157,32 +172,42 @@ def handle_eng(ack, respond, command):
         return
     try:
         chapters = parse_range(text)
-        data = load_data()
-        if data is None:
-            respond(response_type="ephemeral", text="data.json을 찾을 수 없습니다.")
-            return
-        bucket = data.get("eng", {})
-        items = []
-        missing = []
-        for ch in chapters:
-            arr = bucket.get(ch)
-            if isinstance(arr, list):
-                items.extend(str(x) for x in arr)
-            else:
-                missing.append(ch)
+        items, missing = collect_items("eng", chapters)
         if not items:
             respond(response_type="ephemeral", text=f"요청한 범위({text})에 항목이 없습니다.")
             return
         lines = format_lines(items)
-        msg = f"*영어 목록 (챕터 {text})*\n• " + "\n• ".join(lines)
+        body = "• " + "\n• ".join(lines)
+
+        # 블록 + 액션 버튼(한글 뜻 보기)
+        blocks = [
+            {"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {text})*"}},
+            {"type": "section", "block_id": "eng_list", "text": {"type": "mrkdwn", "text": body}},
+            {"type": "actions", "block_id": "eng_actions", "elements": [
+                {
+                    "type": "button",
+                    "action_id": "show_kor_for_range",
+                    "text": {"type": "plain_text", "text": "한글로 보기"},
+                    "style": "primary",
+                    "value": json.dumps({"chapters_expr": text})
+                }
+            ]}
+        ]
         if missing:
-            msg += f"\n_(데이터 없음: {' '.join(missing)})_"
-        respond(response_type="in_channel", text=msg)
+            blocks.append({"type": "context", "elements": [
+                {"type": "mrkdwn", "text": f"_(데이터 없음: {' '.join(missing)})_"}
+            ]})
+
+        # 봇이 직접 채널에 올림 (chat.update 가능)
+        channel_id = command.get("channel_id")
+        res = client.chat_postMessage(channel=channel_id, text="영어 목록", blocks=blocks)
+        # 안내 (선택)
     except Exception as e:
         respond(response_type="ephemeral", text=f"오류: {e}\n{USAGE_ENG}")
 
+# ================== 리스트업 명령 (/kor) ==================
 @app.command("/kor")
-def handle_kor(ack, respond, command):
+def handle_kor(ack, respond, command, client):
     ack()
     text = (command.get("text") or "").strip()
     if not text:
@@ -190,27 +215,34 @@ def handle_kor(ack, respond, command):
         return
     try:
         chapters = parse_range(text)
-        data = load_data()
-        if data is None:
-            respond(response_type="ephemeral", text="data.json을 찾을 수 없습니다.")
-            return
-        bucket = data.get("kor", {})
-        items = []
-        missing = []
-        for ch in chapters:
-            arr = bucket.get(ch)
-            if isinstance(arr, list):
-                items.extend(str(x) for x in arr)
-            else:
-                missing.append(ch)
+        items, missing = collect_items("kor", chapters)
         if not items:
             respond(response_type="ephemeral", text=f"요청한 범위({text})에 항목이 없습니다.")
             return
         lines = format_lines(items)
-        msg = f"*한글 뜻 목록 (챕터 {text})*\n• " + "\n• ".join(lines)
+        body = "• " + "\n• ".join(lines)
+
+        # 블록 + 액션 버튼(영어 목록 보기)
+        blocks = [
+            {"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {text})*"}},
+            {"type": "section", "block_id": "kor_list", "text": {"type": "mrkdwn", "text": body}},
+            {"type": "actions", "block_id": "kor_actions", "elements": [
+                {
+                    "type": "button",
+                    "action_id": "show_eng_for_range",
+                    "text": {"type": "plain_text", "text": "영어로 보기"},
+                    "style": "primary",
+                    "value": json.dumps({"chapters_expr": text})
+                }
+            ]}
+        ]
         if missing:
-            msg += f"\n_(데이터 없음: {' '.join(missing)})_"
-        respond(response_type="in_channel", text=msg)
+            blocks.append({"type": "context", "elements": [
+                {"type": "mrkdwn", "text": f"_(데이터 없음: {' '.join(missing)})_"}
+            ]})
+
+        channel_id = command.get("channel_id")
+        res = client.chat_postMessage(channel=channel_id, text="한글 뜻 목록", blocks=blocks)
     except Exception as e:
         respond(response_type="ephemeral", text=f"오류: {e}\n{USAGE_KOR}")
 
@@ -242,7 +274,7 @@ def handle_test(ack, respond, command, client):
             respond(response_type="ephemeral", text=f"챕터 해석 오류: {e}")
             return
 
-    # 페어 수집 → 랜덤 n개 (각 항목에 챕터키 포함)
+    # 페어 수집 → 랜덤 n개
     pairs = collect_all_pairs(chapters)  # [(eng, kor, key), ...]
     if not pairs:
         respond(response_type="ephemeral", text=f"{chapter_expr or '전체'}에서 출제할 항목이 없습니다.")
@@ -252,56 +284,42 @@ def handle_test(ack, respond, command, client):
 
     sample = random.sample(pairs, n)
 
-    # ===== 규칙 =====
-    # - s계열: 항상 '한글 문제 → 영어 정답'
-    # - p계열: 한/영 혼합. 전체 목표 비율은 '한글 60% / 영어 40%'.
-    #   단, s가 많아 이미 60%를 넘어가면 남은 p는 가능한 한 영어 문제로 배치.
+    # 규칙: s는 항상 '한글 문제', p는 혼합(총 6:4 목표)
     kor_target = int(round(n * 0.6))  # 목표 한글문항 수
-
     s_list = [(e, k, key) for (e, k, key) in sample if key.lower().startswith("s")]
     p_list = [(e, k, key) for (e, k, key) in sample if key.lower().startswith("p")]
 
     questions: List[str] = []
     answers:   List[str] = []
 
-    # s는 전부 한글 문제로 확정
+    # s → 한글 문제
     for e, k, _ in s_list:
-        questions.append(k)  # 문제: 한글
-        answers.append(e)    # 정답: 영어
+        questions.append(k)
+        answers.append(e)
 
-    # p는 남은 한글 슬롯만큼은 '한글 문제', 나머지는 '영어 문제'
     remaining_kor_needed = max(0, kor_target - len(s_list))
     random.shuffle(p_list)
     p_kor = p_list[:remaining_kor_needed]
     p_eng = p_list[remaining_kor_needed:]
 
     for e, k, _ in p_kor:
-        questions.append(k)  # 문제: 한글
-        answers.append(e)    # 정답: 영어
+        questions.append(k); answers.append(e)  # 한글 문제
 
     for e, k, _ in p_eng:
-        questions.append(e)  # 문제: 영어
-        answers.append(k)    # 정답: 한글
+        questions.append(e); answers.append(k)  # 영어 문제
 
-    # 최종 문항 섞기(보기엔 랜덤, 매칭은 인덱스로 유지)
     combined = list(zip(questions, answers))
     random.shuffle(combined)
-    if combined:
-        questions, answers = map(list, zip(*combined))
-    else:
-        questions, answers = [], []
+    questions, answers = (list(t) for t in zip(*combined)) if combined else ([], [])
 
-    # 퀴즈 저장(정답은 서버 메모리에만 보관)
     _cleanup_quizzes()
     quiz_id = _new_quiz_id()
     QUIZZES[quiz_id] = {
         "answers": answers,
         "created": time.time(),
         "revealed": False,
-        # channel/ts는 아래에서 채웁니다.
     }
 
-    # 블록(문제만 + 버튼 1개)
     q_lines = "\n".join(f"{i}. {q}" for i, q in enumerate(questions, 1))
     header = (
         f"*랜덤 테스트* (범위: {chapter_expr or '전체'}) — 총 {len(questions)}문항\n"
@@ -321,20 +339,16 @@ def handle_test(ack, respond, command, client):
         ]}
     ]
 
-    # 🔹 채널에 봇이 직접 게시 (chat.postMessage) → chat.update 가능
     channel_id = command.get("channel_id")
     res = client.chat_postMessage(channel=channel_id, text="랜덤 테스트", blocks=blocks)
+    # 정답 공개에 필요한 ts/channel 저장
     QUIZZES[quiz_id]["channel"] = channel_id
     QUIZZES[quiz_id]["ts"] = res["ts"]
 
-    # 사용자에겐 안내(선택)
-    respond(response_type="ephemeral", text="테스트를 채널에 올렸습니다.")
-
-# ================== 버튼 액션: 정답 공개 ==================
+# ================== 버튼 액션: 정답 전체 공개 ==================
 @app.action("reveal_all")
 def on_reveal_all(ack, body, client, respond, logger):
     ack()
-
     try:
         payload = json.loads(body["actions"][0].get("value", "{}"))
         quiz_id = payload.get("quiz_id")
@@ -347,7 +361,6 @@ def on_reveal_all(ack, body, client, respond, logger):
     if not quiz:
         respond(response_type="ephemeral", text="퀴즈가 만료되었거나 없습니다. `/test`로 다시 시작하세요.")
         return
-
     if quiz.get("revealed"):
         respond(response_type="ephemeral", text="정답은 이미 공개되었습니다.")
         return
@@ -361,10 +374,9 @@ def on_reveal_all(ack, body, client, respond, logger):
         respond(response_type="ephemeral", text="메시지 식별 정보가 없습니다.")
         return
 
-    # 기존 블록 복사
     blocks = body.get("message", {}).get("blocks", [])[:]
 
-    # 1) '정답 전체 보기' 버튼이 있는 actions 블록을 context 블록으로 교체
+    # 버튼 블록을 안내 context로 교체
     for i, b in enumerate(blocks):
         if b.get("block_id") == "quiz_actions":
             blocks[i] = {
@@ -374,7 +386,7 @@ def on_reveal_all(ack, body, client, respond, logger):
             }
             break
 
-    # 2) 정답 섹션이 없다면 추가
+    # 정답 섹션 추가
     if not any(b.get("block_id") == "quiz_answers" for b in blocks):
         blocks.append({"type": "divider"})
         blocks.append({
@@ -386,6 +398,122 @@ def on_reveal_all(ack, body, client, respond, logger):
     try:
         client.chat_update(channel=channel, ts=ts, blocks=blocks, text="정답 공개")
         quiz["revealed"] = True
+    except Exception as e:
+        logger.exception(e)
+        respond(response_type="ephemeral", text="메시지 업데이트에 실패했습니다.")
+
+# ================== 버튼 액션: /eng 메시지에서 '한글 뜻 보기' ==================
+@app.action("show_kor_for_range")
+def on_show_kor_for_range(ack, body, client, respond, logger):
+    ack()
+    try:
+        payload = json.loads(body["actions"][0].get("value", "{}"))
+        expr = payload.get("chapters_expr", "")
+        chapters = parse_range(expr)
+        items, missing = collect_items("kor", chapters)
+    except Exception as e:
+        respond(response_type="ephemeral", text=f"한글 뜻 로드 실패: {e}")
+        return
+
+    if not items:
+        respond(response_type="ephemeral", text="해당 범위의 한글 뜻이 없습니다.")
+        return
+
+    lines = format_lines(items)
+    body_text = "• " + "\n• ".join(lines)
+
+    # 기존 블록 가져오기
+    blocks = body.get("message", {}).get("blocks", [])[:]
+
+    # actions 블록을 안내 context로 교체
+    for i, b in enumerate(blocks):
+        if b.get("block_id") == "eng_actions":
+            blocks[i] = {
+                "type": "context",
+                "block_id": "eng_actions",
+                "elements": [{"type": "mrkdwn", "text": "_한글로 보기_"}]
+            }
+            break
+
+    # 이미 추가되어 있지 않다면, 한글 뜻 섹션 추가
+    if not any(b.get("block_id") == "eng_kor_added" for b in blocks):
+        blocks.append({"type": "divider"})
+        blocks.append({
+            "type": "section",
+            "block_id": "eng_kor_added",
+            "text": {"type": "mrkdwn", "text": f"*한글 뜻*\n{body_text}"}
+        })
+        if missing:
+            blocks.append({"type": "context", "elements": [
+                {"type": "mrkdwn", "text": f"_(데이터 없음: {' '.join(missing)})_"}
+            ]})
+
+    # 원본 메시지 식별
+    channel = body.get("container", {}).get("channel_id")
+    ts = body.get("container", {}).get("message_ts")
+    if not (channel and ts):
+        respond(response_type="ephemeral", text="메시지 식별 정보가 없습니다.")
+        return
+
+    try:
+        client.chat_update(channel=channel, ts=ts, blocks=blocks, text="한글 뜻 추가")
+    except Exception as e:
+        logger.exception(e)
+        respond(response_type="ephemeral", text="메시지 업데이트에 실패했습니다.")
+
+# ================== 버튼 액션: /kor 메시지에서 '영어 목록 보기' ==================
+@app.action("show_eng_for_range")
+def on_show_eng_for_range(ack, body, client, respond, logger):
+    ack()
+    try:
+        payload = json.loads(body["actions"][0].get("value", "{}"))
+        expr = payload.get("chapters_expr", "")
+        chapters = parse_range(expr)
+        items, missing = collect_items("eng", chapters)
+    except Exception as e:
+        respond(response_type="ephemeral", text=f"영어 목록 로드 실패: {e}")
+        return
+
+    if not items:
+        respond(response_type="ephemeral", text="해당 범위의 영어 목록이 없습니다.")
+        return
+
+    lines = format_lines(items)
+    body_text = "• " + "\n• ".join(lines)
+
+    blocks = body.get("message", {}).get("blocks", [])[:]
+
+    # actions 블록을 안내 context로 교체
+    for i, b in enumerate(blocks):
+        if b.get("block_id") == "kor_actions":
+            blocks[i] = {
+                "type": "context",
+                "block_id": "kor_actions",
+                "elements": [{"type": "mrkdwn", "text": "_영어로 보기_"}]
+            }
+            break
+
+    # 이미 추가되어 있지 않다면, 영어 목록 섹션 추가
+    if not any(b.get("block_id") == "kor_eng_added" for b in blocks):
+        blocks.append({"type": "divider"})
+        blocks.append({
+            "type": "section",
+            "block_id": "kor_eng_added",
+            "text": {"type": "mrkdwn", "text": f"*영어*\n{body_text}"}
+        })
+        if missing:
+            blocks.append({"type": "context", "elements": [
+                {"type": "mrkdwn", "text": f"_(데이터 없음: {' '.join(missing)})_"}
+            ]})
+
+    channel = body.get("container", {}).get("channel_id")
+    ts = body.get("container", {}).get("message_ts")
+    if not (channel and ts):
+        respond(response_type="ephemeral", text="메시지 식별 정보가 없습니다.")
+        return
+
+    try:
+        client.chat_update(channel=channel, ts=ts, blocks=blocks, text="영어 목록 추가")
     except Exception as e:
         logger.exception(e)
         respond(response_type="ephemeral", text="메시지 업데이트에 실패했습니다.")
