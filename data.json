@@ -8,6 +8,10 @@
         "p1.2" : ["handsome", "pretty", "shy","slim","fat","tall","thin","ugly","young","old","bald","chubby"],
         "p1.3" : ["kind","lucky","polite","proud","poor","rich","wealthy","rude","greedy","supposed to","lazy","stubborn"],
         "p1.4" : ["brave","busy","calm","coward","frank","generous","humble","neat","reliable","willing","ruthless","conceited"],
+        "p1.5" : ["artistic","capable","competent","creative","effort","expert","experience","keen","skill","talent","knowledgeable","energetic"],
+        "p1.6" : ["sincere","sensible","sensitive","patient","nervous","mature","modest","fuss","foolish","selfish","idiotic","lively"],
+        "p1.7" : ["character","class","common sense","habit","industrious","manners","personality","race","sex","anti-social","worldly"],
+        "p2.1" : ["angry","bored","glad","grateful","happy","jealous","lonely","sad","sorry","surprised","overjoyed","anxious"],
         "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
     "I'm ready to work.", "I'm ready to listen.","I'm ready to talk.","I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."],
         "s2" : ["Welcome! How can i help you today?","I'm here to get a refund for this shirt.","Oh, is there something wrong with it?",
@@ -18,7 +22,12 @@
     "I'm not used to this software.","I'm not used to this city."],
         "s4" : ["Why did you tell Sarah my secret?", "I'm sorry for spilling the beans.","I trusted you!","I didn't mean to. It just slipped out.",
     "I'm sorry for hurting you.","I'm sorry for the mistake.","I'm sorry for making you worry.","I'm sorry for raising my voice.",
-    "I'm sorry for the confusion.","I'm sorry for being late."]
+    "I'm sorry for the confusion.","I'm sorry for being late."],
+        "s5" : ["Have you ever been to Japan?","Yes, I've been to Tokyo twice.","I want to go there. Any recommendations?","You should visit Shibuya. The nightlife is amazing!",
+    "I've been to New york.","I've been to that museum.","I've been to the opera.","I've never been to a tropical island","I've never been to the Grand Canyon.",
+    "I've been to Paris."],
+        "s6" : ["Let's grab coffee in the morning!","I can't. I have to go to the dentist.","Oh no! Do you have a toothache?","Yeah, it's been bothering me all week.",
+    "I have to wake up early.","I have to pick her up.","I have to finish the report.","I have to attend the meeting.","I have to pay taxes.","I have to study."]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -33,6 +42,13 @@
     "무례한, 예의 없는", "탐욕스러운, 욕심 많은","~하기로 되어 있다","게으른","완고한, 고집스러운"],
         "p1.4" : ["용감한","바쁜","침찬한,조용한,진정시키다","겁쟁이","솔직한","너그러운, 관대한","겸손한","정돈된, 단정한","신뢰할 만한, 믿을 수 있는",
     "기꺼이 하는, 자발적인", "무자비한, 인정사정없는","자만하는"],
+        "p1.5" : ["예술의, 예술적인","유능한,~을 할 수 있는","능숙한","창조적인,창의력이 있는","노력,수고","전문가,숙련된,전문적인","경험,체험","간절히~하고 싶은, 열정적인",
+    "기술,기량","(타고난)재주,재능","많이 아는","활동적인,정력적인"],
+        "p1.6" : ["진실한,진심의","분별 있는, 실용적인","세심한, 감성 있는","인내하는, 참는","불안해하는, 신경이 과민한","성숙한, 익은","겸손한, 얌전한",
+    "호들갑, 불평","어리석은, 바보 같은","이기적인","멍청한, 바보 같은","활기 넘치는, 적극적인"],
+        "p1.7" : ["성격, 특성","계급, 계층","상식","버릇, 습관","근면한, 부지런한","예의, 예절","인격, 성격","인종, 종족","성, 성별","반사회적인","세속적인, 세상을 많이 아는"],
+        "p2.1" : ["화난, 성난","지루해하는, 따분해하는","기쁜, 반가운","고마워하는, 감사하는","행복한, 기쁜","질투하는","외로운, 쓸쓸한","슬픈","안된, 유감스러운","놀란, 놀라는",
+    "매우 기뻐하는","불안해하는"],
         "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
     "나 들을 준비됐어.","나 얘기할 준비됐어.","나 주문할 준비됐어.","나 재밌게 놀 준비됐어.","나 갈 준비됐어."],
         "s2" : ["어서 오세요! 어떻게 도와드릴까요?", "이 셔츠 환불하러 왔어요.", "셔츠에 무슨 문제가 있나요?","저한테는 너무 커서요.",
@@ -40,6 +56,10 @@
         "s3" : ["왜 이렇게 천천히 걷는거야?","힐 신는게 익숙하지 않아서 그래.","곧 익숙해질 거야.","그냥 넘어지지만 않으면 좋겠어.","안경을 끼는게 익숙하지 않아.",
     "추위에 익숙하지 않아.","일찍 일어나는 데 익숙하지 않아.","젓가락을 사용하는 데 익숙하지 않아.","이 소프트웨어가 익숙하지 않아.","이 도시가 익숙하지 않아."],
         "s4" : ["왜 사라에게 내 비밀을 말했어?", "비밀을 말해서 미안해.", "난 널 믿었는데!", "일부러 그런 거 아니야. 그냥 튀어나왔어.","상처 줘서 미안해.",
-    "실수해서 미안해.","걱정하게 해서 미안해.","소리 질러서 미안해.","혼란스럽게 해서 미안해.","늦어서 미안해."]
+    "실수해서 미안해.","걱정하게 해서 미안해.","소리 질러서 미안해.","혼란스럽게 해서 미안해.","늦어서 미안해."],
+        "s5" : ["너 일본에 가본 적 있어?","응, 도쿄에 두 번 가봤어.","나도 가보고 싶다. 추천할 만한 곳 있어?","시부야에 가봐. 밤 문화가 정말 멋져!","나 뉴욕에 가본 적 있어.",
+    "나 그 박물관에 가본 적 있어.","나 오페라에 가본 적 있어.","나 열대 섬에 가본 적 없어.","나 그랜드 캐니언에 가본 적 없어.","나 파리에 가본 적 있어."],
+        "s6" : ["아침에 커피 마시러 가자!","안 돼. 나 치과에 가야 해.","어머! 이빨 아파?","응, 이번 주 내내 신경 쓰였어.","나 일찍 일어나야 해.","나 그녀를 데리러 가야 해.",
+    "나 보고서를 끝내야 해.","나 회의에 참석해야 해.","나 세금을 내야 해.","나 공부해야 해."]
     }
 }
