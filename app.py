@@ -93,11 +93,67 @@ def parse_range(arg: str) -> List[str]:
         if ma and mb:
             pfx_a, mid_a, last_a = ma.group(1), int(ma.group(2)), int(ma.group(3))
             pfx_b, mid_b, last_b = mb.group(1), int(mb.group(2)), int(mb.group(3))
-            if pfx_a != pfx_b or mid_a != mid_b:
+            if pfx_a != pfx_b:
                 raise ValueError(f"같은 계열에서만 범위 가능: {t}")
-            if last_b < last_a:
-                raise ValueError(f"범위 끝값이 시작보다 작음: {t}")
-            add([f"{pfx_a}{mid_a}.{i}" for i in range(last_a, last_b + 1)])
+
+            # If both parts (mid) are equal, keep original simple expansion.
+            if mid_a == mid_b:
+                if last_b < last_a:
+                    raise ValueError(f"범위 끝값이 시작보다 작음: {t}")
+                add([f"{pfx_a}{mid_a}.{i}" for i in range(last_a, last_b + 1)])
+                continue
+
+            # If parts differ (예: p1.5-p2.1), try to expand across parts using data.json
+            data = load_data()
+            if data is None:
+                # Without data, we cannot safely expand across different parts.
+                raise ValueError(f"데이터가 없어 서로 다른 단원 간 범위({t})를 해석할 수 없습니다.")
+
+            # Collect available chapter keys from eng/kor sections
+            eng_keys = set((data.get("eng") or {}).keys())
+            kor_keys = set((data.get("kor") or {}).keys())
+            # Exclude keys that end with '#' from availability when expanding ranges
+            avail = sorted(k for k in (eng_keys | kor_keys) if not k.endswith("#"))
+
+            # Helper: get all last indices for a given prefix+mid present in data
+            def available_lasts(pfx: str, mid: int) -> List[int]:
+                pat = re.compile(rf"^{re.escape(pfx)}{mid}\.(\d+)$")
+                lst: List[int] = []
+                for k in avail:
+                    m = pat.match(k)
+                    if m:
+                        lst.append(int(m.group(1)))
+                return sorted(lst)
+
+            items_to_add: List[str] = []
+            # Ensure start and end tokens exist in available keys
+            start_token = f"{pfx_a}{mid_a}.{last_a}"
+            end_token = f"{pfx_b}{mid_b}.{last_b}"
+            if start_token not in avail:
+                raise ValueError(f"범위 시작 챕터가 없습니다: {start_token}")
+            if end_token not in avail:
+                raise ValueError(f"범위 끝 챕터가 없습니다: {end_token}")
+
+            for mid in range(mid_a, mid_b + 1):
+                lasts = available_lasts(pfx_a, mid)
+                if not lasts:
+                    # 중간 단원에 항목이 전혀 없으면 건너뛰지 않고 오류로 처리
+                    raise ValueError(f"단원 {pfx_a}{mid}에 데이터가 없습니다: {t}")
+                if mid == mid_a:
+                    # include lasts >= last_a
+                    for i in [x for x in lasts if x >= last_a]:
+                        items_to_add.append(f"{pfx_a}{mid}.{i}")
+                elif mid == mid_b:
+                    # include lasts <= last_b
+                    for i in [x for x in lasts if x <= last_b]:
+                        items_to_add.append(f"{pfx_a}{mid}.{i}")
+                else:
+                    for i in lasts:
+                        items_to_add.append(f"{pfx_a}{mid}.{i}")
+
+            if not items_to_add:
+                raise ValueError(f"범위로 확장할 수 있는 챕터가 없습니다: {t}")
+            add(items_to_add)
             continue
 
         sa, sb = simple_pat.match(a), simple_pat.match(b)
