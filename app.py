@@ -1,6 +1,7 @@
 # app.py
 # 필요 패키지: slack_bolt, slack_sdk, python-dotenv
 # Windows PowerShell: py -m pip install slack_bolt slack_sdk python-dotenv
+# https://api.slack.com/apps 
 
 import os
 import re
@@ -214,6 +215,57 @@ def format_lines(items: List[str], max_lines: int = 400) -> List[str]:
     if len(lines) > max_lines:
         lines = lines[:max_lines] + [f"... (총 {len(items)}개 중 상위 {max_lines}개 표시)"]
     return lines
+
+
+def find_matches(query: str) -> List[str]:
+    """Find matches for `/find <query>`.
+    - If query contains any ASCII letters (a-zA-Z) treat it as English and search the `eng` section keys' values.
+    - Otherwise treat it as Korean and search the `kor` section values.
+    Returns lines of the form: "source_word : target_word" (one per match)."""
+    q = (query or "").strip()
+    if not q:
+        raise ValueError("검색어를 입력하세요. 예: /find love 또는 /find 사랑")
+
+    data = load_data()
+    if data is None:
+        raise FileNotFoundError("data.json을 찾을 수 없습니다.")
+
+    eng_map: Dict[str, List[str]] = data.get("eng", {}) or {}
+    kor_map: Dict[str, List[str]] = data.get("kor", {}) or {}
+
+    # Decide direction: contains ASCII letter => english query
+    is_eng = bool(re.search(r"[A-Za-z]", q))
+    results: List[str] = []
+
+    if is_eng:
+        # Search all eng values for words that contain q (case-insensitive)
+        qlow = q.lower()
+        for ch, arr in eng_map.items():
+            if not isinstance(arr, list):
+                continue
+            for i, w in enumerate(arr):
+                if qlow in str(w).lower():
+                    # Try to get corresponding kor translation at same index if exists
+                    kor_arr = kor_map.get(ch)
+                    kor_word = None
+                    if isinstance(kor_arr, list) and i < len(kor_arr):
+                        kor_word = kor_arr[i]
+                    results.append(f"{w} : {kor_word or '_(번역없음)_' }")
+    else:
+        # Korean query: substring match against kor values
+        for ch, arr in kor_map.items():
+            if not isinstance(arr, list):
+                continue
+            for i, k in enumerate(arr):
+                if q in str(k):
+                    eng_arr = eng_map.get(ch)
+                    eng_word = None
+                    if isinstance(eng_arr, list) and i < len(eng_arr):
+                        eng_word = eng_arr[i]
+                    results.append(f"{k} : {eng_word or '_(번역없음)_' }")
+
+    return results
+
 
 USAGE_ENG = "사용법: `/eng p1.1-p1.4` / `/eng p1.1,p1.2#` / `/eng s1-s4`"
 USAGE_KOR = "사용법: `/kor p1.1-p1.4` / `/kor p1.1,p1.2#` / `/kor s1-s4`"
@@ -456,7 +508,27 @@ def on_reveal_all(ack, body, client, respond, logger):
         quiz["revealed"] = True
     except Exception as e:
         logger.exception(e)
-        respond(response_type="ephemeral", text="메시지 업데이트에 실패했습니다.")
+
+
+# ================== 단어 찾기 (/find) ==================
+@app.command("/find")
+def handle_find(ack, respond, command, client):
+    ack()
+    text = (command.get("text") or "").strip()
+    if not text:
+        respond(response_type="ephemeral", text="사용법: `/find <단어나 뜻>` — 영어 입력 시 eng에서, 한글 입력 시 kor에서 검색합니다.")
+        return
+    try:
+        matches = find_matches(text)
+        if not matches:
+            respond(response_type="ephemeral", text=f"'{text}'에 대한 결과가 없습니다.")
+            return
+        body = "\n".join(matches)
+        # Post as ephemeral response (private)
+        respond(response_type="in_channel", text=f"검색 결과 for '{text}':\n{body}")
+    except Exception as e:
+        respond(response_type="ephemeral", text=f"오류: {e}")
+
 
 # ================== 버튼 액션: /eng 메시지에서 '한글 뜻 보기' ==================
 @app.action("show_kor_for_range")

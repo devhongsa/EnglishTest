@@ -12,6 +12,10 @@
         "p1.6" : ["sincere","sensible","sensitive","patient","nervous","mature","modest","fuss","foolish","selfish","idiotic","lively"],
         "p1.7" : ["character","class","common sense","habit","industrious","manners","personality","race","sex","anti-social","worldly"],
         "p2.1" : ["angry","bored","glad","grateful","happy","jealous","lonely","sad","sorry","surprised","overjoyed","anxious"],
+        "p2.2" : ["dream","help","kiss","laugh","cry","smile","respect","let","look after","worry","pout","squirm"],
+        "p2.3" : ["beautiful","fair","fun","good","lovely","nice","pity","poor","bad","dull","detest","shocked"],
+        "p2.4" : ["amuse","ashamed","aware","delight","disappoint","embarrass","encourage","excite","fascinate","funny","vulgar","melodramatic"],
+        "p2.5" : ["approve","compliment","confident","conservative","considerate","emotion","mood","be fond of","respectable","sympathy","spectacular","cold"],
         "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
     "I'm ready to work.", "I'm ready to listen.","I'm ready to talk.","I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."],
         "s2" : ["Welcome! How can i help you today?","I'm here to get a refund for this shirt.","Oh, is there something wrong with it?",
@@ -27,7 +31,11 @@
     "I've been to New york.","I've been to that museum.","I've been to the opera.","I've never been to a tropical island","I've never been to the Grand Canyon.",
     "I've been to Paris."],
         "s6" : ["Let's grab coffee in the morning!","I can't. I have to go to the dentist.","Oh no! Do you have a toothache?","Yeah, it's been bothering me all week.",
-    "I have to wake up early.","I have to pick her up.","I have to finish the report.","I have to attend the meeting.","I have to pay taxes.","I have to study."]
+    "I have to wake up early.","I have to pick her up.","I have to finish the report.","I have to attend the meeting.","I have to pay taxes.","I have to study."],
+        "s7" : ["Are you busy right now?","No. Why do you ask?","I was going to go for a walk. Do you want to join?","Sure, I have time to get some fresh air.",
+    "I have time to chat","I have time to meet you","I have time to clean my room","I have time to walk my dog","I have time to discuss the project","I have time to cook."],
+        "s8" : ["How's driving practice going?","Not good. I have trouble parking.","You should practice in an empty parking lot.","Good idea. I'll do that this weekend.",
+    "I have trouble focusing.","I have trouble remembering names.","I have trouble saving money.","I have trouble trusting people.","I have trouble expressing my feelings.","I have trouble sleeping."]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -49,6 +57,14 @@
         "p1.7" : ["성격, 특성","계급, 계층","상식","버릇, 습관","근면한, 부지런한","예의, 예절","인격, 성격","인종, 종족","성, 성별","반사회적인","세속적인, 세상을 많이 아는"],
         "p2.1" : ["화난, 성난","지루해하는, 따분해하는","기쁜, 반가운","고마워하는, 감사하는","행복한, 기쁜","질투하는","외로운, 쓸쓸한","슬픈","안된, 유감스러운","놀란, 놀라는",
     "매우 기뻐하는","불안해하는"],
+        "p2.2" : ["꿈, 꿈을 꾸다","도움, 돕다","키스, 입을 맞추다","웃음, 웃다","울음, 비명","미소, 미소 짓다","존경, 존중, 존경하다","~하게 하다","~을 돌보다","걱정, 걱정하다",
+    "입을 뿌루퉁 내밀다","꿈틀대다"],
+        "p2.3" : ["아름다운","타당한, 공평한","재미, 장난, 재미있는","좋은","사랑스러운, 아름다움","멋진, 좋은","동정, 연민","가난한, 불쌍한","나쁜, 안 좋은","따분한, 칙칙한",
+    "몹시 싫어하다","충격을 받은"],
+        "p2.4" : ["즐겁게 하다","부끄러운, 수치스러운","알고 있는","기쁨, 즐거움, 아주 즐겁게 하다","실망시키다","당황스럽게 만들다","격려하다","흥분시키다, 자극하다",
+        "마음을 사로잡다","우스운, 웃기는","저속한, 상스러운","멜로드라마 같은, 과장된"],
+        "p2.5" : ["찬성하다","칭찬, 칭찬하다","자신감 있는, 확신하는","보수적인","배려하는, 사려 깊은","감정, 정서","기분","~을 좋아하는","존경할 만한, 훌륭한",
+        "동정, 연민","장관을 이루는, 극적인","추운, 냉정한"],
         "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
     "나 들을 준비됐어.","나 얘기할 준비됐어.","나 주문할 준비됐어.","나 재밌게 놀 준비됐어.","나 갈 준비됐어."],
         "s2" : ["어서 오세요! 어떻게 도와드릴까요?", "이 셔츠 환불하러 왔어요.", "셔츠에 무슨 문제가 있나요?","저한테는 너무 커서요.",
@@ -60,6 +76,10 @@
         "s5" : ["너 일본에 가본 적 있어?","응, 도쿄에 두 번 가봤어.","나도 가보고 싶다. 추천할 만한 곳 있어?","시부야에 가봐. 밤 문화가 정말 멋져!","나 뉴욕에 가본 적 있어.",
     "나 그 박물관에 가본 적 있어.","나 오페라에 가본 적 있어.","나 열대 섬에 가본 적 없어.","나 그랜드 캐니언에 가본 적 없어.","나 파리에 가본 적 있어."],
         "s6" : ["아침에 커피 마시러 가자!","안 돼. 나 치과에 가야 해.","어머! 이빨 아파?","응, 이번 주 내내 신경 쓰였어.","나 일찍 일어나야 해.","나 그녀를 데리러 가야 해.",
-    "나 보고서를 끝내야 해.","나 회의에 참석해야 해.","나 세금을 내야 해.","나 공부해야 해."]
+    "나 보고서를 끝내야 해.","나 회의에 참석해야 해.","나 세금을 내야 해.","나 공부해야 해."],
+        "s7" : ["지금 바빠?","아니, 왜(물어봐)?","나 산책하러 가려고. 같이 갈래?","그래, 바람 쐬러 갈 시간 있어.","나 얘기할 시간 있어.","나 너와 만날 시간 있어.","나 방 치울 시간 있어.",
+        "나 강아지 산책시킬 시간 있어.","나 프로젝트 논의할 시간 있어.","나 요리할 시간 있어."],
+        "s8" : ["운전 연습은 잘 돼가?","아니. 주차하는게 어려워.","빈 주차장에서 연습해 봐.","좋은 생각이야. 이번 주말에 해볼게.","나 집중하는게 어려워.","나 이름을 기억하는게 어려워.","나는 돈을 모으는 게 어려워.",
+    "나는 사람들을 신뢰하는게 어려워.","나는 내 감정을 표현하는게 어려워.","나는 잠을 자는게 어려워."]
     }
 }
