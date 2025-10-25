@@ -72,6 +72,7 @@ def parse_range(arg: str) -> List[str]:
 
     dot_pat    = re.compile(r"^([A-Za-z]+)(\d+)\.(\d+)$")  # p1.1 → (p,1,1)
     simple_pat = re.compile(r"^([A-Za-z]+)(\d+)$")         # s1   → (s,1)
+    last_pat   = re.compile(r"^last\.([A-Za-z]+)(\d+)$")   # last.p4, last.s2
 
     def add(items: List[str]):
         for it in items:
@@ -80,8 +81,43 @@ def parse_range(arg: str) -> List[str]:
                 result.append(it)
 
     for t in tokens:
+        # Handle 'last.<prefix><n>' tokens (e.g., last.p4, last.s2)
+        lm = last_pat.match(t)
+        if lm:
+            pfx = lm.group(1)
+            take_n = int(lm.group(2))
+            data = load_data()
+            if data is None:
+                raise ValueError(f"데이터가 없어 '{t}'을(를) 처리할 수 없습니다.")
+            eng_keys = set((data.get("eng") or {}).keys())
+            kor_keys = set((data.get("kor") or {}).keys())
+            avail = sorted(k for k in (eng_keys | kor_keys) if not k.endswith("#"))
+
+            # collect matching keys for prefix (dot or simple)
+            dot_match = re.compile(rf"^{re.escape(pfx)}(\d+)\.(\d+)$")
+            simple_match = re.compile(rf"^{re.escape(pfx)}(\d+)$")
+            matched: List[Tuple[int, int, str]] = []  # (mid, last or 0, key)
+            for k in avail:
+                md = dot_match.match(k)
+                if md:
+                    matched.append((int(md.group(1)), int(md.group(2)), k))
+                    continue
+                ms = simple_match.match(k)
+                if ms:
+                    matched.append((int(ms.group(1)), 0, k))
+
+            if not matched:
+                raise ValueError(f"'{pfx}' 계열의 챕터를 찾을 수 없습니다: {t}")
+
+            # sort by mid, then last
+            matched.sort(key=lambda x: (x[0], x[1]))
+            # take last N keys
+            sel = [k for _, _, k in matched[-take_n:]]
+            add(sel)
+            continue
+
         if "-" not in t:
-            add([t])  # '#'(해시) 포함 허용
+            add([t])  # '#'(해시) 포함 허용 for explicit single token
             continue
 
         a, b = [x.strip() for x in t.split("-", 1)]
@@ -189,10 +225,30 @@ def collect_items(section: str, chapters: List[str]) -> Tuple[List[str], List[st
             missing.append(ch)
     return items, missing
 
-def collect_all_pairs(chapters: List[str] | None) -> List[Tuple[str, str, str]]:
+
+def collect_items_detailed(section: str, chapters: List[str]) -> Tuple[List[Tuple[str, int, str]], List[str]]:
+    """Return detailed items as (chapter, index(1-based), word) and missing chapters list."""
+    data = load_data()
+    if data is None:
+        raise FileNotFoundError("data.json을 찾을 수 없습니다.")
+    if section not in data or not isinstance(data[section], dict):
+        raise KeyError(f"data.json의 '{section}' 섹션이 올바르지 않습니다.")
+    bucket: Dict[str, Any] = data[section]
+    items: List[Tuple[str, int, str]] = []
+    missing: List[str] = []
+    for ch in chapters:
+        arr = bucket.get(ch)
+        if isinstance(arr, list):
+            for i, w in enumerate(arr, 1):
+                items.append((ch, i, str(w)))
+        else:
+            missing.append(ch)
+    return items, missing
+
+def collect_all_pairs(chapters: List[str] | None) -> List[Tuple[str, str, str, int]]:
     """
-    (eng, kor, key) 페어 전부 수집. chapters=None이면 가능한 모든 챕터에서 수집.
-    길이가 다른 경우 짧은 쪽 길이만큼 페어링.
+    (eng, kor, key, index) 페어 전부 수집. chapters=None이면 가능한 모든 챕터에서 수집.
+    길이가 다른 경우 짧은 쪽 길이만큼 페어링. index는 1-based 항목 인덱스입니다.
     """
     data = load_data()
     if data is None:
@@ -200,14 +256,15 @@ def collect_all_pairs(chapters: List[str] | None) -> List[Tuple[str, str, str]]:
     eng_map: Dict[str, List[str]] = data.get("eng", {}) or {}
     kor_map: Dict[str, List[str]] = data.get("kor", {}) or {}
     keys = chapters if chapters else sorted(set(eng_map.keys()) & set(kor_map.keys()))
-    pairs: List[Tuple[str, str, str]] = []
+    pairs: List[Tuple[str, str, str, int]] = []
     for ch in keys:
         e = eng_map.get(ch)
         k = kor_map.get(ch)
         if isinstance(e, list) and isinstance(k, list) and e and k:
             m = min(len(e), len(k))
             for i in range(m):
-                pairs.append((str(e[i]), str(k[i]), ch))
+                # index is 1-based
+                pairs.append((str(e[i]), str(k[i]), ch, i + 1))
     return pairs
 
 def format_lines(items: List[str], max_lines: int = 400) -> List[str]:
@@ -267,6 +324,53 @@ def find_matches(query: str) -> List[str]:
     return results
 
 
+BOOKMARK_FILE = os.path.join(os.path.dirname(__file__), "bookmark.json")
+
+
+def load_bookmarks() -> Dict[str, List[str]]:
+    try:
+        with open(BOOKMARK_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+    except Exception:
+        return {}
+
+
+def save_bookmarks(bm: Dict[str, List[str]]):
+    with open(BOOKMARK_FILE, "w", encoding="utf-8") as f:
+        json.dump(bm, f, ensure_ascii=False, indent=4)
+
+
+def resolve_bookmark_tokens(tokens: List[str]) -> List[Tuple[str, str, str]]:
+    """Given tokens like 'p1.1#3', return list of (token, eng_word, kor_word).
+    If any item missing, include placeholder for missing translation."""
+    data = load_data()
+    if data is None:
+        return []
+    eng_map: Dict[str, List[str]] = data.get("eng", {}) or {}
+    kor_map: Dict[str, List[str]] = data.get("kor", {}) or {}
+    out: List[Tuple[str, str, str]] = []
+    for t in tokens:
+        if not isinstance(t, str) or "#" not in t:
+            continue
+        chapter, _, idx_s = t.partition("#")
+        try:
+            idx = int(idx_s)
+        except Exception:
+            continue
+        eng_word = None
+        kor_word = None
+        e_arr = eng_map.get(chapter)
+        k_arr = kor_map.get(chapter)
+        if isinstance(e_arr, list) and 1 <= idx <= len(e_arr):
+            eng_word = str(e_arr[idx-1])
+        if isinstance(k_arr, list) and 1 <= idx <= len(k_arr):
+            kor_word = str(k_arr[idx-1])
+        out.append((t, eng_word or "_(없음)_", kor_word or "_(없음)_"))
+    return out
+
+
 USAGE_ENG = "사용법: `/eng p1.1-p1.4` / `/eng p1.1,p1.2#` / `/eng s1-s4`"
 USAGE_KOR = "사용법: `/kor p1.1-p1.4` / `/kor p1.1,p1.2#` / `/kor s1-s4`"
 
@@ -280,33 +384,47 @@ def handle_eng(ack, respond, command, client):
         return
     try:
         chapters = parse_range(text)
-        items, missing = collect_items("eng", chapters)
-        if not items:
+        items_detailed, missing = collect_items_detailed("eng", chapters)
+        if not items_detailed:
             respond(response_type="ephemeral", text=f"요청한 범위({text})에 항목이 없습니다.")
             return
-        lines = format_lines(items)
-        body = "• " + "\n• ".join(lines)
 
-        # 블록 + 액션 버튼(한글 뜻 보기)
-        blocks = [
-            {"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {text})*"}},
-            {"type": "section", "block_id": "eng_list", "text": {"type": "mrkdwn", "text": body}},
-            {"type": "actions", "block_id": "eng_actions", "elements": [
-                {
-                    "type": "button",
-                    "action_id": "show_kor_for_range",
-                    "text": {"type": "plain_text", "text": "한글로 보기"},
-                    "style": "primary",
-                    "value": json.dumps({"chapters_expr": text})
-                }
-            ]}
-        ]
+        # Load bookmark users to create per-item buttons
+        bm = load_bookmarks()
+        bm_users = list(bm.keys()) or []
+
+        blocks: List[Dict[str, Any]] = []
+        blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {text})*"}})
+
+        # Add each item as a section + actions (bookmark buttons)
+        for i, (ch, idx, word) in enumerate(items_detailed, 1):
+            # Build section with accessory overflow to choose bookmark user (keeps layout compact: button beside word)
+            section = {"type": "section", "block_id": f"eng_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {word}"}}
+            if bm_users:
+                # Build options (overflow supports up to 5 options). If more users exist, show first 5.
+                opts = []
+                for u in bm_users[:5]:
+                    val = json.dumps({"user_key": u, "chapter": ch, "index": idx, "word": word}, ensure_ascii=False)
+                    opts.append({"text": {"type": "plain_text", "text": u}, "value": val})
+                action_id = f"bookmark_select_eng_{i}"
+                section["accessory"] = {"type": "overflow", "action_id": action_id, "options": opts}
+            blocks.append(section)
+
+        # overall action (view kor)
+        blocks.append({"type": "actions", "block_id": "eng_actions", "elements": [
+            {
+                "type": "button",
+                "action_id": "show_kor_for_range",
+                "text": {"type": "plain_text", "text": "한글로 보기"},
+                "style": "primary",
+                "value": json.dumps({"chapters_expr": text})
+            }
+        ]})
         if missing:
             blocks.append({"type": "context", "elements": [
                 {"type": "mrkdwn", "text": f"_(데이터 없음: {' '.join(missing)})_"}
             ]})
 
-        # 봇이 직접 채널에 올림 (chat.update 가능)
         channel_id = command.get("channel_id")
         res = client.chat_postMessage(channel=channel_id, text="영어 목록", blocks=blocks)
         # 안내 (선택)
@@ -323,27 +441,36 @@ def handle_kor(ack, respond, command, client):
         return
     try:
         chapters = parse_range(text)
-        items, missing = collect_items("kor", chapters)
-        if not items:
+        items_detailed, missing = collect_items_detailed("kor", chapters)
+        if not items_detailed:
             respond(response_type="ephemeral", text=f"요청한 범위({text})에 항목이 없습니다.")
             return
-        lines = format_lines(items)
-        body = "• " + "\n• ".join(lines)
 
-        # 블록 + 액션 버튼(영어 목록 보기)
-        blocks = [
-            {"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {text})*"}},
-            {"type": "section", "block_id": "kor_list", "text": {"type": "mrkdwn", "text": body}},
-            {"type": "actions", "block_id": "kor_actions", "elements": [
-                {
-                    "type": "button",
-                    "action_id": "show_eng_for_range",
-                    "text": {"type": "plain_text", "text": "영어로 보기"},
-                    "style": "primary",
-                    "value": json.dumps({"chapters_expr": text})
-                }
-            ]}
-        ]
+        bm = load_bookmarks()
+        bm_users = list(bm.keys()) or []
+
+        blocks: List[Dict[str, Any]] = []
+        blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {text})*"}})
+        for i, (ch, idx, word) in enumerate(items_detailed, 1):
+            section = {"type": "section", "block_id": f"kor_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {word}"}}
+            if bm_users:
+                opts = []
+                for u in bm_users[:5]:
+                    val = json.dumps({"user_key": u, "chapter": ch, "index": idx, "word": word}, ensure_ascii=False)
+                    opts.append({"text": {"type": "plain_text", "text": u}, "value": val})
+                action_id = f"bookmark_select_kor_{i}"
+                section["accessory"] = {"type": "overflow", "action_id": action_id, "options": opts}
+            blocks.append(section)
+
+        blocks.append({"type": "actions", "block_id": "kor_actions", "elements": [
+            {
+                "type": "button",
+                "action_id": "show_eng_for_range",
+                "text": {"type": "plain_text", "text": "영어로 보기"},
+                "style": "primary",
+                "value": json.dumps({"chapters_expr": text})
+            }
+        ]})
         if missing:
             blocks.append({"type": "context", "elements": [
                 {"type": "mrkdwn", "text": f"_(데이터 없음: {' '.join(missing)})_"}
@@ -394,58 +521,63 @@ def handle_test(ack, respond, command, client):
 
     # 규칙: s는 항상 '한글 문제', p는 혼합(총 6:4 목표)
     kor_target = int(round(n * 0.6))  # 목표 한글문항 수
-    s_list = [(e, k, key) for (e, k, key) in sample if key.lower().startswith("s")]
-    p_list = [(e, k, key) for (e, k, key) in sample if key.lower().startswith("p")]
+    # sample contains tuples (eng, kor, chapter, index)
+    s_list = [(e, k, ch, idx) for (e, k, ch, idx) in sample if ch.lower().startswith("s")]
+    p_list = [(e, k, ch, idx) for (e, k, ch, idx) in sample if ch.lower().startswith("p")]
 
-    questions: List[str] = []
-    answers:   List[str] = []
+    items: List[Dict[str, Any]] = []
 
     # s → 한글 문제
-    for e, k, _ in s_list:
-        questions.append(k)
-        answers.append(e)
+    for e, k, ch, idx in s_list:
+        items.append({"question": k, "answer": e, "chapter": ch, "index": idx, "eng": e, "kor": k})
 
     remaining_kor_needed = max(0, kor_target - len(s_list))
     random.shuffle(p_list)
     p_kor = p_list[:remaining_kor_needed]
     p_eng = p_list[remaining_kor_needed:]
 
-    for e, k, _ in p_kor:
-        questions.append(k); answers.append(e)  # 한글 문제
+    for e, k, ch, idx in p_kor:
+        items.append({"question": k, "answer": e, "chapter": ch, "index": idx, "eng": e, "kor": k})
 
-    for e, k, _ in p_eng:
-        questions.append(e); answers.append(k)  # 영어 문제
+    for e, k, ch, idx in p_eng:
+        items.append({"question": e, "answer": k, "chapter": ch, "index": idx, "eng": e, "kor": k})
 
-    combined = list(zip(questions, answers))
-    random.shuffle(combined)
-    questions, answers = (list(t) for t in zip(*combined)) if combined else ([], [])
+    random.shuffle(items)
+
+    questions = [it["question"] for it in items]
+    answers = [it["answer"] for it in items]
 
     _cleanup_quizzes()
     quiz_id = _new_quiz_id()
-    QUIZZES[quiz_id] = {
-        "answers": answers,
-        "created": time.time(),
-        "revealed": False,
-    }
+    QUIZZES[quiz_id] = {"answers": answers, "created": time.time(), "revealed": False}
 
-    q_lines = "\n".join(f"{i}. {q}" for i, q in enumerate(questions, 1))
-    header = (
-        f"*랜덤 테스트* (범위: {chapter_expr or '전체'}) — 총 {len(questions)}문항\n"
-    )
-    blocks = [
-        {"type": "section", "text": {"type": "mrkdwn", "text": header}},
-        {"type": "divider"},
-        {"type": "section", "block_id": "quiz_questions", "text": {"type": "mrkdwn", "text": f"*문제*\n{q_lines}"}},
-        {"type": "actions", "block_id": "quiz_actions", "elements": [
-            {
-                "type": "button",
-                "action_id": "reveal_all",
-                "text": {"type": "plain_text", "text": "정답 전체 보기"},
-                "style": "primary",
-                "value": json.dumps({"quiz_id": quiz_id})
-            }
-        ]}
-    ]
+    # Build blocks per-item so we can attach bookmark overflow beside each question
+    bm = load_bookmarks()
+    bm_users = list(bm.keys()) or []
+
+    header = f"*랜덤 테스트* (범위: {chapter_expr or '전체'}) — 총 {len(questions)}문항\n"
+    blocks: List[Dict[str, Any]] = []
+    blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": header}})
+    blocks.append({"type": "divider"})
+
+    for i, it in enumerate(items, 1):
+        qtext = it["question"]
+        ch = it["chapter"]
+        idx = it["index"]
+        sec = {"type": "section", "block_id": f"quiz_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {qtext}"}}
+        if bm_users:
+            opts = []
+            for u in bm_users[:5]:
+                val = json.dumps({"user_key": u, "chapter": ch, "index": idx, "word": qtext}, ensure_ascii=False)
+                opts.append({"text": {"type": "plain_text", "text": u}, "value": val})
+            action_id = f"bookmark_select_test_{i}"
+            sec["accessory"] = {"type": "overflow", "action_id": action_id, "options": opts}
+        blocks.append(sec)
+
+    # actions block with reveal button
+    blocks.append({"type": "actions", "block_id": "quiz_actions", "elements": [
+        {"type": "button", "action_id": "reveal_all", "text": {"type": "plain_text", "text": "정답 전체 보기"}, "style": "primary", "value": json.dumps({"quiz_id": quiz_id})}
+    ]})
 
     channel_id = command.get("channel_id")
     res = client.chat_postMessage(channel=channel_id, text="랜덤 테스트", blocks=blocks)
@@ -645,6 +777,314 @@ def on_show_eng_for_range(ack, body, client, respond, logger):
     except Exception as e:
         logger.exception(e)
         respond(response_type="ephemeral", text="메시지 업데이트에 실패했습니다.")
+
+
+@app.command("/mark")
+def handle_mark(ack, respond, command, client):
+    """Usage:
+    /mark <bookmark_user> [eng|kor]           -> list that user's bookmarks (eng/kor or both)
+    /mark <bookmark_user> test <n>             -> make a small test from bookmarks (n items)
+    Examples: `/mark eunji`, `/mark sm kor`, `/mark sm test 10`
+    """
+    ack()
+    text = (command.get("text") or "").strip()
+    if not text:
+        respond(response_type="ephemeral", text="사용법: /mark <유저키> [eng|kor] 또는 /mark <유저키> test <n>")
+        return
+    parts = text.split()
+    user_key = parts[0]
+    mode = None
+    if len(parts) >= 2:
+        if parts[1].lower() == "test":
+            mode = "test"
+        elif parts[1].lower() in ("eng", "kor"):
+            mode = parts[1].lower()
+    # test count
+    n = None
+    if mode == "test":
+        if len(parts) >= 3:
+            try:
+                n = int(parts[2])
+            except Exception:
+                n = None
+        if not n or n <= 0:
+            respond(response_type="ephemeral", text="테스트 문항 수를 양의 정수로 지정하세요. 예: /mark sm test 10")
+            return
+
+    bm = load_bookmarks()
+    tokens = bm.get(user_key) or []
+    if not tokens:
+        respond(response_type="ephemeral", text=f"'{user_key}'의 즐겨찾기가 없습니다.")
+        return
+
+    resolved = resolve_bookmark_tokens(tokens)
+    if not resolved:
+        respond(response_type="ephemeral", text="북마크 항목을 불러오지 못했습니다 (data.json 확인).")
+        return
+
+    # test mode
+    if mode == "test":
+        # build pairs (eng, kor)
+        pairs = [(eng, kor, tok) for (tok, eng, kor) in resolved]
+        if not pairs:
+            respond(response_type="ephemeral", text="출제 가능한 북마크가 없습니다.")
+            return
+        if n > len(pairs):
+            n = len(pairs)
+        sample = random.sample(pairs, n)
+
+        kor_target = int(round(n * 0.7))
+        random.shuffle(sample)
+        # select kor_target items to be Korean questions
+        questions = []
+        answers = []
+        # simple: pick first kor_target as kor questions
+        kor_q = sample[:kor_target]
+        eng_q = sample[kor_target:]
+        for e, k, _ in kor_q:
+            questions.append(k)
+            answers.append(e)
+        for e, k, _ in eng_q:
+            questions.append(e)
+            answers.append(k)
+
+        combined = list(zip(questions, answers))
+        random.shuffle(combined)
+        questions, answers = (list(t) for t in zip(*combined)) if combined else ([], [])
+
+        _cleanup_quizzes()
+        quiz_id = _new_quiz_id()
+        QUIZZES[quiz_id] = {"answers": answers, "created": time.time(), "revealed": False}
+
+        q_lines = "\n".join(f"{i}. {q}" for i, q in enumerate(questions, 1))
+        header = f"*북마크 테스트* (사용자: {user_key}) — 총 {len(questions)}문항\n"
+        blocks = [
+            {"type": "section", "text": {"type": "mrkdwn", "text": header}},
+            {"type": "divider"},
+            {"type": "section", "block_id": "quiz_questions", "text": {"type": "mrkdwn", "text": f"*문제*\n{q_lines}"}},
+            {"type": "actions", "block_id": "quiz_actions", "elements": [
+                {"type": "button", "action_id": "reveal_all", "text": {"type": "plain_text", "text": "정답 전체 보기"}, "style": "primary", "value": json.dumps({"quiz_id": quiz_id})}
+            ]}
+        ]
+        channel_id = command.get("channel_id")
+        res = client.chat_postMessage(channel=channel_id, text="북마크 테스트", blocks=blocks)
+        QUIZZES[quiz_id]["channel"] = channel_id
+        QUIZZES[quiz_id]["ts"] = res["ts"]
+        return
+
+    # list mode: eng / kor / both
+    lines: List[str] = []
+    if mode == "eng":
+        # Build per-item sections so we can attach delete buttons next to each entry
+        blocks = [{"type": "section", "text": {"type": "mrkdwn", "text": f"*(북마크: {user_key})*"}}]
+        for i, (tok, eng, kor) in enumerate(resolved, 1):
+            sec = {"type": "section", "block_id": f"mark_eng_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {eng}"}}
+            # add delete button as accessory
+            del_val = json.dumps({"user_key": user_key, "token": tok}, ensure_ascii=False)
+            action_id = f"bookmark_delete_{user_key}_{i}"
+            sec["accessory"] = {"type": "button", "action_id": action_id, "text": {"type": "plain_text", "text": "삭제"}, "style": "danger", "value": del_val}
+            blocks.append(sec)
+        # add toggle button to show kor
+        blocks.append({"type": "actions", "block_id": "mark_actions", "elements": [
+            {"type": "button", "action_id": "show_kor_for_bookmarks", "text": {"type": "plain_text", "text": "한글로 보기"}, "value": json.dumps({"user_key": user_key})}
+        ]})
+        channel_id = command.get("channel_id")
+        client.chat_postMessage(channel=channel_id, text=f"{user_key} 북마크 (영어)", blocks=blocks)
+        return
+
+    if mode == "kor":
+        blocks = [{"type": "section", "text": {"type": "mrkdwn", "text": f"*(북마크: {user_key})*"}}]
+        for i, (tok, eng, kor) in enumerate(resolved, 1):
+            sec = {"type": "section", "block_id": f"mark_kor_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {kor}"}}
+            del_val = json.dumps({"user_key": user_key, "token": tok}, ensure_ascii=False)
+            action_id = f"bookmark_delete_{user_key}_{i}"
+            sec["accessory"] = {"type": "button", "action_id": action_id, "text": {"type": "plain_text", "text": "삭제"}, "style": "danger", "value": del_val}
+            blocks.append(sec)
+        blocks.append({"type": "actions", "block_id": "mark_actions", "elements": [
+            {"type": "button", "action_id": "show_eng_for_bookmarks", "text": {"type": "plain_text", "text": "영어로 보기"}, "value": json.dumps({"user_key": user_key})}
+        ]})
+        channel_id = command.get("channel_id")
+        client.chat_postMessage(channel=channel_id, text=f"{user_key} 북마크 (한글)", blocks=blocks)
+        return
+
+    # default: show both with delete buttons
+    blocks = [{"type": "section", "text": {"type": "mrkdwn", "text": f"*(북마크: {user_key})*"}}]
+    for i, (tok, eng, kor) in enumerate(resolved, 1):
+        sec = {"type": "section", "block_id": f"mark_both_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {eng} : {kor}"}}
+        del_val = json.dumps({"user_key": user_key, "token": tok}, ensure_ascii=False)
+        action_id = f"bookmark_delete_{user_key}_{i}"
+        sec["accessory"] = {"type": "button", "action_id": action_id, "text": {"type": "plain_text", "text": "삭제"}, "style": "danger", "value": del_val}
+        blocks.append(sec)
+    channel_id = command.get("channel_id")
+    client.chat_postMessage(channel=channel_id, text=f"{user_key} 북마크", blocks=blocks)
+
+
+@app.action(re.compile(r"^bookmark_select_"))
+def on_bookmark_select(ack, body, client, logger):
+    ack()
+    try:
+        action = body["actions"][0]
+        selected = action.get("selected_option") or {}
+        val = selected.get("value")
+        payload = json.loads(val or "{}")
+        user_key = payload.get("user_key")
+        chapter = payload.get("chapter")
+        index = int(payload.get("index")) if payload.get("index") is not None else None
+        word = payload.get("word")
+    except Exception as e:
+        # send ephemeral error
+        channel = body.get("container", {}).get("channel_id") or body.get("channel", {}).get("id")
+        user_id = body.get("user", {}).get("id")
+        if channel and user_id:
+            client.chat_postEphemeral(channel=channel, user=user_id, text="버튼 데이터가 올바르지 않습니다.")
+        return
+
+    if not (user_key and chapter and index):
+        channel = body.get("container", {}).get("channel_id") or body.get("channel", {}).get("id")
+        user_id = body.get("user", {}).get("id")
+        if channel and user_id:
+            client.chat_postEphemeral(channel=channel, user=user_id, text="즐겨찾기 정보가 불완전합니다.")
+        return
+
+    token = f"{chapter}#{index}"
+    try:
+        bm = load_bookmarks()
+        if user_key not in bm:
+            bm[user_key] = []
+        if token in bm[user_key]:
+            channel = body.get("container", {}).get("channel_id") or body.get("channel", {}).get("id")
+            user_id = body.get("user", {}).get("id")
+            if channel and user_id:
+                client.chat_postEphemeral(channel=channel, user=user_id, text=f"{user_key}의 즐겨찾기에 이미 있습니다: {word} ({token})")
+            return
+        bm[user_key].append(token)
+        save_bookmarks(bm)
+        channel = body.get("container", {}).get("channel_id") or body.get("channel", {}).get("id")
+        user_id = body.get("user", {}).get("id")
+        if channel and user_id:
+            client.chat_postEphemeral(channel=channel, user=user_id, text=f"즐겨찾기 저장됨: {user_key} ← {word} ({token})")
+    except Exception as e:
+        logger.exception(e)
+        channel = body.get("container", {}).get("channel_id") or body.get("channel", {}).get("id")
+        user_id = body.get("user", {}).get("id")
+        if channel and user_id:
+            client.chat_postEphemeral(channel=channel, user=user_id, text=f"즐겨찾기 저장 중 오류: {e}")
+
+
+@app.action("show_kor_for_bookmarks")
+def on_show_kor_for_bookmarks(ack, body, client, respond, logger):
+    ack()
+    try:
+        payload = json.loads(body["actions"][0].get("value", "{}"))
+        user_key = payload.get("user_key")
+    except Exception:
+        respond(response_type="ephemeral", text="요청 정보가 유효하지 않습니다.")
+        return
+
+    bm = load_bookmarks()
+    tokens = bm.get(user_key) or []
+    resolved = resolve_bookmark_tokens(tokens)
+    if not resolved:
+        respond(response_type="ephemeral", text=f"'{user_key}'의 북마크가 없습니다.")
+        return
+
+    lines = [f"{i+1}. {kor}" for i, (_, _, kor) in enumerate(resolved)]
+    body_text = "• " + "\n• ".join(lines)
+    # update message blocks: append kor section
+    blocks = body.get("message", {}).get("blocks", [])[:]
+    if not any(b.get("block_id") == "mark_kor_added" for b in blocks):
+        blocks.append({"type": "divider"})
+    blocks.append({"type": "section", "block_id": "mark_kor_added", "text": {"type": "mrkdwn", "text": f"*한글 뜻*\n{body_text}"}})
+    try:
+        channel = body.get("container", {}).get("channel_id")
+        ts = body.get("container", {}).get("message_ts")
+        if not (channel and ts):
+            respond(response_type="ephemeral", text="메시지 식별 정보가 없습니다.")
+            return
+        client.chat_update(channel=channel, ts=ts, blocks=blocks, text="한글 뜻 추가")
+    except Exception as e:
+        logger.exception(e)
+        respond(response_type="ephemeral", text="메시지 업데이트 실패")
+
+
+@app.action("show_eng_for_bookmarks")
+def on_show_eng_for_bookmarks(ack, body, client, respond, logger):
+    ack()
+    try:
+        payload = json.loads(body["actions"][0].get("value", "{}"))
+        user_key = payload.get("user_key")
+    except Exception:
+        respond(response_type="ephemeral", text="요청 정보가 유효하지 않습니다.")
+        return
+
+    bm = load_bookmarks()
+    tokens = bm.get(user_key) or []
+    resolved = resolve_bookmark_tokens(tokens)
+    if not resolved:
+        respond(response_type="ephemeral", text=f"'{user_key}'의 북마크가 없습니다.")
+        return
+
+    lines = [f"{i+1}. {eng}" for i, (_, eng, _) in enumerate(resolved)]
+    body_text = "• " + "\n• ".join(lines)
+    blocks = body.get("message", {}).get("blocks", [])[:]
+    if not any(b.get("block_id") == "mark_eng_added" for b in blocks):
+        blocks.append({"type": "divider"})
+    blocks.append({"type": "section", "block_id": "mark_eng_added", "text": {"type": "mrkdwn", "text": f"*영어*\n{body_text}"}})
+    try:
+        channel = body.get("container", {}).get("channel_id")
+        ts = body.get("container", {}).get("message_ts")
+        if not (channel and ts):
+            respond(response_type="ephemeral", text="메시지 식별 정보가 없습니다.")
+            return
+        client.chat_update(channel=channel, ts=ts, blocks=blocks, text="영어 목록 추가")
+    except Exception as e:
+        logger.exception(e)
+        respond(response_type="ephemeral", text="메시지 업데이트 실패")
+
+
+@app.action(re.compile(r"^bookmark_delete_"))
+def on_bookmark_delete(ack, body, client, logger):
+    ack()
+    try:
+        action = body["actions"][0]
+        val = action.get("value")
+        payload = json.loads(val or "{}")
+        user_key = payload.get("user_key")
+        token = payload.get("token")
+    except Exception as e:
+        channel = body.get("container", {}).get("channel_id") or body.get("channel", {}).get("id")
+        user_id = body.get("user", {}).get("id")
+        if channel and user_id:
+            client.chat_postEphemeral(channel=channel, user=user_id, text="삭제할 항목 정보를 읽지 못했습니다.")
+        return
+
+    if not (user_key and token):
+        channel = body.get("container", {}).get("channel_id") or body.get("channel", {}).get("id")
+        user_id = body.get("user", {}).get("id")
+        if channel and user_id:
+            client.chat_postEphemeral(channel=channel, user=user_id, text="삭제 정보가 불완전합니다.")
+        return
+
+    try:
+        bm = load_bookmarks()
+        if user_key not in bm or token not in bm[user_key]:
+            channel = body.get("container", {}).get("channel_id") or body.get("channel", {}).get("id")
+            user_id = body.get("user", {}).get("id")
+            if channel and user_id:
+                client.chat_postEphemeral(channel=channel, user=user_id, text=f"{user_key}의 북마크에 해당 항목이 없습니다: {token}")
+            return
+        bm[user_key].remove(token)
+        save_bookmarks(bm)
+        channel = body.get("container", {}).get("channel_id") or body.get("channel", {}).get("id")
+        user_id = body.get("user", {}).get("id")
+        if channel and user_id:
+            client.chat_postEphemeral(channel=channel, user=user_id, text=f"삭제되었습니다: {token}")
+    except Exception as e:
+        logger.exception(e)
+        channel = body.get("container", {}).get("channel_id") or body.get("channel", {}).get("id")
+        user_id = body.get("user", {}).get("id")
+        if channel and user_id:
+            client.chat_postEphemeral(channel=channel, user=user_id, text=f"삭제 중 오류 발생: {e}")
 
 # ================== 실행 ==================
 if __name__ == "__main__":
