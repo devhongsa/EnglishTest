@@ -245,6 +245,17 @@ def collect_items_detailed(section: str, chapters: List[str]) -> Tuple[List[Tupl
             missing.append(ch)
     return items, missing
 
+
+def _truncate_blocks_for_slack(blocks: List[Dict[str, Any]], max_blocks: int = 50) -> List[Dict[str, Any]]:
+    """Slack allows at most 50 blocks per message. If blocks exceed that, truncate and append a notice.
+    Returns a new list of blocks safe to send."""
+    if len(blocks) <= max_blocks:
+        return blocks
+    # Keep first (max_blocks-1) blocks and append a context block that indicates truncation
+    kept = blocks[: max_blocks - 1]
+    kept.append({"type": "context", "elements": [{"type": "mrkdwn", "text": f"... (총 {len(blocks)}블록 중 상위 {max_blocks}개만 표시)"}]})
+    return kept
+
 def collect_all_pairs(chapters: List[str] | None) -> List[Tuple[str, str, str, int]]:
     """
     (eng, kor, key, index) 페어 전부 수집. chapters=None이면 가능한 모든 챕터에서 수집.
@@ -716,10 +727,51 @@ def on_show_kor_for_range(ack, body, client, respond, logger):
         return
 
     try:
-        client.chat_update(channel=channel, ts=ts, blocks=blocks, text="한글 뜻 추가")
+        safe_blocks = _truncate_blocks_for_slack(blocks)
+        # If blocks fit under Slack limit, update the original message so it appears as an edit.
+        if len(blocks) <= 50:
+            try:
+                client.chat_update(channel=channel, ts=ts, blocks=safe_blocks, text="한글 뜻 목록")
+            except Exception:
+                # If update fails, fallback to posting a new message
+                client.chat_postMessage(channel=channel, text="한글 뜻 목록", blocks=safe_blocks)
+        else:
+            # Too many blocks: instead of posting the truncated original blocks (which may leave only
+            # the original English content), build a minimal message that contains only the Korean
+            # section so the user actually sees the Korean meanings they requested.
+            try:
+                try:
+                    chapters_label = ' '.join(chapters)
+                except Exception:
+                    chapters_label = expr or "(알수없음)"
+                minimal_blocks: List[Dict[str, Any]] = []
+                minimal_blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {chapters_label})*"}})
+                minimal_blocks.append({"type": "divider"})
+                minimal_blocks.append({"type": "section", "block_id": "eng_kor_added", "text": {"type": "mrkdwn", "text": f"*한글 뜻*\n{body_text}"}})
+                if missing:
+                    minimal_blocks.append({"type": "context", "elements": [{"type": "mrkdwn", "text": f"_(데이터 없음: {' '.join(missing)})_"}]})
+                client.chat_postMessage(channel=channel, text="한글 뜻 목록", blocks=minimal_blocks)
+            except Exception:
+                # As a last fallback, post the plain text as an ephemeral message to the user
+                user_id = body.get("user", {}).get("id")
+                plain = body_text if 'body_text' in locals() else "한글 뜻을 불러오는 중 오류가 발생했습니다."
+                if channel and user_id:
+                    client.chat_postEphemeral(channel=channel, user=user_id, text=plain)
+                else:
+                    client.chat_postMessage(channel=channel, text=plain)
     except Exception as e:
         logger.exception(e)
-        respond(response_type="ephemeral", text="메시지 업데이트에 실패했습니다.")
+        # Fallback: try to send the result as an ephemeral message to the user so they still get the content
+        user_id = body.get("user", {}).get("id")
+        try:
+            plain = body_text if 'body_text' in locals() else "한글 뜻을 불러오는 중 오류가 발생했습니다."
+            if channel and user_id:
+                client.chat_postEphemeral(channel=channel, user=user_id, text=plain)
+                respond(response_type="ephemeral", text="원본 메시지 업데이트에 실패하여 개인 메시지로 결과를 보냈습니다.")
+                return
+        except Exception:
+            logger.exception("ephemeral fallback failed")
+        respond(response_type="ephemeral", text=f"메시지 업데이트에 실패했습니다. 오류: {e}")
 
 # ================== 버튼 액션: /kor 메시지에서 '영어 목록 보기' ==================
 @app.action("show_eng_for_range")
@@ -729,7 +781,16 @@ def on_show_eng_for_range(ack, body, client, respond, logger):
         payload = json.loads(body["actions"][0].get("value", "{}"))
         expr = payload.get("chapters_expr", "")
         chapters = parse_range(expr)
-        items, missing = collect_items("eng", chapters)
+        # To ensure the English list corresponds exactly to the Korean items' order
+        # we collect the detailed kor items (chapter,index,word) and map them to
+        # English counterparts using collect_all_pairs (which provides indices).
+        kor_items_detailed, missing = collect_items_detailed("kor", chapters)
+        pairs = collect_all_pairs(chapters)  # returns (eng, kor, chapter, index)
+        eng_map = {(ch, idx): e for (e, k, ch, idx) in pairs}
+        items = []
+        for ch, idx, _kor_word in kor_items_detailed:
+            eng_w = eng_map.get((ch, idx))
+            items.append(eng_w or "_(번역없음)_")
     except Exception as e:
         respond(response_type="ephemeral", text=f"영어 목록 로드 실패: {e}")
         return
@@ -737,7 +798,6 @@ def on_show_eng_for_range(ack, body, client, respond, logger):
     if not items:
         respond(response_type="ephemeral", text="해당 범위의 영어 목록이 없습니다.")
         return
-
     lines = format_lines(items)
     body_text = "• " + "\n• ".join(lines)
 
@@ -756,6 +816,16 @@ def on_show_eng_for_range(ack, body, client, respond, logger):
     # 이미 추가되어 있지 않다면, 영어 목록 섹션 추가
     if not any(b.get("block_id") == "kor_eng_added" for b in blocks):
         blocks.append({"type": "divider"})
+        # show which chapters were resolved (useful for last.<n> tokens)
+        try:
+            chapters_label = ' '.join(chapters)
+        except Exception:
+            chapters_label = expr or "(알수없음)"
+        blocks.append({"type": "context", "elements": [{"type": "mrkdwn", "text": f"_(선택된 챕터: {chapters_label})_"}]})
+        # truncate long body_text to avoid Slack invalid_blocks due to size
+        MAX_BODY = 3000
+        if len(body_text) > MAX_BODY:
+            body_text = body_text[:MAX_BODY] + "\n... (이하 생략)"
         blocks.append({
             "type": "section",
             "block_id": "kor_eng_added",
@@ -773,10 +843,51 @@ def on_show_eng_for_range(ack, body, client, respond, logger):
         return
 
     try:
-        client.chat_update(channel=channel, ts=ts, blocks=blocks, text="영어 목록 추가")
+        safe_blocks = _truncate_blocks_for_slack(blocks)
+        # If blocks fit under Slack limit, update the original message so it appears as an edit.
+        if len(blocks) <= 50:
+            try:
+                client.chat_update(channel=channel, ts=ts, blocks=safe_blocks, text="영어 목록")
+            except Exception:
+                # If update fails, fallback to posting a new message
+                client.chat_postMessage(channel=channel, text="영어 목록", blocks=safe_blocks)
+        else:
+            # Too many blocks: instead of posting the truncated original blocks (which may leave only
+            # the original Korean content), build a minimal message that contains only the English
+            # section so the user actually sees the English words they requested.
+            try:
+                try:
+                    chapters_label = ' '.join(chapters)
+                except Exception:
+                    chapters_label = expr or "(알수없음)"
+                minimal_blocks: List[Dict[str, Any]] = []
+                minimal_blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {chapters_label})*"}})
+                minimal_blocks.append({"type": "divider"})
+                minimal_blocks.append({"type": "section", "block_id": "kor_eng_added", "text": {"type": "mrkdwn", "text": f"*영어*\n{body_text}"}})
+                if missing:
+                    minimal_blocks.append({"type": "context", "elements": [{"type": "mrkdwn", "text": f"_(데이터 없음: {' '.join(missing)})_"}]})
+                client.chat_postMessage(channel=channel, text="영어 목록", blocks=minimal_blocks)
+            except Exception:
+                # As a last fallback, post the plain text as an ephemeral message to the user
+                user_id = body.get("user", {}).get("id")
+                plain = body_text if 'body_text' in locals() else "영어 목록을 불러오는 중 오류가 발생했습니다."
+                if channel and user_id:
+                    client.chat_postEphemeral(channel=channel, user=user_id, text=plain)
+                else:
+                    client.chat_postMessage(channel=channel, text=plain)
     except Exception as e:
         logger.exception(e)
-        respond(response_type="ephemeral", text="메시지 업데이트에 실패했습니다.")
+        # Fallback: try to send the result as an ephemeral message to the user so they still get the content
+        user_id = body.get("user", {}).get("id")
+        try:
+            plain = body_text if 'body_text' in locals() else "영어 목록을 불러오는 중 오류가 발생했습니다."
+            if channel and user_id:
+                client.chat_postEphemeral(channel=channel, user=user_id, text=plain)
+                respond(response_type="ephemeral", text="원본 메시지 업데이트에 실패하여 개인 메시지로 결과를 보냈습니다.")
+                return
+        except Exception:
+            logger.exception("ephemeral fallback failed")
+        respond(response_type="ephemeral", text=f"메시지 업데이트에 실패했습니다. 오류: {e}")
 
 
 @app.command("/mark")
