@@ -16,6 +16,13 @@
         "p2.3" : ["beautiful","fair","fun","good","lovely","nice","pity","poor","bad","dull","detest","shocked"],
         "p2.4" : ["amuse","ashamed","aware","delight","disappoint","embarrass","encourage","excite","fascinate","funny","vulgar","melodramatic"],
         "p2.5" : ["approve","compliment","confident","conservative","considerate","emotion","mood","be fond of","respectable","sympathy","spectacular","cold"],
+        "p2.6" : ["enjoy","interest","like","love","miss","please","prefer","annoy","hate","tired of","pathetic","inspiring"],
+        "p2.7" : ["favorite","curious","disgraceful","horrible","incredible","popular","wonderful","peculiar","ridiculous","terrible","mediocre","sickening"],
+        "p2.8#" : ["head","hair","face","eye/eyes","nose","mouth","ear/ears","lip/lips","tooth/teeth","tongue","cheek/cheeks","chin","moustache","beard","neck","throat",
+    "chest","breast/breasts","shoulder/shoulders","stomach","waist","back","arm/arms","elbow","hand/hands","finger/fingers","thumb","nail/nails","bottom","leg/legs",
+    "knee","foot/feet","toe/toes","blood","bone","brain","heart","muscle/muscles","skin","voice"],
+        "p3.1" : ["feel","hear","look","look at","relax","see","sleep","touch","wake up","watch","stretch","bend"],
+        "p3.2" : ["go","run","walk","sit","stand","stop","turn","wait","come","do","kneel","scratch"],
         "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
     "I'm ready to work.", "I'm ready to listen.","I'm ready to talk.","I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."],
         "s2" : ["Welcome! How can i help you today?","I'm here to get a refund for this shirt.","Oh, is there something wrong with it?",
@@ -35,7 +42,11 @@
         "s7" : ["Are you busy right now?","No. Why do you ask?","I was going to go for a walk. Do you want to join?","Sure, I have time to get some fresh air.",
     "I have time to chat","I have time to meet you","I have time to clean my room","I have time to walk my dog","I have time to discuss the project","I have time to cook."],
         "s8" : ["How's driving practice going?","Not good. I have trouble parking.","You should practice in an empty parking lot.","Good idea. I'll do that this weekend.",
-    "I have trouble focusing.","I have trouble remembering names.","I have trouble saving money.","I have trouble trusting people.","I have trouble expressing my feelings.","I have trouble sleeping."]
+    "I have trouble focusing.","I have trouble remembering names.","I have trouble saving money.","I have trouble trusting people.","I have trouble expressing my feelings.","I have trouble sleeping."],
+        "s9" : ["This number keeps calling me.","I have a feeling it's a scam.","Yeah, they didn't leave a voicemail.","Just block the number.","I have a feeling he hates me.",
+    "I have a feeling she knows the answer.","I have a feeling they won't come.","I have a feeling he's hiding something.","I have a feeling I left the window open.","I have a feeling she lied."],
+        "s10" : ["Do you like reading?","I do, but I haven't had the time to read lately.","What kind of books do you like?","I love mystery novels.","Do you like hiking?","Do you like drawing?",
+    "Do you like classical music?","Do you like horror movies?","Do you like working from home?","Do you like swimming?"]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -65,6 +76,15 @@
         "마음을 사로잡다","우스운, 웃기는","저속한, 상스러운","멜로드라마 같은, 과장된"],
         "p2.5" : ["찬성하다","칭찬, 칭찬하다","자신감 있는, 확신하는","보수적인","배려하는, 사려 깊은","감정, 정서","기분","~을 좋아하는","존경할 만한, 훌륭한",
         "동정, 연민","장관을 이루는, 극적인","추운, 냉정한"],
+        "p2.6" : ["즐기다","관심,흥미,관심을 보이다","기호,좋아하는 것,좋아하다","사랑,사랑하다","그리워하다","기쁘게 하다","~을 더 좋아하다","짜증나게 하다","몹시 싫어하다","~에 진절머리가 난",
+    "불쌍한,한심한","고무하는,격려하는"],
+        "p2.7" : ["마음에 드는, 매우 좋아하는","궁금한, 호기심이 많은","수치스러운, 부끄러운","지긋지긋한, 끔찍한","믿기 힘든,믿을 수 없는","인기있는","아주 멋진, 훌륭한","이상한",
+    "웃기는, 터무니없는","끔찍한, 소름끼치는","보통 밖에 안되는,썩 좋지는 않은","역겨운, 구역질나는"],
+        "p2.8#" : ["머리","머리카락","얼굴","눈","코","입","귀","입술","이, 치아","혀","뺨","턱","콧수염","턱수염","목","목구멍","가슴,흉부","가슴(여자)","어깨","배","허리","등","팔",
+    "팔꿈치","손","손가락","엄지손가락","손톱","엉덩이","다리","무릎","발","발가락","피, 혈액","뼈","뇌","심장","근육","피부","목소리"],
+        "p3.1" : ["느끼다","듣다","표정, 겉모습, 보다, 보이다","바라보다","휴식을 취하다","보다","잠,수면,자다","만지기,감촉,만지다,닿다","잠을 깨다","주시,감시,지켜보다,주시하다","늘이다,기지개를 켜다",
+    "굽히다,숙이다"],
+        "p3.2" : ["가다","달리다, 뛰다","걷기,산책,걷다","앉다","서다","멈춤,정지하다,멈추다","돌리기,회전,돌다,돌리다","기다림,기다리는 시간,기다리다","(~쪽으로)오다","하다","무릎을 꿇다","긁힌 상처,긁다,할퀴다"],
         "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
     "나 들을 준비됐어.","나 얘기할 준비됐어.","나 주문할 준비됐어.","나 재밌게 놀 준비됐어.","나 갈 준비됐어."],
         "s2" : ["어서 오세요! 어떻게 도와드릴까요?", "이 셔츠 환불하러 왔어요.", "셔츠에 무슨 문제가 있나요?","저한테는 너무 커서요.",
@@ -80,6 +100,10 @@
         "s7" : ["지금 바빠?","아니, 왜(물어봐)?","나 산책하러 가려고. 같이 갈래?","그래, 바람 쐬러 갈 시간 있어.","나 얘기할 시간 있어.","나 너와 만날 시간 있어.","나 방 치울 시간 있어.",
         "나 강아지 산책시킬 시간 있어.","나 프로젝트 논의할 시간 있어.","나 요리할 시간 있어."],
         "s8" : ["운전 연습은 잘 돼가?","아니. 주차하는게 어려워.","빈 주차장에서 연습해 봐.","좋은 생각이야. 이번 주말에 해볼게.","나 집중하는게 어려워.","나 이름을 기억하는게 어려워.","나는 돈을 모으는 게 어려워.",
-    "나는 사람들을 신뢰하는게 어려워.","나는 내 감정을 표현하는게 어려워.","나는 잠을 자는게 어려워."]
+    "나는 사람들을 신뢰하는게 어려워.","나는 내 감정을 표현하는게 어려워.","나는 잠을 자는게 어려워."],
+        "s9" : ["이 번호로 계속 전화가 와.","사기 전화일 것 같은 느낌이 들어.","그러게, 음성 메시지도 안 남겼어.","그냥 그 번호 차단해.","그가 날 싫어하는 느낌이 들어.","그녀가 답을 안다는 느낌이 들어.",
+    "그들이 안 올 거라는 느낌이 들어.","그가 무언가를 숨기고 있다는 느낌이 들어.","창문을 열어두고 왔다는 느낌이 들어.","그녀가 거짓말을 했다는 느낌이 들어."],
+        "s10" : ["책 읽는 거 좋아해?","응, 근데 요즘은 읽을 시간이 없었어.","무슨 책 좋아해?","난 추리 소설을 정말 좋아해.","동산 좋아해?","그림 그리는 거 좋아해?","클래식 음악 좋아해?",
+    "공포 영화 좋아해?","재택근무 하는 거 좋아해?","수영하는 거 좋아해?"]
     }
 }
