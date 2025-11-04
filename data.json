@@ -46,7 +46,11 @@
         "s9" : ["This number keeps calling me.","I have a feeling it's a scam.","Yeah, they didn't leave a voicemail.","Just block the number.","I have a feeling he hates me.",
     "I have a feeling she knows the answer.","I have a feeling they won't come.","I have a feeling he's hiding something.","I have a feeling I left the window open.","I have a feeling she lied."],
         "s10" : ["Do you like reading?","I do, but I haven't had the time to read lately.","What kind of books do you like?","I love mystery novels.","Do you like hiking?","Do you like drawing?",
-    "Do you like classical music?","Do you like horror movies?","Do you like working from home?","Do you like swimming?"]
+    "Do you like classical music?","Do you like horror movies?","Do you like working from home?","Do you like swimming?"],
+        "s11" : ["Do you want to make dinner with me?", "I'd love to. What are we making?", "How's spaghetti? It's my specialty.","It sounds yummy.",
+    "Do you want to come over?","Do you want to join us?","Do you want to order dessert?","Do you want to play a game?","Do you want to go shopping?","Do you want to have dinner?"],
+        "s12" : ["Do you need a charger for your phone?","Yes, my battery is almost dead.","I can lend you mine.","That would be great, thanks.",
+    "Do you need water?","Do you need a break?","Do you need help?","Do you need advice?","Do you need something to eat?","Do you need anything?"]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -104,6 +108,8 @@
         "s9" : ["이 번호로 계속 전화가 와.","사기 전화일 것 같은 느낌이 들어.","그러게, 음성 메시지도 안 남겼어.","그냥 그 번호 차단해.","그가 날 싫어하는 느낌이 들어.","그녀가 답을 안다는 느낌이 들어.",
     "그들이 안 올 거라는 느낌이 들어.","그가 무언가를 숨기고 있다는 느낌이 들어.","창문을 열어두고 왔다는 느낌이 들어.","그녀가 거짓말을 했다는 느낌이 들어."],
         "s10" : ["책 읽는 거 좋아해?","응, 근데 요즘은 읽을 시간이 없었어.","무슨 책 좋아해?","난 추리 소설을 정말 좋아해.","동산 좋아해?","그림 그리는 거 좋아해?","클래식 음악 좋아해?",
-    "공포 영화 좋아해?","재택근무 하는 거 좋아해?","수영하는 거 좋아해?"]
+    "공포 영화 좋아해?","재택근무 하는 거 좋아해?","수영하는 거 좋아해?"],
+        "s11" : ["나랑 같이 저녁 만들래?","좋아. 뭐 만들 거야?","스파게티 어때? 내 전문이야","맛있을 거 같아.","놀러 올래?","우리랑 같이 할래?","디저트 시킬래?","게임할래?","쇼핑하러 갈래?","저녁 먹을래?"],
+        "s12" : ["핸드폰 충전기 필요해?","응, 배터리가 거의 다 됐거든","내 것을 빌려줄 수 있어.","그럼 좋지, 고마워.","물이 필요해?","휴식이 필요해?","도움이 필요해?","조언이 필요해?","먹을 거 필요해?","필요한 거 있어?"]
     }
 }
