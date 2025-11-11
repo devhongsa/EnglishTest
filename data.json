@@ -23,6 +23,10 @@
     "knee[니]","foot/feet[풋/피트]","toe/toes[토/토즈]","blood[블러드]","bone[본]","brain[브레인]","heart[하트]","muscle/muscles[머슬/머슬스]","skin[스킨]","voice[보이스]"],
         "p3.1" : ["feel[필]","hear[히어]","look[룩]","look at[룩 앳]","relax[릴랙스]","see[씨]","sleep[슬립]","touch[터치]","wake up[웨이크 업]","watch[워치]","stretch[스트레치]","bend[벤드]"],
         "p3.2" : ["go[고]","run[런]","walk[워크]","sit[싯]","stand[스탠드]","stop[스탑]","turn[턴]","wait[웨잇]","come[컴]","do[두]","kneel[닐]","scratch[스크래치]"],
+        "p3.3" : ["open[오픈]","close[클로우즈]","catch[캐치]","drop[드롭]","pick up[픽업]","fall[퍼얼]","put[풋]","show[쇼우]","step on[스텝 언]","take[테이크]","sign[사인]","brush[브러쉬]"],
+        "p3.4" : ["climb[클라임]","cross[크로스]","enter[엔터]","follow[팔로우]","crawl[크러얼]","jump[점프]","lean[리인]","pause[퍼-즈]","hesitate[헤지테이트]","creep[크립]","slip[슬립]","wait[웨잇]"],
+        "p3.5" : ["fast[패스트]","move[무브]","pull[풀]","push[푸시]","careful[케어풀]","lift[리프트]","throw[쓰로우]","quick[퀵]","slow[슬로우]","still[스틸]","pounce[파운쓰]","slide[슬라이드]"],
+        "p3.6" : ["pass[패스]","raise[레이즈]","lower[로우어]","repair[리페어]","destory[디스트로이]","kick[킥]","smash[스매쉬]","rub[럽]","stir[스터-]","shake[쉐이크]","hang[행]","sweep[스윕]"],
         "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
     "I'm ready to work.", "I'm ready to listen.","I'm ready to talk.","I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."],
         "s2" : ["Welcome! How can i help you today?","I'm here to get a refund for this shirt.","Oh, is there something wrong with it?",
@@ -50,7 +54,10 @@
         "s11" : ["Do you want to make dinner with me?", "I'd love to. What are we making?", "How's spaghetti? It's my specialty.","It sounds yummy.",
     "Do you want to come over?","Do you want to join us?","Do you want to order dessert?","Do you want to play a game?","Do you want to go shopping?","Do you want to have dinner?"],
         "s12" : ["Do you need a charger for your phone?","Yes, my battery is almost dead.","I can lend you mine.","That would be great, thanks.",
-    "Do you need water?","Do you need a break?","Do you need help?","Do you need advice?","Do you need something to eat?","Do you need anything?"]
+    "Do you need water?","Do you need a break?","Do you need help?","Do you need advice?","Do you need something to eat?","Do you need anything?"],
+        "s13" : ["Do you usually binge-watch TV shows?","Yeah, especially on weekends.","Me too! I once watched an entire season in one day.","Wow, that's impressive!","Do you usually take the subway?",
+    "Do you usually shop online?","Do you usually go to bed late?","Do you usually work on weekends?","Do you usually sleep in on Sundays?","Do you usually eat breakfast?"],
+        "s14" : ["There is a problem with washing machine.","What kind of problem?","It's not draining water properly.","Okay, I'll call the repairman.","There is a cat.","There is work to do.","There is a book on the table.","There are tow restaurants nearby.","There are typos in the report.","There are cars here."]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -89,6 +96,11 @@
         "p3.1" : ["느끼다","듣다","표정, 겉모습, 보다, 보이다","바라보다","휴식을 취하다","보다","잠,수면,자다","만지기,감촉,만지다,닿다","잠을 깨다","주시,감시,지켜보다,주시하다","늘이다,기지개를 켜다",
     "굽히다,숙이다"],
         "p3.2" : ["가다","달리다, 뛰다","걷기,산책,걷다","앉다","서다","멈춤,정지하다,멈추다","돌리기,회전,돌다,돌리다","기다림,기다리는 시간,기다리다","(~쪽으로)오다","하다","무릎을 꿇다","긁힌 상처,긁다,할퀴다"],
+        "p3.3" : ["열려 있는, 열다","닫다","잡다, 받다","떨어트리다","~을 집다, 들어 올리다","넘어지다, 떨어지다","놓다, 넣다","보여 주다","밟다","가지고 가다[오다]","표지판, 징후, 서명하다","솔질, 솔질하다"],
+        "p3.4" : ["등산, 오르다","건너다, 횡단하다","들어가다[오다]","~의 뒤를 따라가다","기어가기,(엎드려)기다","점프, 뛰다, 점프하다","~에 기대다, 의지하다","멈춤, 잠시 멈추다","망설이다, 주저하다"
+    ,"살금살금 움직이다","미끄러지다","기다리다"],
+        "p3.5" : ["빠른, 빨리","움직이다, 옮기다","잡아당기다, 끌다","밀다, 밀치다","조심하는, 주의 깊은","들어올리다","던지다","빠른","느린","조용한, 움직이지 않는","덮치다, 덤비다","미끄러지다, 미끄러지듯이 움직이다"],
+        "p3.6" : ["건네주다, 통과하다","들어올리다","낮추다, 내리다","수리, 고치다, 수리하다","파괴하다","차기, 발길질, 차다","박살내다, 힘껏 치다","문지르기, 문지르다, 닦다","젓다, 섞다","흔들기, 흔들다","걸다, 매달다","쓸다, 청소하다"],
         "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
     "나 들을 준비됐어.","나 얘기할 준비됐어.","나 주문할 준비됐어.","나 재밌게 놀 준비됐어.","나 갈 준비됐어."],
         "s2" : ["어서 오세요! 어떻게 도와드릴까요?", "이 셔츠 환불하러 왔어요.", "셔츠에 무슨 문제가 있나요?","저한테는 너무 커서요.",
@@ -110,6 +122,8 @@
         "s10" : ["책 읽는 거 좋아해?","응, 근데 요즘은 읽을 시간이 없었어.","무슨 책 좋아해?","난 추리 소설을 정말 좋아해.","동산 좋아해?","그림 그리는 거 좋아해?","클래식 음악 좋아해?",
     "공포 영화 좋아해?","재택근무 하는 거 좋아해?","수영하는 거 좋아해?"],
         "s11" : ["나랑 같이 저녁 만들래?","좋아. 뭐 만들 거야?","스파게티 어때? 내 전문이야","맛있을 거 같아.","놀러 올래?","우리랑 같이 할래?","디저트 시킬래?","게임할래?","쇼핑하러 갈래?","저녁 먹을래?"],
-        "s12" : ["핸드폰 충전기 필요해?","응, 배터리가 거의 다 됐거든","내 것을 빌려줄 수 있어.","그럼 좋지, 고마워.","물이 필요해?","휴식이 필요해?","도움이 필요해?","조언이 필요해?","먹을 거 필요해?","필요한 거 있어?"]
+        "s12" : ["핸드폰 충전기 필요해?","응, 배터리가 거의 다 됐거든","내 것을 빌려줄 수 있어.","그럼 좋지, 고마워.","물이 필요해?","휴식이 필요해?","도움이 필요해?","조언이 필요해?","먹을 거 필요해?","필요한 거 있어?"],
+        "s13" : ["너 보통 드라마 몰아서 봐?","응, 특히 주말에.","나도! 전에는 하루 만에 한 시즌 다 본 적이 있어.","와, 대단한데!","너 보통 지하철 타?","너 보통 온라인으로 쇼핑해?","너 보통 늦게 자?","너 보통 주말에 일해?","너 보통 일요일에 늦잠 자?","너 보통 아침 먹어?"],
+        "s14" : ["세탁기에 문제가 있어.","무슨 문제?","물이 제대로 안 빠져.","알았어. 수리 기사 부를게.","고양이가 있어.","할 일이 있어.","식탁에 책이 있어.","근처에 식당 두 곳이 있어.","보고서에 오토가 있어.","여기 차들이 있어."]
     }
 }
