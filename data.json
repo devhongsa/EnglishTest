@@ -26,10 +26,14 @@
         "p3.3" : ["open[오픈]","close[클로우즈]","catch[캐치]","drop[드롭]","pick up[픽업]","fall[퍼얼]","put[풋]","show[쇼우]","step on[스텝 언]","take[테이크]","sign[사인]","brush[브러쉬]"],
         "p3.4" : ["climb[클라임]","cross[크로스]","enter[엔터]","follow[팔로우]","crawl[크러얼]","jump[점프]","lean[리인]","pause[퍼-즈]","hesitate[헤지테이트]","creep[크립]","slip[슬립]","wait[웨잇]"],
         "p3.5" : ["fast[패스트]","move[무브]","pull[풀]","push[푸시]","careful[케어풀]","lift[리프트]","throw[쓰로우]","quick[퀵]","slow[슬로우]","still[스틸]","pounce[파운쓰]","slide[슬라이드]"],
-        "p3.6" : ["pass[패스]","raise[레이즈]","lower[로우어]","repair[리페어]","destory[디스트로이]","kick[킥]","smash[스매쉬]","rub[럽]","stir[스터-]","shake[쉐이크]","hang[행]","sweep[스윕]"],
+        "p3.6" : ["pass[패스]","raise[레이즈]","lower[로우어]","repair[리페어]","destroy[디스트로이]","kick[킥]","smash[스매쉬]","rub[럽]","stir[스터-]","shake[쉐이크]","hang[행]","sweep[스윕]"],
+        "p3.7" : ["wipe[와입]","shift[시프트]","arrange[어레인쥐]","clear[클리어]","decorate[데커레이트]","dig[딕]","hit[힛]","knock[녹]","pick[픽]","tie[타이]","patch[팻취]","fold[폴드]"],
+        "p3.8" : ["wrap[랩]","block[블록]","break[브레이크]","build[빌드]","fix[픽스]","imitate[이미테이트]","press[프레스]","replace[리플레이스]","wash[워시]","turn on[턴 온]","check[첵]","charge[차지]"],
+        "p3.9" : ["allow[얼라우]","control[컨트롤]","disturb[디스터브]","forbid[포비드]","influence[인플루언스]","obey[어베이]","permit[퍼밋]","protect[프로텍트]","tolerate[톨러레이트]","treat[트릿]","cooperate[코옵러레이트]","work on[워크 온]"],
+        "p3.10" : ["explain[익스플레인]","order[오더]","persuade[퍼스웨이드]","express[익스프레스]","forgive[포기브]","inform[인포음]","convince[컨빈스]","state[스테이트]","scream[스크림]","exaggerate[이그재저레이트]","bold[볼드]","privately[프라이빗리]"],
         "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
     "I'm ready to work.", "I'm ready to listen.","I'm ready to talk.","I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."],
-        "s2" : ["Welcome! How can i help you today?","I'm here to get a refund for this shirt.","Oh, is there something wrong with it?",
+        "s2" : ["Welcome! How can I help you today?","I'm here to get a refund for this shirt.","Oh, is there something wrong with it?",
     "It's too big on me.", "I'm here to exercise.", "I'm here to relax.", "I'm here to see you.", "I'm here to buy something.",
     "I'm here to meet my friends.","I'm here to help."],
         "s3" : ["Why are you walking so slowly?", "I'm not used to wearing heels.","You'll get the hang of it soon.", "I just hope I don't trip and fall",
@@ -57,7 +61,11 @@
     "Do you need water?","Do you need a break?","Do you need help?","Do you need advice?","Do you need something to eat?","Do you need anything?"],
         "s13" : ["Do you usually binge-watch TV shows?","Yeah, especially on weekends.","Me too! I once watched an entire season in one day.","Wow, that's impressive!","Do you usually take the subway?",
     "Do you usually shop online?","Do you usually go to bed late?","Do you usually work on weekends?","Do you usually sleep in on Sundays?","Do you usually eat breakfast?"],
-        "s14" : ["There is a problem with washing machine.","What kind of problem?","It's not draining water properly.","Okay, I'll call the repairman.","There is a cat.","There is work to do.","There is a book on the table.","There are tow restaurants nearby.","There are typos in the report.","There are cars here."]
+        "s14" : ["There is a problem with washing machine.","What kind of problem?","It's not draining water properly.","Okay, I'll call the repairman.","There is a cat.","There is work to do.","There is a book on the table.","There are two restaurants nearby.","There are typos in the report.","There are cars here."],
+        "s15" : ["There is no Wi-Fi in this cafe.","That's inconvenient! How are we going to work?","Let's just use our mobile data for now.","I guess we have no choice."
+    ,"There is no answer.","There is no bed in the room.","There is no time to waste.","There are no seats left.","There are no eggs in the fridge.","There are no taxis."],
+        "s16" : ["Is there a chance of rain today?","Yes, it might rain in the afternoon.","Oh no! I didn't bring an umbrella.","You can borrow mine if you need one.",
+    "Is there a post office?","Is there a gym in this building?","Is there a problem with the computer?","Are there flowers here?","Are there students in the library?","Is there a bathroom?"]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -101,6 +109,10 @@
     ,"살금살금 움직이다","미끄러지다","기다리다"],
         "p3.5" : ["빠른, 빨리","움직이다, 옮기다","잡아당기다, 끌다","밀다, 밀치다","조심하는, 주의 깊은","들어올리다","던지다","빠른","느린","조용한, 움직이지 않는","덮치다, 덤비다","미끄러지다, 미끄러지듯이 움직이다"],
         "p3.6" : ["건네주다, 통과하다","들어올리다","낮추다, 내리다","수리, 고치다, 수리하다","파괴하다","차기, 발길질, 차다","박살내다, 힘껏 치다","문지르기, 문지르다, 닦다","젓다, 섞다","흔들기, 흔들다","걸다, 매달다","쓸다, 청소하다"],
+        "p3.7" : ["닦기, 닦다","위치 변동,이동하다","정리하다","치우다","장식하다,꾸미다","(구멍을)파다","때리다,치다","노크,두드리다,노크하다","따다, 집다","묶다","부분,덧대다,때우다","주름,접다,개키다"],
+        "p3.8" : ["싸다, 포장하다","막다,차단하다","깨어지다,부서지다","짓다,건설하다","고치다,고정시키다","모방하다","누르다","대신하다,교체하다","씻기,씻다,세탁하다","켜다","확인,살피다,확인하다","요금,청구하다,충전하다"],
+        "p3.9" : ["허락하다","통제,조절,제어하다,조정하다","방해하다","금하다","영향, 영향을주다","따르다,복종하다","허락하다,허가하다","보호하다","용인하다,참다","취급하다,대접하다","협력하다","~에 노력을 들이다,착수하다"],
+        "p3.10" : ["설명하다, 변명하다","명령,지휘,명령하다,주문하다","설득하다","표현하다,나타내다","용서하다,용납하다","알리다","납득시키다,확신시키다","상태, 말하다","비명,비명을 지르다","과장하다","용감한,대담한","남몰래,개인적으로"],
         "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
     "나 들을 준비됐어.","나 얘기할 준비됐어.","나 주문할 준비됐어.","나 재밌게 놀 준비됐어.","나 갈 준비됐어."],
         "s2" : ["어서 오세요! 어떻게 도와드릴까요?", "이 셔츠 환불하러 왔어요.", "셔츠에 무슨 문제가 있나요?","저한테는 너무 커서요.",
@@ -124,6 +136,8 @@
         "s11" : ["나랑 같이 저녁 만들래?","좋아. 뭐 만들 거야?","스파게티 어때? 내 전문이야","맛있을 거 같아.","놀러 올래?","우리랑 같이 할래?","디저트 시킬래?","게임할래?","쇼핑하러 갈래?","저녁 먹을래?"],
         "s12" : ["핸드폰 충전기 필요해?","응, 배터리가 거의 다 됐거든","내 것을 빌려줄 수 있어.","그럼 좋지, 고마워.","물이 필요해?","휴식이 필요해?","도움이 필요해?","조언이 필요해?","먹을 거 필요해?","필요한 거 있어?"],
         "s13" : ["너 보통 드라마 몰아서 봐?","응, 특히 주말에.","나도! 전에는 하루 만에 한 시즌 다 본 적이 있어.","와, 대단한데!","너 보통 지하철 타?","너 보통 온라인으로 쇼핑해?","너 보통 늦게 자?","너 보통 주말에 일해?","너 보통 일요일에 늦잠 자?","너 보통 아침 먹어?"],
-        "s14" : ["세탁기에 문제가 있어.","무슨 문제?","물이 제대로 안 빠져.","알았어. 수리 기사 부를게.","고양이가 있어.","할 일이 있어.","식탁에 책이 있어.","근처에 식당 두 곳이 있어.","보고서에 오토가 있어.","여기 차들이 있어."]
+        "s14" : ["세탁기에 문제가 있어.","무슨 문제?","물이 제대로 안 빠져.","알았어. 수리 기사 부를게.","고양이가 있어.","할 일이 있어.","식탁에 책이 있어.","근처에 식당 두 곳이 있어.","보고서에 오토가 있어.","여기 차들이 있어."],
+        "s15" : ["이 카페에는 와이파이가 없어.","너무 불편하다! 일은 어떻게 하지?","일단 핸드폰 데이터를 사용해보자.","그럴 수밖에 없겠네.","답이 없어.","방에 침대가 없어.","낭비할 시간이 없어.","남은 자리가 없어.","냉장고에 달걀이 없어.","택시가 없어."],
+        "s16" : ["오늘 비가 올 가능성이 있어?","응 오후에 비가 올 수도 있대.","안 되는데! 나 우산을 안 갖고 왔는데.","필요하면 내 거 빌려줄게.","우체국 있어?","이 건물에 헬스장 있어?","컴퓨터에 문제 있어?","여기에 꽃 있어?","도서관에 학생들 있어?","화장실 있어?"]
     }
 }
