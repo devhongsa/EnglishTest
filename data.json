@@ -31,6 +31,10 @@
         "p3.8" : ["wrap[랩]","block[블록]","break[브레이크]","build[빌드]","fix[픽스]","imitate[이미테이트]","press[프레스]","replace[리플레이스]","wash[워시]","turn on[턴 온]","check[첵]","charge[차지]"],
         "p3.9" : ["allow[얼라우]","control[컨트롤]","disturb[디스터브]","forbid[포비드]","influence[인플루언스]","obey[어베이]","permit[퍼밋]","protect[프로텍트]","tolerate[톨러레이트]","treat[트릿]","cooperate[코옵러레이트]","work on[워크 온]"],
         "p3.10" : ["explain[익스플레인]","order[오더]","persuade[퍼스웨이드]","express[익스프레스]","forgive[포기브]","inform[인포음]","convince[컨빈스]","state[스테이트]","scream[스크림]","exaggerate[이그재저레이트]","bold[볼드]","privately[프라이빗리]"],
+        "p3.11" : ["congratulation","thank","welcome","introduce","refer","clarify[클래러파이]","whisper","distinguish","swear","conclude","joke","admit"],
+        "p3.12" : ["achieve","admire","attempt","desire","imagine","mind","pretend","refuse","regard","wonder","strive","aspire"],
+        "p4.1" : ["wear","undress","tight","comfortable","dirty","clean","dry","change","fashion","fit","flatter","narrow"],
+        "p4.2" : ["cook","delicious","fry","boil","hot","cut","mix","raw","sour","sweet","bitter","strong"],
         "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
     "I'm ready to work.", "I'm ready to listen.","I'm ready to talk.","I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."],
         "s2" : ["Welcome! How can I help you today?","I'm here to get a refund for this shirt.","Oh, is there something wrong with it?",
@@ -65,7 +69,11 @@
         "s15" : ["There is no Wi-Fi in this cafe.","That's inconvenient! How are we going to work?","Let's just use our mobile data for now.","I guess we have no choice."
     ,"There is no answer.","There is no bed in the room.","There is no time to waste.","There are no seats left.","There are no eggs in the fridge.","There are no taxis."],
         "s16" : ["Is there a chance of rain today?","Yes, it might rain in the afternoon.","Oh no! I didn't bring an umbrella.","You can borrow mine if you need one.",
-    "Is there a post office?","Is there a gym in this building?","Is there a problem with the computer?","Are there flowers here?","Are there students in the library?","Is there a bathroom?"]
+    "Is there a post office?","Is there a gym in this building?","Is there a problem with the computer?","Are there flowers here?","Are there students in the library?","Is there a bathroom?"],
+        "s17" : ["My throat hurts a little.","You might be catching a cold. Let me make you some tea.","There's nothing like hot tea with honey.","I think so too.","There's nothing like a hot bath.","There's nothing like getting a nice compliment.",
+    "There's nothing like watching the sunset.","There's nothing like spending time with family.","There's nothing like a cold drink on a hot day.","There's nothing like home."],
+        "s18" : ["We need to plan our upcoming wedding.","Yes, let's decide on a location first.","I think we should choose a smaller venue.","Sounds good to me.","I think we should clean.","I think we should invite them.","I think we should study together.",
+        "I think we should cancel the meeting.","I think we should book our flight.","I think we should wait."]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -113,6 +121,10 @@
         "p3.8" : ["싸다, 포장하다","막다,차단하다","깨어지다,부서지다","짓다,건설하다","고치다,고정시키다","모방하다","누르다","대신하다,교체하다","씻기,씻다,세탁하다","켜다","확인,살피다,확인하다","요금,청구하다,충전하다"],
         "p3.9" : ["허락하다","통제,조절,제어하다,조정하다","방해하다","금하다","영향, 영향을주다","따르다,복종하다","허락하다,허가하다","보호하다","용인하다,참다","취급하다,대접하다","협력하다","~에 노력을 들이다,착수하다"],
         "p3.10" : ["설명하다, 변명하다","명령,지휘,명령하다,주문하다","설득하다","표현하다,나타내다","용서하다,용납하다","알리다","납득시키다,확신시키다","상태, 말하다","비명,비명을 지르다","과장하다","용감한,대담한","남몰래,개인적으로"],
+        "p3.11" : ["축하, 축하해요","감사하다,고마워하다","환영,환대,환영하다,맞이하다","소개하다","언급하다,참조하다","분명히 말하다","속삭임,속삭이다","구분하다,구별하다","욕을 하다,맹세하다","끝내다,마치다","농담,농담하다","인정하다"],
+        "p3.12" : ["성취하다","감탄하다,칭찬하다","시도,시도하다","갈망,욕규,갈망하다,바라다","상상하다","마음,생각,상관하다,신경쓰다","~인 척하다","거절하다, 거부하다","관심,존경,~로 여기다","경탄,불가사의,궁금하다,놀라다","분투하다","열망하다"],
+        "p4.1" : ["입다,착용하다","옷을 벗다","꽉 조여 있는,단단한","편안한,쾌적한","더러운","깨끗한,청소하다","마른,건조한,말리다","바꾸다,변하다","유행","어울림,조화,알맞은,맞다,적합하다","(실제보다)돋보이게 하다","좁은"],
+        "p4.2" : ["요리하다","아주 맛있는","튀기다, 굽다","끓다,끓이다","뜨거운,매운","자르다","섞다","익히지 않은, 날것의","신,시큼한","달콤한","맛이 쓴","향이 강한"],
         "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
     "나 들을 준비됐어.","나 얘기할 준비됐어.","나 주문할 준비됐어.","나 재밌게 놀 준비됐어.","나 갈 준비됐어."],
         "s2" : ["어서 오세요! 어떻게 도와드릴까요?", "이 셔츠 환불하러 왔어요.", "셔츠에 무슨 문제가 있나요?","저한테는 너무 커서요.",
@@ -138,6 +150,8 @@
         "s13" : ["너 보통 드라마 몰아서 봐?","응, 특히 주말에.","나도! 전에는 하루 만에 한 시즌 다 본 적이 있어.","와, 대단한데!","너 보통 지하철 타?","너 보통 온라인으로 쇼핑해?","너 보통 늦게 자?","너 보통 주말에 일해?","너 보통 일요일에 늦잠 자?","너 보통 아침 먹어?"],
         "s14" : ["세탁기에 문제가 있어.","무슨 문제?","물이 제대로 안 빠져.","알았어. 수리 기사 부를게.","고양이가 있어.","할 일이 있어.","식탁에 책이 있어.","근처에 식당 두 곳이 있어.","보고서에 오토가 있어.","여기 차들이 있어."],
         "s15" : ["이 카페에는 와이파이가 없어.","너무 불편하다! 일은 어떻게 하지?","일단 핸드폰 데이터를 사용해보자.","그럴 수밖에 없겠네.","답이 없어.","방에 침대가 없어.","낭비할 시간이 없어.","남은 자리가 없어.","냉장고에 달걀이 없어.","택시가 없어."],
-        "s16" : ["오늘 비가 올 가능성이 있어?","응 오후에 비가 올 수도 있대.","안 되는데! 나 우산을 안 갖고 왔는데.","필요하면 내 거 빌려줄게.","우체국 있어?","이 건물에 헬스장 있어?","컴퓨터에 문제 있어?","여기에 꽃 있어?","도서관에 학생들 있어?","화장실 있어?"]
+        "s16" : ["오늘 비가 올 가능성이 있어?","응 오후에 비가 올 수도 있대.","안 되는데! 나 우산을 안 갖고 왔는데.","필요하면 내 거 빌려줄게.","우체국 있어?","이 건물에 헬스장 있어?","컴퓨터에 문제 있어?","여기에 꽃 있어?","도서관에 학생들 있어?","화장실 있어?"],
+        "s17" : ["나 목이 좀 아파.","감기에 걸리는 걸 수도 있어. 차 좀 줄게.","꿀차만큼 좋은 건 없지.","나도 그렇게 생각해.","따뜻한 목욕만큼 좋은 건 없어.","칭찬을 받는 것만큼 좋은 건 없어.","노을을 보는 것만큼 좋은 건 없어.","가족과 시간을 보내는 것만큼 좋은 건 없어.","더운 날에는 차가운 음료만큼 좋은 건 없어.","집만큼 좋은 건 없어."],
+        "s18" : ["우리 다가오는 결혼식을 준비해야 해.","응, 장소를 먼저 정하자.","좀 더 작은 곳에서 하는 게 좋을 것 같아.","난 좋아.","우리 청소하는 게 좋을 것 같아.","그들을 초대하는 게 좋을 것 같아.","우리 같이 공부하는 게 좋을 것 같아.","회의를 취소하는 게 좋을 것 같아.","비행기 예약을 하는 게 좋을 것 같아.","우리 기다리는 게 좋을 것 같아."]
     }
 }
