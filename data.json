@@ -34,6 +34,7 @@
         "p3.11" : ["congratulation","thank","welcome","introduce","refer","clarify[클래러파이]","whisper","distinguish","swear","conclude","joke","admit"],
         "p3.12" : ["achieve","admire","attempt","desire","imagine","mind","pretend","refuse","regard","wonder","strive","aspire"],
         "p4.1" : ["wear","undress","tight","comfortable","dirty","clean","dry","change","fashion","fit","flatter","narrow"],
+        "p4.1#" : ["glasses","shirt","collar","tie","suit","handkerchief[행커치프]","pocket","watch","pants/trousers","shoes","umbrella","hat","socks","sandals","necklace","coat","skirt","belt","gloves","handbag","black","blue","brown","green","grey","orange","pink","purple","red","yellow","white","bright","dark"],
         "p4.2" : ["cook","delicious","fry","boil","hot","cut","mix","raw","sour","sweet","bitter","strong"],
         "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
     "I'm ready to work.", "I'm ready to listen.","I'm ready to talk.","I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."],
@@ -73,7 +74,9 @@
         "s17" : ["My throat hurts a little.","You might be catching a cold. Let me make you some tea.","There's nothing like hot tea with honey.","I think so too.","There's nothing like a hot bath.","There's nothing like getting a nice compliment.",
     "There's nothing like watching the sunset.","There's nothing like spending time with family.","There's nothing like a cold drink on a hot day.","There's nothing like home."],
         "s18" : ["We need to plan our upcoming wedding.","Yes, let's decide on a location first.","I think we should choose a smaller venue.","Sounds good to me.","I think we should clean.","I think we should invite them.","I think we should study together.",
-        "I think we should cancel the meeting.","I think we should book our flight.","I think we should wait."]
+        "I think we should cancel the meeting.","I think we should book our flight.","I think we should wait."],
+        "s19" : ["Should I buy this phone?","I don't think that's a good idea.","Why not?","It's a bit overpriced for its features.","I don't think he agrees.","I don't think it matters.","I don't think we'll finish this.","I don't think she likes that movie.","I don't think this is the right decision.","I don't think they believe me."],
+        "s20" : ["What's your plan for dinner?","I'm thinking about making pizza from scratch.","Cool! Do you have all the ingredients?","Not yet. I need to go grocery shopping.","I'm thinking about getting a haircut.","I'm thinking about the future.","I'm thinking about going on a diet.","I'm thinking about the meeting tomorrow.","I'm thinking about starting a new hobby.","I'm thinking about working out."]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -124,6 +127,8 @@
         "p3.11" : ["축하, 축하해요","감사하다,고마워하다","환영,환대,환영하다,맞이하다","소개하다","언급하다,참조하다","분명히 말하다","속삭임,속삭이다","구분하다,구별하다","욕을 하다,맹세하다","끝내다,마치다","농담,농담하다","인정하다"],
         "p3.12" : ["성취하다","감탄하다,칭찬하다","시도,시도하다","갈망,욕규,갈망하다,바라다","상상하다","마음,생각,상관하다,신경쓰다","~인 척하다","거절하다, 거부하다","관심,존경,~로 여기다","경탄,불가사의,궁금하다,놀라다","분투하다","열망하다"],
         "p4.1" : ["입다,착용하다","옷을 벗다","꽉 조여 있는,단단한","편안한,쾌적한","더러운","깨끗한,청소하다","마른,건조한,말리다","바꾸다,변하다","유행","어울림,조화,알맞은,맞다,적합하다","(실제보다)돋보이게 하다","좁은"],
+        "p4.1#" : ["안경","셔츠","칼라,깃","넥타이","정장,신사복","손수건","주머니","손목시계","바지","구두,신발","우산","모자","양말","샌들","목걸이","외투","치마","허리띠","장갑","핸드백","검은색","파란색","갈색",
+    "녹색","회색","주황색","분홍색","보라색","빨간색","노란색","흰색","밝은,빛나는","짙은,어두운"],
         "p4.2" : ["요리하다","아주 맛있는","튀기다, 굽다","끓다,끓이다","뜨거운,매운","자르다","섞다","익히지 않은, 날것의","신,시큼한","달콤한","맛이 쓴","향이 강한"],
         "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
     "나 들을 준비됐어.","나 얘기할 준비됐어.","나 주문할 준비됐어.","나 재밌게 놀 준비됐어.","나 갈 준비됐어."],
@@ -152,6 +157,8 @@
         "s15" : ["이 카페에는 와이파이가 없어.","너무 불편하다! 일은 어떻게 하지?","일단 핸드폰 데이터를 사용해보자.","그럴 수밖에 없겠네.","답이 없어.","방에 침대가 없어.","낭비할 시간이 없어.","남은 자리가 없어.","냉장고에 달걀이 없어.","택시가 없어."],
         "s16" : ["오늘 비가 올 가능성이 있어?","응 오후에 비가 올 수도 있대.","안 되는데! 나 우산을 안 갖고 왔는데.","필요하면 내 거 빌려줄게.","우체국 있어?","이 건물에 헬스장 있어?","컴퓨터에 문제 있어?","여기에 꽃 있어?","도서관에 학생들 있어?","화장실 있어?"],
         "s17" : ["나 목이 좀 아파.","감기에 걸리는 걸 수도 있어. 차 좀 줄게.","꿀차만큼 좋은 건 없지.","나도 그렇게 생각해.","따뜻한 목욕만큼 좋은 건 없어.","칭찬을 받는 것만큼 좋은 건 없어.","노을을 보는 것만큼 좋은 건 없어.","가족과 시간을 보내는 것만큼 좋은 건 없어.","더운 날에는 차가운 음료만큼 좋은 건 없어.","집만큼 좋은 건 없어."],
-        "s18" : ["우리 다가오는 결혼식을 준비해야 해.","응, 장소를 먼저 정하자.","좀 더 작은 곳에서 하는 게 좋을 것 같아.","난 좋아.","우리 청소하는 게 좋을 것 같아.","그들을 초대하는 게 좋을 것 같아.","우리 같이 공부하는 게 좋을 것 같아.","회의를 취소하는 게 좋을 것 같아.","비행기 예약을 하는 게 좋을 것 같아.","우리 기다리는 게 좋을 것 같아."]
+        "s18" : ["우리 다가오는 결혼식을 준비해야 해.","응, 장소를 먼저 정하자.","좀 더 작은 곳에서 하는 게 좋을 것 같아.","난 좋아.","우리 청소하는 게 좋을 것 같아.","그들을 초대하는 게 좋을 것 같아.","우리 같이 공부하는 게 좋을 것 같아.","회의를 취소하는 게 좋을 것 같아.","비행기 예약을 하는 게 좋을 것 같아.","우리 기다리는 게 좋을 것 같아."],
+        "s19" : ["이 핸드폰을 살까?","좋은 생각 같지 않아.","왜?","기능에 비해 가격이 너무 비싼 것 같아.","그가 동의하는 것 같지 않아.","그게 중요한 것 같지 않아.","우리가 이걸 못 끝낼 것 같아.","그녀가 그 영화를 좋아하는 것 같지 않아.","이게 옳은 결정인 것 같지 않아.","그들이 날 믿는 거 같지 않아."],
+        "s20" : ["저녁은 어떻게 할 거야?","피자를 처음부터 직접 만들어 볼까 생각 중이야.","멋지다! 재료 다 있어?","아직. 장 보러 가야 해.","머리를 자를까 생각 중이야.","미래에 대해 생각하고 있어.","다이어트할까 생각 중이야.","내일 회의에 대해 생각하고 있어.","새로운 취미를 시작해 볼까 생각 중이야.","운동을 할까 생각 중이야."]
     }
 }
