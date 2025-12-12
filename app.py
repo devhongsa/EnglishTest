@@ -985,49 +985,101 @@ def handle_mark(ack, respond, command, client):
 
     # list mode: eng / kor / both
     lines: List[str] = []
+    # helper: split item blocks into chunks so each message has <= 50 blocks
+    def _send_chunked_messages(channel_id: str, header_block: dict, item_blocks: List[dict], actions_block: dict = None, title_text: str = ""):
+        max_blocks = 50
+        # reserve 1 for header, and leave room for actions on the last message
+        per_chunk = max_blocks - 2  # header + (possible actions)
+        if per_chunk < 1:
+            per_chunk = max_blocks - 1
+
+        chunks = [item_blocks[i:i+per_chunk] for i in range(0, len(item_blocks), per_chunk)] or [[]]
+        for idx, chunk in enumerate(chunks, 1):
+            is_last = (idx == len(chunks))
+            blocks_to_send = [header_block] + chunk
+            if is_last and actions_block is not None:
+                blocks_to_send.append(actions_block)
+            # Post message
+            try:
+                if blocks_to_send:
+                    client.chat_postMessage(channel=channel_id, text=title_text, blocks=blocks_to_send)
+                else:
+                    client.chat_postMessage(channel=channel_id, text=title_text)
+            except Exception:
+                # Fallback: send text-only message listing items
+                text_lines = []
+                for i, b in enumerate(item_blocks, 1):
+                    # try to extract plain text from block
+                    txt = b.get("text", {}).get("text") if isinstance(b.get("text"), dict) else None
+                    if not txt:
+                        # try other keys
+                        txt = b.get("text") if isinstance(b.get("text"), str) else None
+                    if not txt:
+                        txt = f"item {i}"
+                    text_lines.append(f"{i}. {txt}")
+                client.chat_postMessage(channel=channel_id, text=(title_text + "\n" + "\n".join(text_lines)))
+
     if mode == "eng":
-        # Build per-item sections so we can attach delete buttons next to each entry
-        blocks = [{"type": "section", "text": {"type": "mrkdwn", "text": f"*(북마크: {user_key})*"}}]
+        header = {"type": "section", "text": {"type": "mrkdwn", "text": f"*(북마크: {user_key})*"}}
+        item_blocks = []
         for i, (tok, eng, kor) in enumerate(resolved, 1):
             sec = {"type": "section", "block_id": f"mark_eng_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {eng}"}}
-            # add delete button as accessory
             del_val = json.dumps({"user_key": user_key, "token": tok}, ensure_ascii=False)
             action_id = f"bookmark_delete_{user_key}_{i}"
             sec["accessory"] = {"type": "button", "action_id": action_id, "text": {"type": "plain_text", "text": "삭제"}, "style": "danger", "value": del_val}
-            blocks.append(sec)
-        # add toggle button to show kor
-        blocks.append({"type": "actions", "block_id": "mark_actions", "elements": [
+            item_blocks.append(sec)
+        actions = {"type": "actions", "block_id": "mark_actions", "elements": [
             {"type": "button", "action_id": "show_kor_for_bookmarks", "text": {"type": "plain_text", "text": "한글로 보기"}, "value": json.dumps({"user_key": user_key})}
-        ]})
+        ]}
         channel_id = command.get("channel_id")
-        client.chat_postMessage(channel=channel_id, text=f"{user_key} 북마크 (영어)", blocks=blocks)
+        title = f"{user_key} 북마크 (영어)"
+        # If total blocks are small, send single message with actions
+        total_blocks = 1 + len(item_blocks) + 1
+        if total_blocks <= 50:
+            client.chat_postMessage(channel=channel_id, text=title, blocks=[header] + item_blocks + [actions])
+        else:
+            _send_chunked_messages(channel_id, header, item_blocks, actions, title_text=title)
         return
 
     if mode == "kor":
-        blocks = [{"type": "section", "text": {"type": "mrkdwn", "text": f"*(북마크: {user_key})*"}}]
+        header = {"type": "section", "text": {"type": "mrkdwn", "text": f"*(북마크: {user_key})*"}}
+        item_blocks = []
         for i, (tok, eng, kor) in enumerate(resolved, 1):
             sec = {"type": "section", "block_id": f"mark_kor_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {kor}"}}
             del_val = json.dumps({"user_key": user_key, "token": tok}, ensure_ascii=False)
             action_id = f"bookmark_delete_{user_key}_{i}"
             sec["accessory"] = {"type": "button", "action_id": action_id, "text": {"type": "plain_text", "text": "삭제"}, "style": "danger", "value": del_val}
-            blocks.append(sec)
-        blocks.append({"type": "actions", "block_id": "mark_actions", "elements": [
+            item_blocks.append(sec)
+        actions = {"type": "actions", "block_id": "mark_actions", "elements": [
             {"type": "button", "action_id": "show_eng_for_bookmarks", "text": {"type": "plain_text", "text": "영어로 보기"}, "value": json.dumps({"user_key": user_key})}
-        ]})
+        ]}
         channel_id = command.get("channel_id")
-        client.chat_postMessage(channel=channel_id, text=f"{user_key} 북마크 (한글)", blocks=blocks)
+        title = f"{user_key} 북마크 (한글)"
+        total_blocks = 1 + len(item_blocks) + 1
+        if total_blocks <= 50:
+            client.chat_postMessage(channel=channel_id, text=title, blocks=[header] + item_blocks + [actions])
+        else:
+            _send_chunked_messages(channel_id, header, item_blocks, actions, title_text=title)
         return
 
     # default: show both with delete buttons
-    blocks = [{"type": "section", "text": {"type": "mrkdwn", "text": f"*(북마크: {user_key})*"}}]
+    header = {"type": "section", "text": {"type": "mrkdwn", "text": f"*(북마크: {user_key})*"}}
+    item_blocks = []
     for i, (tok, eng, kor) in enumerate(resolved, 1):
         sec = {"type": "section", "block_id": f"mark_both_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {eng} : {kor}"}}
         del_val = json.dumps({"user_key": user_key, "token": tok}, ensure_ascii=False)
         action_id = f"bookmark_delete_{user_key}_{i}"
         sec["accessory"] = {"type": "button", "action_id": action_id, "text": {"type": "plain_text", "text": "삭제"}, "style": "danger", "value": del_val}
-        blocks.append(sec)
+        item_blocks.append(sec)
     channel_id = command.get("channel_id")
-    client.chat_postMessage(channel=channel_id, text=f"{user_key} 북마크", blocks=blocks)
+    title = f"{user_key} 북마크"
+    actions = None
+    total_blocks = 1 + len(item_blocks)
+    if total_blocks <= 50:
+        client.chat_postMessage(channel=channel_id, text=title, blocks=[header] + item_blocks)
+    else:
+        # no actions for default view; chunk into messages
+        _send_chunked_messages(channel_id, header, item_blocks, actions, title_text=title)
 
 
 @app.action(re.compile(r"^bookmark_select_"))
