@@ -37,6 +37,7 @@
         "p4.1#" : ["glasses","shirt","collar","tie","suit","handkerchief[행커치프]","pocket","watch","pants/trousers","shoes","umbrella","hat","socks","sandals","necklace","coat","skirt","belt","gloves","handbag","black","blue","brown","green","grey","orange","pink","purple","red","yellow","white","bright","dark"],
         "p4.2" : ["cook","delicious","fry","boil","hot","cut","mix","raw","sour","sweet","bitter","strong"],
         "p4.3" : ["eat","drink","full","hungry","bite","smell","swallow","taste","thirsty","drunk","savor","chew"],
+        "p4.3#" :["breakfast","lunch","dinner","supper","morning tea","eating out","menu","cafeteria","restaurant","meat","beef","pork","chicken","lamb","mutton","fish","sausage","ham","hamburger","rice","vegetable","sandwich","cookie","dessert","pudding","salad","soup","dressing","cheese","chocolate","ice cream","jam","candy,sweets","water","coffee","juice","tea","milk","soda","dish","bowl","glass","spoon","chopsticks","fork","knife","pan","pot","frying pan"],
         "p4.4" : ["live","stay","rent","tidy","use","comfortable","cosy","modern","convenient","practical","property","musty"],
         "p5.1" : ["agree","answer","ask","call","promise","repeat","say","speak","talk","tell","recite","whisper"],
         "p5.2" : ["borrow","copy","fill in","look up","read","write","define","meaning","spell","translate","plagiarize","edit"],
@@ -82,7 +83,9 @@
         "s19" : ["Should I buy this phone?","I don't think that's a good idea.","Why not?","It's a bit overpriced for its features.","I don't think he agrees.","I don't think it matters.","I don't think we'll finish this.","I don't think she likes that movie.","I don't think this is the right decision.","I don't think they believe me."],
         "s20" : ["What's your plan for dinner?","I'm thinking about making pizza from scratch.","Cool! Do you have all the ingredients?","Not yet. I need to go grocery shopping.","I'm thinking about getting a haircut.","I'm thinking about the future.","I'm thinking about going on a diet.","I'm thinking about the meeting tomorrow.","I'm thinking about starting a new hobby.","I'm thinking about working out."],
         "s21" : ["Hey, I heard you started your new job.","I did. I'm still adjusting, but so far so good!","Great! Tell me about your coworkers.","They're wonderful! Everyone is so nice.","Tell me about your day.","Tell me about the blind date.","Tell me about your favorite movie.","Tell me about the trip to Italy.","Tell me the truth.","Tell me about your weekend."],
-        "s22" : ["You look so happy today! What's going on?","Hey, let me tell you about my weekend! I got engaged!","Wow, that's amazing! Congratulations!","Thanks! I'm over the moon right now.","Let me tell you about the concert.","Let me tell you about my date.","Let me tell you about my weekend plans.","Let me tell you about this new app.","Let me tell you about my goals.","Let me tell you about my trip."]
+        "s22" : ["You look so happy today! What's going on?","Hey, let me tell you about my weekend! I got engaged!","Wow, that's amazing! Congratulations!","Thanks! I'm over the moon right now.","Let me tell you about the concert.","Let me tell you about my date.","Let me tell you about my weekend plans.","Let me tell you about this new app.","Let me tell you about my goals.","Let me tell you about my trip."],
+        "s23" : ["Are you going to the party tonight?","Of course! I told you that I wouldn't miss it.","Great! What time should we meet up?","I'll pick you up at seven.","I told you that it would rain.","I told you to be careful.","I told you so.","I told you to clean your room.","I told you that they forgot.","I told you to bring an umbrella."],
+        "s24" : ["Is everything all right?","Yeah, I'm just exhausted from work.","I can tell that you're stressed. Let's go grab some coffee.","That would be nice, thanks.","I can tell that she's upset.","I can tell that something's wrong.","I can't tell if you're joking.","I can't tell if he likes his gift.","I can't tell if the bag is real.","I can tell that you're lying."]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -137,6 +140,7 @@
     "녹색","회색","주황색","분홍색","보라색","빨간색","노란색","흰색","밝은,빛나는","짙은,어두운"],
         "p4.2" : ["요리하다","아주 맛있는","튀기다, 굽다","끓다,끓이다","뜨거운,매운","자르다","섞다","익히지 않은, 날것의","신,시큼한","달콤한","맛이 쓴","향이 강한"],
         "p4.3" : ["먹다","음료,마시다","배부르게 먹은","배고픈","물다,베어 물다","냄새, 냄새가 나다","삼키다","맛,맛이 나다,맛보다","목이 마른","술에 취한","맛,풍미,맛을 내다, 맛보다","씹다"],
+        "p4.3#" :["아침 식사","점심 식사","저녁 식사","저녁 식사","오전에 마시는 차","외식","메뉴,차림표","카페테리아(식당)","고기","소고기","돼지고기","닭고기","(새끼)양고기","양고기","생선","소시지","햄","햄버거","쌀,밥","채소","샌드위치","쿠키","디저트","푸딩","샐러드","수프","드레싱,소스","치즈","초콜릿","아이스크림","잼","사탕","물","커피","주스","차","우유","탄산음료","접시","사발,그릇","유리컵","숟가락","젓가락","포크","칼","(손잡이 달린)냄비","냄비","프라이팬"],
         "p4.4" : ["살다","머무르다, 있다","임대, 임대하다","깔끔한,잘 정돈된,정리하다","사용,사용하다","안락한","아늑한","현대의","편리한","실용적인","재산,소유물,부동산","퀴퀴한 냄새가 나는"],
         "p5.1" : ["동의하다","대답,대답하다","질문하다,요청하다","전화,~라고 부르다,전화하다","약속,약속하다","반복,반복하다","말하다","말하다","이야기,이야기하다","말하다","암송하다","속삭이다,귓속말을 하다"],
         "p5.2" : ["빌리다","복사,복사하다,베끼다","작성하다","찾아보다","읽다","쓰다","정의하다","뜻,의미","~의 철자를 말하다[쓰다]","번역하다,통역하다","표절하다","편집하다,수정하다"],
@@ -171,6 +175,8 @@
         "s19" : ["이 핸드폰을 살까?","좋은 생각 같지 않아.","왜?","기능에 비해 가격이 너무 비싼 것 같아.","그가 동의하는 것 같지 않아.","그게 중요한 것 같지 않아.","우리가 이걸 못 끝낼 것 같아.","그녀가 그 영화를 좋아하는 것 같지 않아.","이게 옳은 결정인 것 같지 않아.","그들이 날 믿는 거 같지 않아."],
         "s20" : ["저녁은 어떻게 할 거야?","피자를 처음부터 직접 만들어 볼까 생각 중이야.","멋지다! 재료 다 있어?","아직. 장 보러 가야 해.","머리를 자를까 생각 중이야.","미래에 대해 생각하고 있어.","다이어트할까 생각 중이야.","내일 회의에 대해 생각하고 있어.","새로운 취미를 시작해 볼까 생각 중이야.","운동을 할까 생각 중이야."],
         "s21" : ["너 새 직장에 다니기 시작했다며.","맞아. 아직 적응 중이긴 한데, 아직까지는 괜찮아!","다행이다! 동료들은 어때?","정말 좋은 분들이야! 다들 너무 친절해.","오늘 하루 어땠어?(어땠는지 말해줘)","소개팅 어땠어?(어땠는지 말해줘)","네가 가장 좋아하는 영화에 대해 말해줘.","이탈리아 여행에 대해 말해줘.","사실대로 말해줘.","주말 어땠어?(어땠는지 말해줘)"],
-        "s22" : ["오늘 엄청 행복해 보이네! 무슨 일 있어?","주말에 있었던 일을 말해 줄게! 나 약혼했어!","와, 너무 잘됐다! 축하해!","고마워! 지금 기분이 너무 좋아.","콘서트 어땠는지 말해 줄게.","데이트 어땠는지 말해 줄게.","내 주말 계획에 대해 말해 줄게.","이 새로운 앱에 대해 설명해 줄게.","내 목표에 대해 말해 줄게.","내 여행에 대해 말해 줄게."]
+        "s22" : ["오늘 엄청 행복해 보이네! 무슨 일 있어?","주말에 있었던 일을 말해 줄게! 나 약혼했어!","와, 너무 잘됐다! 축하해!","고마워! 지금 기분이 너무 좋아.","콘서트 어땠는지 말해 줄게.","데이트 어땠는지 말해 줄게.","내 주말 계획에 대해 말해 줄게.","이 새로운 앱에 대해 설명해 줄게.","내 목표에 대해 말해 줄게.","내 여행에 대해 말해 줄게."],
+        "s23" : ["오늘 밤에 파티에 갈 거야?","물론이지! 꼭 가겠다고 했잖아.","좋아! 우리 몇 시에 만날까?","내가 7시에 데리러 갈게.","내가 비 올 거라고 했잖아.","내가 조심하라고 했잖아.","그러게 내가 뭐랬어(내 말이 맞잖아).","방을 청소하라고 했잖아.","그들이 깜빡했다고 했잖아.","내가 우산을 갖고 오라고 했잖아."],
+        "s24" : ["괜찮아?","응, 그냥 일 때문에 지쳐서 그래.","스트레스받은 것 같네. 커피 한잔하러 갈까?","그거 좋겠다, 고마워.","그녀가 속상해 보여(속상하다는 걸 알 수 있어).","뭔가 잘못됐다는 걸 알 수 있어.","네가 농담하는 건지 모르겠어.","그가 선물을 마음에 들어 하는지 모르겠어.","이 가방이 진품인지 모르겠어.","난 네가 거짓말을 하고 있다는 걸 알 수 있어."]
     }
 }
