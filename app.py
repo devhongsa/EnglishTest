@@ -404,10 +404,11 @@ def handle_eng(ack, respond, command, client):
         bm = load_bookmarks()
         bm_users = list(bm.keys()) or []
 
-        blocks: List[Dict[str, Any]] = []
-        blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {text})*"}})
-
-        # Add each item as a section + actions (bookmark buttons)
+        # Build header block
+        header_block = {"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {text})*"}}
+        
+        # Build item blocks
+        item_blocks: List[Dict[str, Any]] = []
         for i, (ch, idx, word) in enumerate(items_detailed, 1):
             # Build section with accessory overflow to choose bookmark user (keeps layout compact: button beside word)
             section = {"type": "section", "block_id": f"eng_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {word}"}}
@@ -419,10 +420,10 @@ def handle_eng(ack, respond, command, client):
                     opts.append({"text": {"type": "plain_text", "text": u}, "value": val})
                 action_id = f"bookmark_select_eng_{i}"
                 section["accessory"] = {"type": "overflow", "action_id": action_id, "options": opts}
-            blocks.append(section)
+            item_blocks.append(section)
 
-        # overall action (view kor)
-        blocks.append({"type": "actions", "block_id": "eng_actions", "elements": [
+        # Build actions block
+        actions_block = {"type": "actions", "block_id": "eng_actions", "elements": [
             {
                 "type": "button",
                 "action_id": "show_kor_for_range",
@@ -430,14 +431,50 @@ def handle_eng(ack, respond, command, client):
                 "style": "primary",
                 "value": json.dumps({"chapters_expr": text})
             }
-        ]})
+        ]}
+        
+        # Build missing context block if needed
+        missing_block = None
         if missing:
-            blocks.append({"type": "context", "elements": [
+            missing_block = {"type": "context", "elements": [
                 {"type": "mrkdwn", "text": f"_(데이터 없음: {' '.join(missing)})_"}
-            ]})
+            ]}
 
         channel_id = command.get("channel_id")
-        res = client.chat_postMessage(channel=channel_id, text="영어 목록", blocks=blocks)
+        max_blocks = 50
+        
+        # Calculate total blocks: header(1) + items + actions(1) + missing(0 or 1)
+        total_blocks = 1 + len(item_blocks) + 1 + (1 if missing_block else 0)
+        
+        if total_blocks <= max_blocks:
+            # All blocks fit in one message
+            blocks = [header_block] + item_blocks + [actions_block]
+            if missing_block:
+                blocks.append(missing_block)
+            client.chat_postMessage(channel=channel_id, text="영어 목록", blocks=blocks)
+        else:
+            # Need to split into multiple messages
+            # Reserve: header(1) + actions(1) + missing(0 or 1) = 2 or 3 blocks
+            reserved = 2 + (1 if missing_block else 0)
+            per_chunk = max_blocks - reserved
+            if per_chunk < 1:
+                per_chunk = max_blocks - 1
+            
+            chunks = [item_blocks[i:i+per_chunk] for i in range(0, len(item_blocks), per_chunk)] or [[]]
+            for idx, chunk in enumerate(chunks, 1):
+                is_last = (idx == len(chunks))
+                blocks_to_send = [header_block] + chunk
+                if is_last:
+                    blocks_to_send.append(actions_block)
+                    if missing_block:
+                        blocks_to_send.append(missing_block)
+                # Add chunk indicator for multi-message case
+                if len(chunks) > 1:
+                    chunk_header = {"type": "context", "elements": [
+                        {"type": "mrkdwn", "text": f"_(부분 {idx}/{len(chunks)})_"}
+                    ]}
+                    blocks_to_send.insert(1, chunk_header)
+                client.chat_postMessage(channel=channel_id, text="영어 목록", blocks=blocks_to_send)
         # 안내 (선택)
     except Exception as e:
         respond(response_type="ephemeral", text=f"오류: {e}\n{USAGE_ENG}")
@@ -460,8 +497,11 @@ def handle_kor(ack, respond, command, client):
         bm = load_bookmarks()
         bm_users = list(bm.keys()) or []
 
-        blocks: List[Dict[str, Any]] = []
-        blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {text})*"}})
+        # Build header block
+        header_block = {"type": "section", "text": {"type": "mrkdwn", "text": f"*(챕터 {text})*"}}
+        
+        # Build item blocks
+        item_blocks: List[Dict[str, Any]] = []
         for i, (ch, idx, word) in enumerate(items_detailed, 1):
             section = {"type": "section", "block_id": f"kor_item_{i}", "text": {"type": "mrkdwn", "text": f"{i}. {word}"}}
             if bm_users:
@@ -471,9 +511,10 @@ def handle_kor(ack, respond, command, client):
                     opts.append({"text": {"type": "plain_text", "text": u}, "value": val})
                 action_id = f"bookmark_select_kor_{i}"
                 section["accessory"] = {"type": "overflow", "action_id": action_id, "options": opts}
-            blocks.append(section)
+            item_blocks.append(section)
 
-        blocks.append({"type": "actions", "block_id": "kor_actions", "elements": [
+        # Build actions block
+        actions_block = {"type": "actions", "block_id": "kor_actions", "elements": [
             {
                 "type": "button",
                 "action_id": "show_eng_for_range",
@@ -481,14 +522,50 @@ def handle_kor(ack, respond, command, client):
                 "style": "primary",
                 "value": json.dumps({"chapters_expr": text})
             }
-        ]})
+        ]}
+        
+        # Build missing context block if needed
+        missing_block = None
         if missing:
-            blocks.append({"type": "context", "elements": [
+            missing_block = {"type": "context", "elements": [
                 {"type": "mrkdwn", "text": f"_(데이터 없음: {' '.join(missing)})_"}
-            ]})
+            ]}
 
         channel_id = command.get("channel_id")
-        res = client.chat_postMessage(channel=channel_id, text="한글 뜻 목록", blocks=blocks)
+        max_blocks = 50
+        
+        # Calculate total blocks: header(1) + items + actions(1) + missing(0 or 1)
+        total_blocks = 1 + len(item_blocks) + 1 + (1 if missing_block else 0)
+        
+        if total_blocks <= max_blocks:
+            # All blocks fit in one message
+            blocks = [header_block] + item_blocks + [actions_block]
+            if missing_block:
+                blocks.append(missing_block)
+            client.chat_postMessage(channel=channel_id, text="한글 뜻 목록", blocks=blocks)
+        else:
+            # Need to split into multiple messages
+            # Reserve: header(1) + actions(1) + missing(0 or 1) = 2 or 3 blocks
+            reserved = 2 + (1 if missing_block else 0)
+            per_chunk = max_blocks - reserved
+            if per_chunk < 1:
+                per_chunk = max_blocks - 1
+            
+            chunks = [item_blocks[i:i+per_chunk] for i in range(0, len(item_blocks), per_chunk)] or [[]]
+            for idx, chunk in enumerate(chunks, 1):
+                is_last = (idx == len(chunks))
+                blocks_to_send = [header_block] + chunk
+                if is_last:
+                    blocks_to_send.append(actions_block)
+                    if missing_block:
+                        blocks_to_send.append(missing_block)
+                # Add chunk indicator for multi-message case
+                if len(chunks) > 1:
+                    chunk_header = {"type": "context", "elements": [
+                        {"type": "mrkdwn", "text": f"_(부분 {idx}/{len(chunks)})_"}
+                    ]}
+                    blocks_to_send.insert(1, chunk_header)
+                client.chat_postMessage(channel=channel_id, text="한글 뜻 목록", blocks=blocks_to_send)
     except Exception as e:
         respond(response_type="ephemeral", text=f"오류: {e}\n{USAGE_KOR}")
 
