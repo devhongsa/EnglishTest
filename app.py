@@ -365,7 +365,7 @@ def resolve_bookmark_tokens(tokens: List[str]) -> List[Tuple[str, str, str]]:
     for t in tokens:
         if not isinstance(t, str) or "#" not in t:
             continue
-        chapter, _, idx_s = t.partition("#")
+        chapter, _, idx_s = t.rpartition("#")
         try:
             idx = int(idx_s)
         except Exception:

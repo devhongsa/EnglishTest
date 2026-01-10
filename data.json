@@ -42,6 +42,7 @@
         "p4.4#" :["television","refrigerator","telephone","clock","radio","furniture","wardrobe[워드로웁]","sofa","cushion","table","chair","desk","drawer","light","cupboard","painting","picture","curtain","pillow","single bed","double bed","mattress","sheet","blanket","rug","carpet","mirror","washstand","bathtub","shower","tap","key","lock","broom","entrance","balcony","first floor","upstairs","downstairs","basement","corridor[커리더]","hall","living room","bedroom","dining room","kitchen","bathroom","toilet","elevator","door","window","roof","chimney","floor","wall","stair","ceiling","gate","garden","lawn","yard","fence","garage","city","downtown","town","village","farm","road","street","sidewalk","crossing","path","bridge","market","supermarket","store/shop","mall","bank","hospital","pharmacy","post office","subway station","library","park"],
         "p5.1" : ["agree","answer","ask","call","promise","repeat","say","speak","talk","tell","recite","whisper"],
         "p5.2" : ["borrow","copy","fill in","look up","read","write","define","meaning","spell","translate","plagiarize[플레이저라이즈]","edit"],
+        "p5.2#" : ["language","foreign language","national language","vocabulary","pronunciation","grammar","spelling","tense","rule","well","very well","quite well","fluently","not very well","poorly","loudly","softly","quickly","slowly","quietly","aloud"],
         "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
     "I'm ready to work.", "I'm ready to listen.","I'm ready to talk.","I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."],
         "s2" : ["Welcome! How can I help you today?","I'm here to get a refund for this shirt.","Oh, is there something wrong with it?",
@@ -88,7 +89,9 @@
         "s23" : ["Are you going to the party tonight?","Of course! I told you that I wouldn't miss it.","Great! What time should we meet up?","I'll pick you up at seven.","I told you that it would rain.","I told you to be careful.","I told you so.","I told you to clean your room.","I told you that they forgot.","I told you to bring an umbrella."],
         "s24" : ["Is everything all right?","Yeah, I'm just exhausted from work.","I can tell that you're stressed. Let's go grab some coffee.","That would be nice, thanks.","I can tell that she's upset.","I can tell that something's wrong.","I can't tell if you're joking.","I can't tell if he likes his gift.","I can't tell if the bag is real.","I can tell that you're lying."],
         "s25" : ["Is your apartment close to your workplace?","It takes thirty minutes to get to work.","That's not too bad.","I agree. It could be worse.","It takes a week.","It takes ten minutes to get to the station.","It takes an hour to cook dinner.","It takes five hours to get to Thailand.","It takes a long time to learn French.","It takes an hour to get there."],
-        "s26" : ["I forgot to make a reservation for dinner.","Don't worry, I'll take care of the reservation.","Thanks! You're a lifesaver.","No problem. I'll do it right away.","I'll take care of the kids.","I'll take care of dinner tonight.","I'll take care of the dishes.","I'll take care of the bill.","Don't worry, I'll take care of the paperwork.","I'll take care of this problem."]
+        "s26" : ["I forgot to make a reservation for dinner.","Don't worry, I'll take care of the reservation.","Thanks! You're a lifesaver.","No problem. I'll do it right away.","I'll take care of the kids.","I'll take care of dinner tonight.","I'll take care of the dishes.","I'll take care of the bill.","Don't worry, I'll take care of the paperwork.","I'll take care of this problem."],
+        "s27" : ["The dishes are piling up again.","Let's take turns washing them this week.","That sounds fair.I'll start today.","Great, I'll do them tomorrow.","Let's take turns playing games.","Let's take turns watching the baby.","Let's take turns doing the laundry. You go first.","Let's take turns asking questions.","Let's take turns presenting our ideas.","Let's take turns driving."],
+        "s28" : ["I'd like an iced Americano, please.","Sure, your total is five dollars.","Do you take mobile payments here?","Yes, we accept all payment apps.","Do you take cash only?","Do you take online orders?","Do you take returns?","Do you take reservations?","Do you take walk-ins?","Do you take credit cards?"]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -148,6 +151,7 @@
         "p4.4#" :["텔레비전","냉장고","전화,전화기","시계","라디오","가구","옷장","소파","쿠션","테이블,식탁","의자","책상","서랍","전등","찬장","그림","사진","커튼","베개","1인용 침대","2인용 침대","매트리스","시트,홑이불","담요","깔개,양탄자","카페트","거울","세면대","욕조","샤워기","수도꼭지","열쇠","자물쇠","빗자루","출입구,현관","발코니,베란다","1층","위층,2층","아래층","지하층","복도","홀","거실","침실","식당","부엌","욕실,화장실(미)","화장실(영),변기","엘리베이터","문","창문","지붕","굴뚝","바닥,마루","벽","계단","천장","대문,문","정원","잔디","마당","울타리","차고","도시","번화가,상업지구","도시,읍","마을","농장","도로","거리,도로","인도,보도","횡단보도,건널목","오솔길","다리","시장","슈퍼마켓","가게,상점","쇼핑센터","은행","병원","약국","우체국","지하철역","도서관","공원"],
         "p5.1" : ["동의하다","대답,대답하다","질문하다,요청하다","전화,~라고 부르다,전화하다","약속,약속하다","반복,반복하다","말하다","말하다","이야기,이야기하다","말하다","암송하다","속삭이다,귓속말을 하다"],
         "p5.2" : ["빌리다","복사,복사하다,베끼다","작성하다","찾아보다","읽다","쓰다","정의하다","뜻,의미","~의 철자를 말하다[쓰다]","번역하다,통역하다","표절하다","편집하다,수정하다"],
+        "p5.2#" : ["언어","외국어","국어","어휘","발음","문법","철자법, 맞춤법","(동사의)시제","규칙","잘","아주 잘","아주 잘","유창하게","잘 못하는","형편없이","큰 소리로","부드럽게","빠르게","천천히, 느리게","조용하게","큰 소리로"],
         "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
     "나 들을 준비됐어.","나 얘기할 준비됐어.","나 주문할 준비됐어.","나 재밌게 놀 준비됐어.","나 갈 준비됐어."],
         "s2" : ["어서 오세요! 어떻게 도와드릴까요?", "이 셔츠 환불하러 왔어요.", "셔츠에 무슨 문제가 있나요?","저한테는 너무 커서요.",
@@ -183,6 +187,8 @@
         "s23" : ["오늘 밤에 파티에 갈 거야?","물론이지! 꼭 가겠다고 했잖아.","좋아! 우리 몇 시에 만날까?","내가 7시에 데리러 갈게.","내가 비 올 거라고 했잖아.","내가 조심하라고 했잖아.","그러게 내가 뭐랬어(내 말이 맞잖아).","방을 청소하라고 했잖아.","그들이 깜빡했다고 했잖아.","내가 우산을 갖고 오라고 했잖아."],
         "s24" : ["괜찮아?","응, 그냥 일 때문에 지쳐서 그래.","스트레스받은 것 같네. 커피 한잔하러 갈까?","그거 좋겠다, 고마워.","그녀가 속상해 보여(속상하다는 걸 알 수 있어).","뭔가 잘못됐다는 걸 알 수 있어.","네가 농담하는 건지 모르겠어.","그가 선물을 마음에 들어 하는지 모르겠어.","이 가방이 진품인지 모르겠어.","난 네가 거짓말을 하고 있다는 걸 알 수 있어."],
         "s25" : ["집이 직장이랑 가까워?","출근하는 데 30분 걸려.","그 정도면 괜찮네.","맞아.이 정도면 나쁘지 않지.","일주일 걸려.","역까지 가는 데 10분 걸려.","저녁을 만드는 데 1시간 걸려.","태국까지 가는 데 5시간 걸려.","불어를 배우는 데 오래 걸려.","거기에 가는 데 1시간 걸려."],
-        "s26" : ["저녁 식당 예약하는 걸 깜빡했어.","걱정하지 마, 내가 예약할게.","고마워! 네 덕에 살았어.","고맙긴 뭘. 지금 바로 예약할게.","아이들은 내가 맡아서 돌볼게.","오늘 저녁은 내가 맡아서 할게.","설거지는 내가 맡아서 할게.","계산은 내가 할게.","걱정하지 마, 서류는 내가 맡아서 처리할게.","이 문제는 내가 맡아서 해결할게."]
+        "s26" : ["저녁 식당 예약하는 걸 깜빡했어.","걱정하지 마, 내가 예약할게.","고마워! 네 덕에 살았어.","고맙긴 뭘. 지금 바로 예약할게.","아이들은 내가 맡아서 돌볼게.","오늘 저녁은 내가 맡아서 할게.","설거지는 내가 맡아서 할게.","계산은 내가 할게.","걱정하지 마, 서류는 내가 맡아서 처리할게.","이 문제는 내가 맡아서 해결할게."],
+        "s27" : ["설거지가 또 쌓이고 있어.","이번 주에는 돌아가면서 설거지하자.","합리적이네. 내가 오늘 할게.","좋아, 난 내일 할게.","돌아가면서 게임하자.","아기를 교대로 보자.","돌아가면서 빨래하자. 너 먼저 해.","돌아가면서 질문하자.","돌아가면서 아이디어를 발표하자.","교대로 운전하자."],
+        "s28" : ["아이스 아메리카노 한 잔 주세요.","네, 다 해서 총 5달러입니다.","여기 모바일 결제되나요?","네, 모든 결제는 앱 사용이 가능합니다.","현금만 받나요?","온라인 주문이 가능한가요?","반품이 가능한가요?","예약을 받나요?","예약 없이 방문 가능한가요?","카드 받나요?"]
     }
 }
