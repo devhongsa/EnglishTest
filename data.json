@@ -43,6 +43,10 @@
         "p5.1" : ["agree","answer","ask","call","promise","repeat","say","speak","talk","tell","recite","whisper"],
         "p5.2" : ["borrow","copy","fill in","look up","read","write","define","meaning","spell","translate","plagiarize[플레이저라이즈]","edit"],
         "p5.2#" : ["language","foreign language","national language","vocabulary","pronunciation","grammar","spelling","tense","rule","well","very well","quite well","fluently","not very well","poorly","loudly","softly","quickly","slowly","quietly","aloud"],
+        "p5.3" : ["know","learn","mark","memorize","pass","practice","remember","forget","teach","fail","review","preview"],
+        "p5.4" : ["attend","concentrate","discover","educate","prepare","clever","hard-working","intelligent","lazy","succeed","take notes","postpone"],
+        "p5.5" : ["according to","contain","deal with","describe","include","translate","realistic"],
+        "p6.1" : ["play","event","game","match","race","tournament","dive","swim","ride","gamble","seat","rank"],
         "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
     "I'm ready to work.", "I'm ready to listen.","I'm ready to talk.","I'm ready to order.", "I'm ready to have fun.", "I'm ready to go."],
         "s2" : ["Welcome! How can I help you today?","I'm here to get a refund for this shirt.","Oh, is there something wrong with it?",
@@ -91,7 +95,9 @@
         "s25" : ["Is your apartment close to your workplace?","It takes thirty minutes to get to work.","That's not too bad.","I agree. It could be worse.","It takes a week.","It takes ten minutes to get to the station.","It takes an hour to cook dinner.","It takes five hours to get to Thailand.","It takes a long time to learn French.","It takes an hour to get there."],
         "s26" : ["I forgot to make a reservation for dinner.","Don't worry, I'll take care of the reservation.","Thanks! You're a lifesaver.","No problem. I'll do it right away.","I'll take care of the kids.","I'll take care of dinner tonight.","I'll take care of the dishes.","I'll take care of the bill.","Don't worry, I'll take care of the paperwork.","I'll take care of this problem."],
         "s27" : ["The dishes are piling up again.","Let's take turns washing them this week.","That sounds fair.I'll start today.","Great, I'll do them tomorrow.","Let's take turns playing games.","Let's take turns watching the baby.","Let's take turns doing the laundry. You go first.","Let's take turns asking questions.","Let's take turns presenting our ideas.","Let's take turns driving."],
-        "s28" : ["I'd like an iced Americano, please.","Sure, your total is five dollars.","Do you take mobile payments here?","Yes, we accept all payment apps.","Do you take cash only?","Do you take online orders?","Do you take returns?","Do you take reservations?","Do you take walk-ins?","Do you take credit cards?"]
+        "s28" : ["I'd like an iced Americano, please.","Sure, your total is five dollars.","Do you take mobile payments here?","Yes, we accept all payment apps.","Do you take cash only?","Do you take online orders?","Do you take returns?","Do you take reservations?","Do you take walk-ins?","Do you take credit cards?"],
+        "s29" : ["This store has so many nice things.","Look at this sweater. It's so pretty.","That would suit you. You should try it on.","Good idea. I hope they have my size.","Look at that puppy.","Look at the price of this computer.","Look at this bag I just bought.","Don't look at my phone.","Don't look at the sun directly.","Look at this picture."],
+        "s30" : ["The roads are really slippery today.","Look out for ice on the road.","Okay, I'll drive extra slowly.","Yes, better safe than sorry!","Look out for wet floors.","Look out for pickpockets.","Look out for phone scams.","Look out for errors in the report.","Look out for sales next week.","Look out for cars."]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -152,6 +158,10 @@
         "p5.1" : ["동의하다","대답,대답하다","질문하다,요청하다","전화,~라고 부르다,전화하다","약속,약속하다","반복,반복하다","말하다","말하다","이야기,이야기하다","말하다","암송하다","속삭이다,귓속말을 하다"],
         "p5.2" : ["빌리다","복사,복사하다,베끼다","작성하다","찾아보다","읽다","쓰다","정의하다","뜻,의미","~의 철자를 말하다[쓰다]","번역하다,통역하다","표절하다","편집하다,수정하다"],
         "p5.2#" : ["언어","외국어","국어","어휘","발음","문법","철자법, 맞춤법","(동사의)시제","규칙","잘","아주 잘","아주 잘","유창하게","잘 못하는","형편없이","큰 소리로","부드럽게","빠르게","천천히, 느리게","조용하게","큰 소리로"],
+        "p5.3" : ["알다, 알고 있다","배우다","점수, 채점하다","암기하다","합격하다, 통과하다","연습, 연습하다","기억하다","잊다","가르치다","실패하다","복습, 논평, 복습하다, 논평하다","예습, 시사회, 예습하다, 간단히 소개하다"],
+        "p5.4" : ["참석하다","집중하다","발견하다","교육하다","준비하다","영리한, 똑똑한","근면한","총명한, 똑똑한","게으른","성공하다","필기하다","연기하다, 미루다"],
+        "p5.5" : ["~에 의하면, 따르면","~이 들어 있다","처리하다, ~을 다루다","말하다, 묘사하다","포함하다","번역하다, 통역하다","현실적인"],
+        "p6.1" : ["놀다,(경기를)하다","사건, 행사, 경기","경기, 시합","경기, 맞수, 맞먹다","달리기,경주,경쟁하다","토너먼트","다이빙하다","수영하다","놀이기구,타다","도박을 하다","좌석,앉다,앉히다","순위,지위,(순위를)매기다"],
         "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
     "나 들을 준비됐어.","나 얘기할 준비됐어.","나 주문할 준비됐어.","나 재밌게 놀 준비됐어.","나 갈 준비됐어."],
         "s2" : ["어서 오세요! 어떻게 도와드릴까요?", "이 셔츠 환불하러 왔어요.", "셔츠에 무슨 문제가 있나요?","저한테는 너무 커서요.",
@@ -189,6 +199,8 @@
         "s25" : ["집이 직장이랑 가까워?","출근하는 데 30분 걸려.","그 정도면 괜찮네.","맞아.이 정도면 나쁘지 않지.","일주일 걸려.","역까지 가는 데 10분 걸려.","저녁을 만드는 데 1시간 걸려.","태국까지 가는 데 5시간 걸려.","불어를 배우는 데 오래 걸려.","거기에 가는 데 1시간 걸려."],
         "s26" : ["저녁 식당 예약하는 걸 깜빡했어.","걱정하지 마, 내가 예약할게.","고마워! 네 덕에 살았어.","고맙긴 뭘. 지금 바로 예약할게.","아이들은 내가 맡아서 돌볼게.","오늘 저녁은 내가 맡아서 할게.","설거지는 내가 맡아서 할게.","계산은 내가 할게.","걱정하지 마, 서류는 내가 맡아서 처리할게.","이 문제는 내가 맡아서 해결할게."],
         "s27" : ["설거지가 또 쌓이고 있어.","이번 주에는 돌아가면서 설거지하자.","합리적이네. 내가 오늘 할게.","좋아, 난 내일 할게.","돌아가면서 게임하자.","아기를 교대로 보자.","돌아가면서 빨래하자. 너 먼저 해.","돌아가면서 질문하자.","돌아가면서 아이디어를 발표하자.","교대로 운전하자."],
-        "s28" : ["아이스 아메리카노 한 잔 주세요.","네, 다 해서 총 5달러입니다.","여기 모바일 결제되나요?","네, 모든 결제는 앱 사용이 가능합니다.","현금만 받나요?","온라인 주문이 가능한가요?","반품이 가능한가요?","예약을 받나요?","예약 없이 방문 가능한가요?","카드 받나요?"]
+        "s28" : ["아이스 아메리카노 한 잔 주세요.","네, 다 해서 총 5달러입니다.","여기 모바일 결제되나요?","네, 모든 결제는 앱 사용이 가능합니다.","현금만 받나요?","온라인 주문이 가능한가요?","반품이 가능한가요?","예약을 받나요?","예약 없이 방문 가능한가요?","카드 받나요?"],
+        "s29" : ["이 가게에는 멋진 물건이 정말 많네.","이 니트 좀 봐. 너무 예쁘다.","너한테 잘 어울릴 거 같아. 한번 입어 봐.","좋은 생각이야. 내 사이즈가 있으면 좋겠다.","저 강아지 좀 봐.","이 컴퓨터 가격 좀 봐.","내가 방금 산 이 가방 좀 봐봐.","내 핸드폰 보지 마.","태양을 똑바로 보지 마.","이 사진 좀 봐."],
+        "s30" : ["오늘 도로가 정말 미끄럽네.","도로 위의 얼음을 조심해.","응, 평소보다 더 천천히 운전할게.","그래, 조심해서 나쁠 건 없지!","바닥이 미끄러우니까 조심해.","소매치기 조심해.","보이스 피싱 조심해.","보고서에 오류가 있는지 주의해서 보세요.","다음 주 세일을 놓치지 마세요(주의해서 보세요.)","차 조심해."]
     }
 }
