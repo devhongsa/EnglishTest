@@ -49,6 +49,7 @@
         "p6.1" : ["play","event","game","match","race","tournament","dive","swim","ride","gamble","seat","rank"],
         "p6.2" : ["able","belong","compete","enter","lose","mental","Physical","hobby","member","competitive","rookie","ban"],
         "p6.3" : ["entertain","invite","perform","play","sing","celebration","ceremony","concert","exhibition","festival","rehearse","program"],
+        "p6.3#" : ["guitar","piano","violin","drum","microphone","band","orchestra","pop group","stage","theater","audience","ballet","dance","play","folk dance","music","opera","drama","movie","actor","actress","movie director","hero","heroine","documentary movie","horror movie","comedy movie","romantic movie","science fiction movie"],
         "p7.1" : ["abroad","arrange","pack","passenger","timetable","fly","destination","arrive","land","get","look after","check"],
         "p7.2" : ["travel","trip","sail","wave","private","leave","take off","visit","pass","catch","fasten","souvenir"],
         "s1" : ["Are you nervous about the test?", "No. I'm ready to ace it.","I like your confidence. Good luck!", "Thanks!",
@@ -103,7 +104,9 @@
         "s29" : ["This store has so many nice things.","Look at this sweater. It's so pretty.","That would suit you. You should try it on.","Good idea. I hope they have my size.","Look at that puppy.","Look at the price of this computer.","Look at this bag I just bought.","Don't look at my phone.","Don't look at the sun directly.","Look at this picture."],
         "s30" : ["The roads are really slippery today.","Look out for ice on the road.","Okay, I'll drive extra slowly.","Yes, better safe than sorry!","Look out for wet floors.","Look out for pickpockets.","Look out for phone scams.","Look out for errors in the report.","Look out for sales next week.","Look out for cars."],
         "s31" : ["Excuse me, can you help me?","Yes, of course.","I'm looking for the electronics section.","It's on the third floor, near the escalators.","I'm looking for the subway station.","I'm looking for the manager.","I'm looking for a new job.","I'm looking for a place to eat lunch.","I'm looking for a gift for a friend.","I'm looking for a bathroom."],
-        "s32" : ["The weather will be perfect this weekend.","I'm looking forward to our picnic at the park.","Should we invite others too?","Sure, the more the merrier!","I'm looking forward to seeing you.","I'm looking forward to the movie.","I'm looking forward to the honeymoon.","I'm looking forward to catching up with you.","I'm looking forward to relaxing at home.","I'm looking forward to the weekend."]
+        "s32" : ["The weather will be perfect this weekend.","I'm looking forward to our picnic at the park.","Should we invite others too?","Sure, the more the merrier!","I'm looking forward to seeing you.","I'm looking forward to the movie.","I'm looking forward to the honeymoon.","I'm looking forward to catching up with you.","I'm looking forward to relaxing at home.","I'm looking forward to the weekend."],
+        "s33" : ["Isn't this cafe really nice?","Yeah, their coffee is great. I get why you like this place.","I really like the vibes as well.","Yes, it's very cozy here.","I get the joke.","I get how you feel.","I get the instructions.","I get why you are upset.","I get the idea now.","I get what you mean."],
+        "s34" : ["How's your headache?","It's getting worse, actually.","Maybe you should see a doctor.","You're right, I probably should.","It's getting late.","It's getting busy.","It's getting warmer these days.","It's getting close to dinnertime.","It's getting expensive to eat out.","It's getting dark."]
     },
     "kor" : {
         "p1.1" : ["태어나다", "성장하다, 자라다", "배우다, 학습하다", "일하다, 근무하다", "사랑, 사랑하다", "행복한", "결혼하다", "돌보다, 보살피다", "죽다",
@@ -170,6 +173,7 @@
         "p6.1" : ["놀다,(경기를)하다","사건, 행사, 경기","경기, 시합","경기, 맞수, 맞먹다","달리기,경주,경쟁하다","토너먼트","다이빙하다","수영하다","놀이기구,타다","도박을 하다","좌석,앉다,앉히다","순위,지위,(순위를)매기다"],
         "p6.2" : ["~할 수 있는","제자리에 있다,소속감을 느끼다","경쟁하다,(시합에)참가하다","들어가다,참가하다","잃다,경기에 지다","정신의","육체의","취미","회원,구성원","경쟁을 하는, 경쟁력 있는","초보자,신인 선수","금지,금하다"],
         "p6.3" : ["접대하다,즐겁게 해 주다","초대하다,초청하다","공연하다,연기하다","(악기,음악을)연주하다","노래하다","기념행사,축하하기","식,의식","연주회,콘서트","전시회","축제","리허설을 하다","프로그램,계획,프로그램을 짜다"],
+        "p6.3#" : ["기타","피아노","드럼","바이올린","드럼,북","마이크","밴드,악단","오케스트라","팝 그룹","무대","극장","관중","발레","무용","연극","민속 무용,포크 댄스","오페라,가극","극,드라마","영화","배우(남자)","여배우","영화 감독","남자 주인공","여자 주인공","기록 영화,다큐멘터리","공포 영화","코미디 영화","로맨틱 영화","공상 과학 영화"],
         "p7.1" : ["해외에,해외로","마련하다,정리하다","짐을 꾸리다","승객","시간표","날다,비행하다","목적지,도착지","도착하다","착륙하다","얻다,구하다","~을 돌보다","맡기다,(수화물을)부치다"],
         "p7.2" : ["여행,여행하다","여행","항해하다","파도,손을 흔들다","사적인,개인을 위한","떠나다, 그만두다","이륙하다","방문,방문하다","통과하다,지나가다","잡기,잡다,받다","매다,잠그다","기념품,선물"],
         "s1" : ["시험 보는 거 긴장돼?","아니. 난 시험 잘 볼 준비됐어.","너의 자신감이 마음에 들어. 행운을 빌게!","고마워!","나 일할 준비됐어.",
@@ -213,6 +217,8 @@
         "s29" : ["이 가게에는 멋진 물건이 정말 많네.","이 니트 좀 봐. 너무 예쁘다.","너한테 잘 어울릴 거 같아. 한번 입어 봐.","좋은 생각이야. 내 사이즈가 있으면 좋겠다.","저 강아지 좀 봐.","이 컴퓨터 가격 좀 봐.","내가 방금 산 이 가방 좀 봐봐.","내 핸드폰 보지 마.","태양을 똑바로 보지 마.","이 사진 좀 봐."],
         "s30" : ["오늘 도로가 정말 미끄럽네.","도로 위의 얼음을 조심해.","응, 평소보다 더 천천히 운전할게.","그래, 조심해서 나쁠 건 없지!","바닥이 미끄러우니까 조심해.","소매치기 조심해.","보이스 피싱 조심해.","보고서에 오류가 있는지 주의해서 보세요.","다음 주 세일을 놓치지 마세요(주의해서 보세요.)","차 조심해."],
         "s31" : ["실례합니다, 저 좀 도와주시겠어요?","네, 물론이죠.","전자제품 코너를 찾고 있어요.","3층 에스컬레이터 근처에 있어요.","지하철역을 찾고 있어요.","매니저를 찾고 있어요.","새 직장을 찾고 있어요.","점심 먹을 장소를 찾고 있어요.","친구에게 줄 선물을 찾고 있어요.","화장실을 찾고 있어요."],
-        "s32" : ["이번 주말에 날씨가 엄청 좋을 거래.","공원 피크닉이 너무 기대돼.","다른 사람들도 초대할까?","좋아, 사람이 많을수록 더 재미있지!","널 만나길 기대하고 있어.","영화가 기대돼.","신혼여행이 기대돼.","너와 이야기 나누는 걸 기대하고 있어.","집에서 편히 쉬는 걸 기대하고 있어.","주말이 기대돼."]
+        "s32" : ["이번 주말에 날씨가 엄청 좋을 거래.","공원 피크닉이 너무 기대돼.","다른 사람들도 초대할까?","좋아, 사람이 많을수록 더 재미있지!","널 만나길 기대하고 있어.","영화가 기대돼.","신혼여행이 기대돼.","너와 이야기 나누는 걸 기대하고 있어.","집에서 편히 쉬는 걸 기대하고 있어.","주말이 기대돼."],
+        "s33" : ["이 카페 정말 좋지 않아?","응, 커피도 맛있어. 네가 왜 이곳을 좋아하는지 알겠어.","나는 분위기도 정말 마음에 들어.","맞아, 여기 아늑하고 좋다.","농담을 이해했어.","네 마음을 이해해.","설명서를 이해했어.","네가 왜 속상한지 알겠어.","이제 개념을 이해했어.","무슨 말인지 이해해."],
+        "s34" : ["두통은 어때?","사실 점점 심해지고 있어.","병원에 가보는 게 좋을 것 같은데.","맞아, 그래야 할 것 같아.","시간이 늦어지고 있어.","바빠지고 있어.","요즘 날씨가 따뜻해지고 있어.","저녁 시간이 다가오고 있어.","외식비가 점점 비싸지고 있어.","어두워지고 있어."]
     }
 }
