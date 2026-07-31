@@ -342,6 +342,10 @@ html = r"""<!DOCTYPE html>
       <div class="card">
         <h2>테스트 종류</h2>
         <div class="modes">
+          <button class="mode" data-type="study">
+            <strong>공부하기</strong>
+            <span>단원 단어를 목록으로 보며 가리기 공부</span>
+          </button>
           <button class="mode" data-type="eng2kor">
             <strong>영어 → 한글</strong>
             <span>영어를 보고 한글 뜻을 입력 · 랜덤 추가 가능</span>
@@ -349,10 +353,6 @@ html = r"""<!DOCTYPE html>
           <button class="mode" data-type="kor2eng">
             <strong>한글 → 영어</strong>
             <span>한글을 보고 영어를 입력 · 랜덤 추가 가능</span>
-          </button>
-          <button class="mode" data-type="study">
-            <strong>공부하기</strong>
-            <span>단원 단어를 목록으로 보며 가리기 공부</span>
           </button>
         </div>
       </div>
