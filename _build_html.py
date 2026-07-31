@@ -373,7 +373,7 @@ html = r"""<!DOCTYPE html>
       <div class="card">
         <h2 id="setupTitle">설정</h2>
         <div id="chapterBlock">
-          <div class="field-label">출제 범위 (여러 개 선택 · 없으면 전체)</div>
+          <div class="field-label" id="rangeLabel">출제 범위 선택</div>
           <div class="row" style="margin-bottom:10px;">
             <button class="btn btn-sub btn-sm" id="selWords">단어만</button>
             <button class="btn btn-sub btn-sm" id="selTalk">회화만</button>
@@ -382,8 +382,6 @@ html = r"""<!DOCTYPE html>
           </div>
           <div class="chapters" id="chapterList"></div>
         </div>
-        <p class="note" id="testNote" style="margin-top:14px;">선택한 단원의 모든 단어가 먼저 출제됩니다.</p>
-        <p class="note hide" id="studyNote" style="margin-top:14px;">선택한 단원의 영단어와 한글 뜻을 목록으로 보여 줍니다.</p>
         <div id="testOptions">
           <label class="check-row">
             <input type="checkbox" id="includeRandom" />
@@ -667,11 +665,9 @@ html = r"""<!DOCTYPE html>
       $("#randomCountBlock").classList.add("hide");
       const isStudy = type === "study";
       const testOptions = $("#testOptions");
-      const testNote = $("#testNote");
-      const studyNote = $("#studyNote");
       if (testOptions) testOptions.classList.toggle("hide", isStudy);
-      if (testNote) testNote.classList.toggle("hide", isStudy);
-      if (studyNote) studyNote.classList.toggle("hide", !isStudy);
+      const rangeLabel = $("#rangeLabel");
+      if (rangeLabel) rangeLabel.textContent = isStudy ? "공부 범위 선택" : "출제 범위 선택";
       $("#btnStart").textContent = isStudy ? "공부 시작" : "시작";
       view("setup");
     }
