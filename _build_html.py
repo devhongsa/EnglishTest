@@ -296,8 +296,9 @@ html = r"""<!DOCTYPE html>
     .study-chapter:first-child { margin-top: 0; }
     .study-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr auto;
       gap: 10px;
+      align-items: center;
       padding: 12px 14px;
       border: 1px solid var(--line);
       border-radius: 12px;
@@ -305,7 +306,8 @@ html = r"""<!DOCTYPE html>
       margin-bottom: 8px;
     }
     @media (max-width: 600px) {
-      .study-row { grid-template-columns: 1fr; }
+      .study-row { grid-template-columns: 1fr auto; }
+      .study-kor { grid-column: 1 / -1; }
     }
     .study-eng, .study-kor {
       word-break: keep-all;
@@ -318,6 +320,25 @@ html = r"""<!DOCTYPE html>
       font-size: 1.05rem;
     }
     .study-kor { color: var(--ink); }
+    .study-star {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: #c9d4cc;
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+      transition: color .15s, background .15s, border-color .15s;
+    }
+    .study-star.on {
+      color: #e6a800;
+      background: #fff8e1;
+      border-color: #e6c35c;
+    }
     .study-list.hide-eng .study-eng,
     .study-list.hide-kor .study-kor {
       visibility: hidden;
@@ -472,6 +493,9 @@ html = r"""<!DOCTYPE html>
         <h2>결과</h2>
         <div class="q" id="score" style="margin-top:0;"></div>
         <p class="note" style="margin-bottom:12px;">○ / ✕를 누르면 채점을 수정할 수 있습니다.</p>
+        <div class="row" style="margin-bottom:12px;">
+          <button class="btn btn-soft" id="btnFavWrongs">틀린 문제 모두 즐겨찾기</button>
+        </div>
         <div class="list" id="resultList"></div>
         <div class="row" style="margin-top:16px;">
           <button class="btn btn-main" id="btnAgain">다시 풀기</button>
@@ -726,9 +750,25 @@ html = r"""<!DOCTYPE html>
         }
         const row = document.createElement("div");
         row.className = "study-row";
+        const on = state.favs.has(p.id);
         row.innerHTML =
           '<div class="study-eng">' + esc(stripSound(p.eng)) + "</div>" +
-          '<div class="study-kor">' + esc(p.kor) + "</div>";
+          '<div class="study-kor">' + esc(p.kor) + "</div>" +
+          '<button type="button" class="study-star' + (on ? " on" : "") +
+          '" aria-label="즐겨찾기" title="즐겨찾기">★</button>';
+        const star = row.querySelector(".study-star");
+        star.addEventListener("click", () => {
+          if (state.favs.has(p.id)) {
+            state.favs.delete(p.id);
+            star.classList.remove("on");
+            toast("즐겨찾기 해제");
+          } else {
+            state.favs.add(p.id);
+            star.classList.add("on");
+            toast("즐겨찾기 추가");
+          }
+          saveFavs();
+        });
         box.appendChild(row);
       }
 
@@ -824,6 +864,28 @@ html = r"""<!DOCTYPE html>
       $("#score").textContent = state.score + " / " + state.quiz.length + " 정답";
     }
 
+    function favAllWrongs() {
+      let added = 0;
+      let wrongs = 0;
+      state.quiz.forEach((q, i) => {
+        if (state.marks[i] !== false) return;
+        wrongs += 1;
+        if (!state.favs.has(q.id)) added += 1;
+        state.favs.add(q.id);
+      });
+      if (!wrongs) {
+        toast("틀린 문제가 없습니다");
+        return;
+      }
+      saveFavs();
+      $$("#resultList .item-result").forEach((div, i) => {
+        if (state.marks[i] !== false) return;
+        const star = div.querySelector(".study-star");
+        if (star) star.classList.add("on");
+      });
+      toast(added ? ("틀린 문제 " + added + "개 즐겨찾기 추가") : "틀린 문제는 이미 모두 즐겨찾기되어 있습니다");
+    }
+
     function showResult() {
       updateScore();
       const box = $("#resultList");
@@ -842,8 +904,8 @@ html = r"""<!DOCTYPE html>
           "<small>" + esc(dirLabel(q)) + " · " + esc(q.chapter) + "</small>" +
           "<small>내 답: " + esc(user) + "</small>" +
           "<small>정답: " + esc(expected) + "</small></div>" +
-          '<button type="button" class="btn btn-soft btn-sm"' + (saved ? " disabled" : "") + ">" +
-          (saved ? "저장됨" : "★ 저장") + "</button>";
+          '<button type="button" class="study-star' + (saved ? " on" : "") +
+          '" aria-label="즐겨찾기" title="즐겨찾기">★</button>';
 
         const markBtn = div.querySelector(".result-mark");
         markBtn.addEventListener("click", () => {
@@ -855,13 +917,18 @@ html = r"""<!DOCTYPE html>
           updateScore();
         });
 
-        const favBtn = div.querySelector(".btn");
-        favBtn.addEventListener("click", () => {
-          state.favs.add(q.id);
+        const star = div.querySelector(".study-star");
+        star.addEventListener("click", () => {
+          if (state.favs.has(q.id)) {
+            state.favs.delete(q.id);
+            star.classList.remove("on");
+            toast("즐겨찾기 해제");
+          } else {
+            state.favs.add(q.id);
+            star.classList.add("on");
+            toast("즐겨찾기 추가");
+          }
           saveFavs();
-          favBtn.textContent = "저장됨";
-          favBtn.disabled = true;
-          toast("저장됨");
         });
         box.appendChild(div);
       });
@@ -929,6 +996,7 @@ html = r"""<!DOCTYPE html>
     $("#btnNext").onclick = next;
     $("#btnOk").onclick = () => mark(true);
     $("#btnNg").onclick = () => mark(false);
+    $("#btnFavWrongs").onclick = favAllWrongs;
     $("#btnAgain").onclick = () => {
       if (state.type === "fav") startFavQuiz();
       else openSetup(state.type);
