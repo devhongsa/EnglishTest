@@ -375,8 +375,8 @@ html = r"""<!DOCTYPE html>
         <div id="chapterBlock">
           <div class="field-label">출제 범위 (여러 개 선택 · 없으면 전체)</div>
           <div class="row" style="margin-bottom:10px;">
-            <button class="btn btn-sub btn-sm" id="selWords">단어(p)만</button>
-            <button class="btn btn-sub btn-sm" id="selTalk">회화(s)만</button>
+            <button class="btn btn-sub btn-sm" id="selWords">단어만</button>
+            <button class="btn btn-sub btn-sm" id="selTalk">회화만</button>
             <button class="btn btn-sub btn-sm" id="selAll">전체 선택</button>
             <button class="btn btn-sub btn-sm" id="selNone">선택 해제</button>
           </div>
@@ -666,9 +666,12 @@ html = r"""<!DOCTYPE html>
       $("#randomCount").value = 10;
       $("#randomCountBlock").classList.add("hide");
       const isStudy = type === "study";
-      $("#testOptions").classList.toggle("hide", isStudy);
-      $("#testNote").classList.toggle("hide", isStudy);
-      $("#studyNote").classList.toggle("hide", !isStudy);
+      const testOptions = $("#testOptions");
+      const testNote = $("#testNote");
+      const studyNote = $("#studyNote");
+      if (testOptions) testOptions.classList.toggle("hide", isStudy);
+      if (testNote) testNote.classList.toggle("hide", isStudy);
+      if (studyNote) studyNote.classList.toggle("hide", !isStudy);
       $("#btnStart").textContent = isStudy ? "공부 시작" : "시작";
       view("setup");
     }

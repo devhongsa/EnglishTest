@@ -371,10 +371,12 @@
           </div>
           <div class="chapters" id="chapterList"></div>
         </div>
+        <p class="note" id="testNote" style="margin-top:14px;">선택한 단원의 모든 단어가 출제됩니다.</p>
+        <p class="note hide" id="studyNote" style="margin-top:14px;">선택한 단원의 영단어와 한글 뜻을 목록으로 보여 줍니다.</p>
         <div id="testOptions">
           <label class="check-row">
             <input type="checkbox" id="includeRandom" />
-            <span>랜덤 테스트 포함</span>
+            <span>랜덤 테스트 포함 (전체에서 출제 · 영/한 방향 랜덤)</span>
           </label>
           <label id="randomCountBlock" class="hide" style="margin-top:12px;">
             <em>랜덤 문항 수</em>
@@ -653,9 +655,12 @@
       $("#randomCount").value = 10;
       $("#randomCountBlock").classList.add("hide");
       const isStudy = type === "study";
-      $("#testOptions").classList.toggle("hide", isStudy);
-      $("#testNote").classList.toggle("hide", isStudy);
-      $("#studyNote").classList.toggle("hide", !isStudy);
+      const testOptions = $("#testOptions");
+      const testNote = $("#testNote");
+      const studyNote = $("#studyNote");
+      if (testOptions) testOptions.classList.toggle("hide", isStudy);
+      if (testNote) testNote.classList.toggle("hide", isStudy);
+      if (studyNote) studyNote.classList.toggle("hide", !isStudy);
       $("#btnStart").textContent = isStudy ? "공부 시작" : "시작";
       view("setup");
     }
