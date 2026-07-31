@@ -49,8 +49,8 @@
       margin-bottom: 14px;
     }
     .card h2 { margin: 0 0 14px; font-size: 1rem; font-weight: 600; }
-    .modes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    @media (max-width: 700px) { .modes { grid-template-columns: 1fr; } }
+    .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    @media (max-width: 900px) { .modes { grid-template-columns: 1fr; } }
     .check-row {
       display: flex;
       align-items: center;
@@ -259,11 +259,66 @@
     }
     .open-hint strong { display: block; margin-bottom: 6px; }
     .open-hint ol { margin: 8px 0 0; padding-left: 1.2em; }
+    .study-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+    .study-sticky .check-row { margin: 0; }
+    .study-checks { display: flex; flex-wrap: wrap; gap: 14px; }
+    .study-meta { color: var(--muted); font-size: 0.88rem; }
+    .study-chapter {
+      margin: 18px 0 8px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--teal);
+    }
+    .study-chapter:first-child { margin-top: 0; }
+    .study-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 600px) {
+      .study-row { grid-template-columns: 1fr; }
+    }
+    .study-eng, .study-kor {
+      word-break: keep-all;
+      line-height: 1.45;
+      min-height: 1.45em;
+    }
+    .study-eng {
+      font-family: "Literata", serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .study-kor { color: var(--ink); }
+    .study-list.hide-eng .study-eng,
+    .study-list.hide-kor .study-kor {
+      visibility: hidden;
+    }
   </style>
 </head>
 <body>
   <div class="app">
-    <h1>영어 테스트</h1>
+    <h1>은지❤️승민 영어 공부 사이트</h1>
     <div class="open-hint" id="openHint">
       <strong>버튼이 안 눌리면 Safari로 열어 주세요</strong>
       카톡·미리보기에서는 시험이 동작하지 않습니다.
@@ -273,11 +328,9 @@
         <li>하단 공유 → <b>Safari로 열기</b></li>
       </ol>
     </div>
-    <p class="lead">HTML 파일만 열어서 바로 시험 보세요.</p>
 
     <section id="home">
       <div class="card">
-        <h2>테스트 종류</h2>
         <div class="modes">
           <button class="mode" data-type="eng2kor">
             <strong>영어 → 한글</strong>
@@ -286,6 +339,10 @@
           <button class="mode" data-type="kor2eng">
             <strong>한글 → 영어</strong>
             <span>한글을 보고 영어를 입력 · 랜덤 추가 가능</span>
+          </button>
+          <button class="mode" data-type="study">
+            <strong>공부하기</strong>
+            <span>단원 단어를 목록으로 보며 가리기 공부</span>
           </button>
         </div>
       </div>
@@ -315,19 +372,42 @@
           </div>
           <div class="chapters" id="chapterList"></div>
         </div>
-        <p class="note" style="margin-top:14px;">선택한 단원의 모든 단어가 먼저 출제됩니다.</p>
-        <label class="check-row">
-          <input type="checkbox" id="includeRandom" />
-          <span>랜덤 테스트 포함 (전체에서 출제 · 영/한 방향 랜덤)</span>
-        </label>
-        <label id="randomCountBlock" class="hide" style="margin-top:12px;">
-          <em>랜덤 문항 수</em>
-          <input type="number" id="randomCount" min="1" max="300" value="10" />
-        </label>
+        <p class="note" id="testNote" style="margin-top:14px;">선택한 단원의 모든 단어가 먼저 출제됩니다.</p>
+        <p class="note hide" id="studyNote" style="margin-top:14px;">선택한 단원의 영단어와 한글 뜻을 목록으로 보여 줍니다.</p>
+        <div id="testOptions">
+          <label class="check-row">
+            <input type="checkbox" id="includeRandom" />
+            <span>랜덤 테스트 포함 (전체에서 출제 · 영/한 방향 랜덤)</span>
+          </label>
+          <label id="randomCountBlock" class="hide" style="margin-top:12px;">
+            <em>랜덤 문항 수</em>
+            <input type="number" id="randomCount" min="1" max="300" value="10" />
+          </label>
+        </div>
         <div class="row" style="margin-top:14px;">
           <button class="btn btn-main" id="btnStart">시작</button>
           <button class="btn btn-sub" data-home>홈</button>
         </div>
+      </div>
+    </section>
+
+    <section id="study" class="hide">
+      <div class="study-sticky">
+        <div class="study-checks">
+          <label class="check-row">
+            <input type="checkbox" id="hideKor" />
+            <span>한글 가리기</span>
+          </label>
+          <label class="check-row">
+            <input type="checkbox" id="hideEng" />
+            <span>영단어 가리기</span>
+          </label>
+        </div>
+        <span class="study-meta" id="studyMeta"></span>
+        <button class="btn btn-sub btn-sm" data-home>홈</button>
+      </div>
+      <div class="card">
+        <div class="study-list" id="studyList"></div>
       </div>
     </section>
 
@@ -434,7 +514,7 @@
     }
 
     function view(name) {
-      ["home", "setup", "quiz", "grade", "result", "favs"].forEach((id) => {
+      ["home", "setup", "study", "quiz", "grade", "result", "favs"].forEach((id) => {
         document.getElementById(id).classList.toggle("hide", id !== name);
       });
     }
@@ -570,15 +650,25 @@
 
     function openSetup(type) {
       state.type = type;
-      const titles = { eng2kor: "영어 → 한글", kor2eng: "한글 → 영어" };
+      const titles = { eng2kor: "영어 → 한글", kor2eng: "한글 → 영어", study: "공부하기" };
       $("#setupTitle").textContent = titles[type] || "설정";
       $("#includeRandom").checked = false;
       $("#randomCount").value = 10;
       $("#randomCountBlock").classList.add("hide");
+      const isStudy = type === "study";
+      $("#testOptions").classList.toggle("hide", isStudy);
+      $("#testNote").classList.toggle("hide", isStudy);
+      $("#studyNote").classList.toggle("hide", !isStudy);
+      $("#btnStart").textContent = isStudy ? "공부 시작" : "시작";
       view("setup");
     }
 
     function startFromSetup() {
+      if (state.type === "study") {
+        startStudy();
+        return;
+      }
+
       let pool = allPairs();
       const sel = selectedChapters();
       if (sel.length) pool = pool.filter((p) => sel.includes(p.chapter));
@@ -599,6 +689,50 @@
       }
 
       beginQuiz(quiz);
+    }
+
+    function startStudy() {
+      let pool = allPairs();
+      const sel = selectedChapters();
+      if (sel.length) pool = pool.filter((p) => sel.includes(p.chapter));
+      if (!pool.length) {
+        toast("선택한 범위에 단어가 없습니다");
+        return;
+      }
+
+      const box = $("#studyList");
+      box.innerHTML = "";
+      box.classList.remove("hide-eng", "hide-kor");
+      $("#hideEng").checked = false;
+      $("#hideKor").checked = false;
+
+      let lastCh = "";
+      for (const p of pool) {
+        if (p.chapter !== lastCh) {
+          lastCh = p.chapter;
+          const h = document.createElement("div");
+          h.className = "study-chapter";
+          h.textContent = p.chapter;
+          box.appendChild(h);
+        }
+        const row = document.createElement("div");
+        row.className = "study-row";
+        row.innerHTML =
+          '<div class="study-eng">' + esc(stripSound(p.eng)) + "</div>" +
+          '<div class="study-kor">' + esc(p.kor) + "</div>";
+        box.appendChild(row);
+      }
+
+      $("#studyMeta").textContent = pool.length + "개 · " +
+        (sel.length ? sel.length + "개 단원" : "전체");
+      view("study");
+      window.scrollTo(0, 0);
+    }
+
+    function applyStudyHide() {
+      const box = $("#studyList");
+      box.classList.toggle("hide-eng", $("#hideEng").checked);
+      box.classList.toggle("hide-kor", $("#hideKor").checked);
     }
 
     function beginQuiz(quiz) {
@@ -780,6 +914,8 @@
     $("#includeRandom").onchange = () => {
       $("#randomCountBlock").classList.toggle("hide", !$("#includeRandom").checked);
     };
+    $("#hideEng").onchange = applyStudyHide;
+    $("#hideKor").onchange = applyStudyHide;
     $("#btnStart").onclick = startFromSetup;
     $("#btnNext").onclick = next;
     $("#btnOk").onclick = () => mark(true);
