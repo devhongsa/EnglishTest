@@ -855,6 +855,5 @@ html = r"""<!DOCTYPE html>
 """
 
 out = html.replace("__EMBEDDED_DATA__", embedded)
-(p / "EnglishTest.html").write_text(out, encoding="utf-8")
 (p / "index.html").write_text(out, encoding="utf-8")
-print("ok", (p / "EnglishTest.html").stat().st_size)
+print("ok", (p / "index.html").stat().st_size)
