@@ -411,20 +411,26 @@ class App(tk.Tk):
         self.refresh_words()
 
     def rebuild_html(self, silent: bool = False) -> None:
+        """현재 index.html 폼은 유지하고 data.json 단어만 주입."""
         script = ROOT / "_build_html.py"
         if not script.exists():
             if not silent:
                 messagebox.showerror("빌드", "_build_html.py 가 없습니다.")
             return
         try:
-            r = subprocess.run([sys.executable, str(script)], cwd=str(ROOT), capture_output=True, text=True)
+            r = subprocess.run(
+                [sys.executable, str(script)],
+                cwd=str(ROOT),
+                capture_output=True,
+                text=True,
+            )
             msg = (r.stdout or r.stderr or "").strip() or "완료"
             if r.returncode != 0:
                 messagebox.showerror("빌드 실패", msg)
             elif not silent:
-                messagebox.showinfo("빌드", msg)
+                messagebox.showinfo("빌드", "index.html 폼은 그대로 두고 단어 데이터만 갱신했습니다.\n" + msg)
             else:
-                self.status.set(f"저장 + HTML 빌드 완료 · {msg}")
+                self.status.set(f"저장 + HTML 데이터 갱신 완료 · {msg}")
         except Exception as e:
             messagebox.showerror("빌드 실패", str(e))
 
