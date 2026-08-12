@@ -49,7 +49,7 @@
       margin-bottom: 14px;
     }
     .card h2 { margin: 0 0 14px; font-size: 1rem; font-weight: 600; }
-    .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .modes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     @media (max-width: 900px) { .modes { grid-template-columns: 1fr; } }
     .check-row {
       display: flex;
@@ -364,6 +364,10 @@
             <strong>[TEST] 한글 → 영어</strong>
             <span>한글을 보고 영어를 입력</span>
           </button>
+          <button class="mode" data-type="mixed">
+            <strong>[TEST] 랜덤</strong>
+            <span>문항마다 영한 / 한영이 랜덤으로 출제</span>
+          </button>
         </div>
       </div>
 
@@ -392,6 +396,7 @@
         <h2 id="setupTitle">설정</h2>
         <div id="chapterBlock">
           <div class="field-label" id="rangeLabel">출제 범위 선택</div>
+          <p class="note" id="lastScopeNote" style="margin:0 0 10px;"></p>
           <div class="row" style="margin-bottom:10px;">
             <button class="btn btn-sub btn-sm" id="selWords">단어만</button>
             <button class="btn btn-sub btn-sm" id="selTalk">회화만</button>
@@ -647,7 +652,21 @@
     }
 
     function typeLabel(type) {
-      return ({ eng2kor: "영어 → 한글", kor2eng: "한글 → 영어", fav: "즐겨찾기 테스트" })[type] || type;
+      return ({
+        eng2kor: "영어 → 한글",
+        kor2eng: "한글 → 영어",
+        mixed: "랜덤",
+        fav: "즐겨찾기 테스트",
+      })[type] || type;
+    }
+
+    function lastExamScopeText() {
+      const h = loadHistory().find((x) => x.type !== "fav");
+      if (!h) return "최근 시험 범위: 없음";
+      let t = "최근 시험 범위: " + h.chapterLabel;
+      if (h.includeRandom) t += " + 랜덤 " + h.randomCount + "문항";
+      t += " · " + h.typeLabel + " · " + formatAt(h.at);
+      return t;
     }
 
     function loadHistory() {
@@ -738,7 +757,7 @@
 
     function renderHistory() {
       const list = loadHistory();
-      $("#histNote").textContent = list.length + "회 (브라우저 저장)";
+      $("#histNote").textContent = list.length + "회";
       const box = $("#histList");
       box.innerHTML = "";
       if (!list.length) {
@@ -865,7 +884,12 @@
 
     function openSetup(type) {
       state.type = type;
-      const titles = { eng2kor: "영어 → 한글", kor2eng: "한글 → 영어", study: "공부하기" };
+      const titles = {
+        eng2kor: "영어 → 한글",
+        kor2eng: "한글 → 영어",
+        mixed: "랜덤",
+        study: "공부하기",
+      };
       $("#setupTitle").textContent = titles[type] || "설정";
       $("#includeRandom").checked = false;
       $("#randomCount").value = 10;
@@ -875,6 +899,8 @@
       if (testOptions) testOptions.classList.toggle("hide", isStudy);
       const rangeLabel = $("#rangeLabel");
       if (rangeLabel) rangeLabel.textContent = isStudy ? "공부 범위 선택" : "출제 범위 선택";
+      const lastNote = $("#lastScopeNote");
+      if (lastNote) lastNote.textContent = lastExamScopeText();
       $("#btnStart").textContent = isStudy ? "공부 시작" : "시작";
       view("setup");
     }
