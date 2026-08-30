@@ -1533,6 +1533,30 @@
             "You make me wait.",
             "Don't make me angry",
             "You make me laugh."
+        ],
+        "s39": [
+            "Are you ready for the trip?",
+            "Yes, I made sure to pack all the essentials.",
+            "Did you bring your passport?",
+            "Absolutely, it's the first thing I packed.",
+            "I made sure to save the files.",
+            "I made sure to bring my wallet.",
+            "I made sure to turn off the lights.",
+            "Please make sure to arrive on time.",
+            "Please make sure to bring your ID.",
+            "I made sure to lock the door."
+        ],
+        "s40": [
+            "Have you decided on your vacation plans?",
+            "I made up my mind to travel to Italy.",
+            "Italy sounds amazing! When are you going?",
+            "I'm planning for springtime.",
+            "I made up my mind to study abroad.",
+            "I made up my mind about the wedding.",
+            "I made up my mind to go on a diet.",
+            "I can't make up my mind about the job offer.",
+            "I can't make up my mind about the trip.",
+            "I made up my mind to move."
         ]
     },
     "kor": {
@@ -3069,6 +3093,30 @@
             "나 기다리게 하지 마.",
             "나 화나게 하지 마.",
             "넌 날 웃게 해."
+        ],
+        "s39": [
+            "여행 갈 준비됐어?",
+            "응, 필수품은 확실히 챙겼어.",
+            "여권은 가져왔어?",
+            "당연하지, 제일 먼저 챙겼어.",
+            "파일을 확실히 저장했어.",
+            "지갑을 확실히 챙겼어.",
+            "불을 확실히 껐어.",
+            "꼭 제시간에 와주세요.",
+            "신분증을 꼭 챙기세요.",
+            "문을 확실히 잠갔어."
+        ],
+        "s40": [
+            "휴가 계획 정했어?",
+            "이탈리아로 여행 가기로 결정했어.",
+            "이탈리아 너무 좋겠다! 언제 갈 거야?",
+            "봄에 가려고 계획 중이야.",
+            "유학을 가기로 결정했어.",
+            "결혼식에 대한 결정을 내렸어.",
+            "다이어트하기로 결정했어.",
+            "그 일자리 제안을 받아들일지 결정을 못 내리겠어.",
+            "여행을 갈지 결정을 못 내리겠어.",
+            "이사 가기로 결정했어."
         ]
     }
 }
